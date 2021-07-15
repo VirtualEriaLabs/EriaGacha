@@ -37,8 +37,10 @@ public class RegisterMyCommands implements Command<Object> {
    * Metodo donde se añaden los objetos al gacha con su rareza
    */
   public static void loadTheGacha(){
-    GachaObject diamond = new GachaObject(Items.DIAMOND);
-    GachaObject torch = new GachaObject(Items.TORCH);
+    GachaObject diamond = new GachaObject(Items.DIAMOND, "Diamante!", 64);
+    GachaObject torch = new GachaObject(Items.TORCH, "Antorcha!", 32);
+    GachaObject Stone = new GachaObject(Items.TORCH, "Antorcha!", 64);
+    GACHERIA_LIST.addEntry(diamond, 10);
     GACHERIA_LIST.addEntry(diamond, 10);
     GACHERIA_LIST.addEntry(torch, 90);
   }
@@ -97,10 +99,12 @@ public class RegisterMyCommands implements Command<Object> {
    */
   public static int giveItem(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException{
     final ServerCommandSource source = ctx.getSource();
+    //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
-    ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.getItem().toString()), false);
+    //Manda el mensaje de la recompensa
+    ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    if (!self.getInventory().insertStack(new ItemStack(obj.getItem()))) {
+    if (!self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
       throw new SimpleCommandExceptionType(new TranslatableText("inventory.isfull")).create();
     }
     return 1;
