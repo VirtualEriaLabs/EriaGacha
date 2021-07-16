@@ -1,4 +1,4 @@
-package net.gacheria;
+package net.eriagacha;
 
 import java.util.ArrayList;
 import java.util.List;

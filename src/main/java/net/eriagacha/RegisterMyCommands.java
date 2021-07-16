@@ -1,4 +1,4 @@
-package net.gacheria;
+package net.eriagacha;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
@@ -37,12 +37,16 @@ public class RegisterMyCommands implements Command<Object> {
    * Metodo donde se añaden los objetos al gacha con su rareza
    */
   public static void loadTheGacha(){
-    GachaObject diamond = new GachaObject(Items.DIAMOND, "Diamante!", 64);
-    GachaObject torch = new GachaObject(Items.TORCH, "Antorcha!", 32);
-    GachaObject Stone = new GachaObject(Items.TORCH, "Antorcha!", 64);
-    GACHERIA_LIST.addEntry(diamond, 10);
-    GACHERIA_LIST.addEntry(diamond, 10);
-    GACHERIA_LIST.addEntry(torch, 90);
+    GachaObject diamond = new GachaObject(Items.DIAMOND, "Diamante(s)!", 5);
+    GachaObject torch = new GachaObject(Items.TORCH, "Antorcha(s)!", 12);
+    GachaObject stone = new GachaObject(Items.STONE, "Piedra(s)!", 32);
+    GachaObject diamond_picaxe = new GachaObject(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
+
+    GACHERIA_LIST.addEntry(diamond, 20);
+    GACHERIA_LIST.addEntry(torch, 30);
+    GACHERIA_LIST.addEntry(stone, 50);
+    GACHERIA_LIST.addEntry(diamond_picaxe, 25);
+
   }
 
   /**
@@ -102,10 +106,12 @@ public class RegisterMyCommands implements Command<Object> {
     //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
     //Manda el mensaje de la recompensa
-    ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    if (!self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
-      throw new SimpleCommandExceptionType(new TranslatableText("inventory.isfull")).create();
+    if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
+      ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+    }else{
+      throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
     }
     return 1;
   }

@@ -1,4 +1,4 @@
-package net.gacheria;
+package net.eriagacha;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "gacheria",
+  "id": "eriagacha",
   "version": "${version}",
 
   "name": "Gacha Mod For Eria!",
@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.gacheria.GacheriaMod"
+      "net.eriagacha.EriaGachaMain"
     ]
   },
   "mixins": [
