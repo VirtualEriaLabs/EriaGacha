@@ -19,7 +19,7 @@ public class RegisterMyCommands implements Command<Object> {
 
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-  public static final ItemStack REQUIEREMENT = new ItemStack(Items.EMERALD);
+  public static final ItemStack REQUIEREMENT = new ItemStack(GachaItem.GACHA_COOKIE);
   @Override
   public int run(CommandContext<Object> context) {
     return 0;
@@ -43,13 +43,14 @@ public class RegisterMyCommands implements Command<Object> {
     GachaObject torch = new GachaObject(Items.TORCH, "Antorcha(s)!", 12);
     GachaObject stone = new GachaObject(Items.STONE, "Piedra(s)!", 32);
     GachaObject diamond_picaxe = new GachaObject(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
-    GachaObject haste = new GachaObject( new StatusEffectInstance(StatusEffects.HASTE, 200), "Haste por 8 segundos!");
-
-    GACHERIA_LIST.addEntry(diamond, 20);
-    GACHERIA_LIST.addEntry(torch, 30);
-    GACHERIA_LIST.addEntry(stone, 50);
-    GACHERIA_LIST.addEntry(diamond_picaxe, 25);
-    GACHERIA_LIST.addEntry(haste, 50);
+    GachaObject haste = new GachaObject( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
+    GachaObject speed = new GachaObject( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
+    GACHERIA_LIST.addEntry(diamond, 10);
+    GACHERIA_LIST.addEntry(torch, 20);
+    GACHERIA_LIST.addEntry(stone, 30);
+    GACHERIA_LIST.addEntry(diamond_picaxe, 20);
+    GACHERIA_LIST.addEntry(haste, 15);
+    GACHERIA_LIST.addEntry(speed, 15);
 
   }
 
@@ -84,34 +85,27 @@ public class RegisterMyCommands implements Command<Object> {
 
 
   /**
-   * Metodo para dar un item del Gacha al usuario, requiere de una clase "CommandContext"
+   * Metodo para dar una recompensa del Gacha al usuario, requiere de una clase "CommandContext"
    * @param ctx
    * @return
    * @throws CommandSyntaxException
    */
   public static int giveItem(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException{
     final ServerCommandSource source = ctx.getSource();
-    //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
     if(self.getInventory().contains(REQUIEREMENT))
     {
       if(obj.rewardType==1){
-        //Se añade el item al usuario
         if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
-          //Manda el mensaje de la recompensa
           ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
-          //Se elimina el requerimiento para tirar al gacha
           self.getInventory().removeStack(self.getInventory().getSlotWithStack(REQUIEREMENT),1);
         }else{
           throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
         }
       }else if(obj.rewardType==2){
-        //Se añade el efecto al usuario
         self.setStatusEffect(obj.statusEffectInstance, self);
-        //Manda el mensaje de la recompensa
         ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
-        //Se elimina el requerimiento para tirar al gacha
         self.getInventory().removeStack(self.getInventory().getSlotWithStack(REQUIEREMENT),1);
       }else {
         ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 "), false);
