@@ -66,24 +66,8 @@ public class RegisterMyCommands implements Command<Object> {
             return 1;
           }));
     });
-
-    /*
-    CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-      dispatcher.register(CommandManager.literal("willydiosHablo")
-          .then(RequiredArgumentBuilder.argument("message", StringArgumentType.string()))
-          .executes(context -> {
-            String message = StringArgumentType.getString(context, "message");
-            context.getSource().sendFeedback(new LiteralText(
-                message + " " + context.getSource().getPlayer().getDisplayName().asString()), true);
-            return 1;
-          }));
-    });
-    */
   }
 
-  /**
-   *
-   */
   /*
   public static int serverMessage(CommandContext<ServerCommandSource> ctx) throws
       CommandSyntaxException {
@@ -109,22 +93,28 @@ public class RegisterMyCommands implements Command<Object> {
     final ServerCommandSource source = ctx.getSource();
     //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
-    //StatusEffectInstance sei = new StatusEffectInstance(StatusEffects.LEVITATION, 10);
-
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    if(obj.rewardType==1){
-      if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
-        //Manda el mensaje de la recompensa
-        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
-      }else{
-        throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
+    ;
+    if(self.getInventory().contains(new ItemStack(Items.EMERALD)))
+    {
+      if(obj.rewardType==1){
+        if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
+          //Manda el mensaje de la recompensa
+          ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+        }else{
+          throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
+        }
+      }else if(obj.rewardType==2){
+        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
+        self.setStatusEffect(obj.statusEffectInstance, self);
+      }else {
+        ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 " + obj.rewardName), false);
       }
-    }else if(obj.rewardType==2){
-      ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
-      self.setStatusEffect(obj.statusEffectInstance, self);
-    }else {
-      ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 " + obj.rewardName), false);
+    }else
+    {
+      throw new SimpleCommandExceptionType(new TranslatableText("Te falta una esmeralda")).create();
     }
+
 
     return 1;
   }
