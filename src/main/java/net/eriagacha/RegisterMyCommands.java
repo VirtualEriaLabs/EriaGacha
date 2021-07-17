@@ -19,7 +19,7 @@ public class RegisterMyCommands implements Command<Object> {
 
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-
+  public static final ItemStack REQUIEREMENT = new ItemStack(Items.EMERALD);
   @Override
   public int run(CommandContext<Object> context) {
     return 0;
@@ -94,28 +94,32 @@ public class RegisterMyCommands implements Command<Object> {
     //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    ;
-    if(self.getInventory().contains(new ItemStack(Items.EMERALD)))
+    if(self.getInventory().contains(REQUIEREMENT))
     {
       if(obj.rewardType==1){
+        //Se añade el item al usuario
         if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
           //Manda el mensaje de la recompensa
           ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+          //Se elimina el requerimiento para tirar al gacha
+          self.getInventory().removeStack(self.getInventory().getSlotWithStack(REQUIEREMENT),1);
         }else{
           throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
         }
       }else if(obj.rewardType==2){
-        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
+        //Se añade el efecto al usuario
         self.setStatusEffect(obj.statusEffectInstance, self);
+        //Manda el mensaje de la recompensa
+        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
+        //Se elimina el requerimiento para tirar al gacha
+        self.getInventory().removeStack(self.getInventory().getSlotWithStack(REQUIEREMENT),1);
       }else {
-        ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 " + obj.rewardName), false);
+        ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 "), false);
       }
     }else
     {
-      throw new SimpleCommandExceptionType(new TranslatableText("Te falta una esmeralda")).create();
+      throw new SimpleCommandExceptionType(new TranslatableText("Te falta una " + REQUIEREMENT.getTranslationKey())).create();
     }
-
-
     return 1;
   }
 }
