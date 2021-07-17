@@ -13,6 +13,5 @@ public class GachaItem {
   public static void init(){
 
     Registry.register(Registry.ITEM, new Identifier("gacheria", "gacha_cookie"), GACHA_COOKIE);
-
   }
 }

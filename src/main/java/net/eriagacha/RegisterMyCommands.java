@@ -5,6 +5,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -41,11 +43,13 @@ public class RegisterMyCommands implements Command<Object> {
     GachaObject torch = new GachaObject(Items.TORCH, "Antorcha(s)!", 12);
     GachaObject stone = new GachaObject(Items.STONE, "Piedra(s)!", 32);
     GachaObject diamond_picaxe = new GachaObject(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
+    GachaObject haste = new GachaObject( new StatusEffectInstance(StatusEffects.HASTE, 200), "Haste por 8 segundos!");
 
     GACHERIA_LIST.addEntry(diamond, 20);
     GACHERIA_LIST.addEntry(torch, 30);
     GACHERIA_LIST.addEntry(stone, 50);
     GACHERIA_LIST.addEntry(diamond_picaxe, 25);
+    GACHERIA_LIST.addEntry(haste, 50);
 
   }
 
@@ -105,14 +109,23 @@ public class RegisterMyCommands implements Command<Object> {
     final ServerCommandSource source = ctx.getSource();
     //Coge un objeto aleatorio del Gacha
     GachaObject obj = GACHERIA_LIST.getRandom();
-    //Manda el mensaje de la recompensa
+    //StatusEffectInstance sei = new StatusEffectInstance(StatusEffects.LEVITATION, 10);
 
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
-      ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
-    }else{
-      throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
+    if(obj.rewardType==1){
+      if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
+        //Manda el mensaje de la recompensa
+        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+      }else{
+        throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
+      }
+    }else if(obj.rewardType==2){
+      ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
+      self.setStatusEffect(obj.statusEffectInstance, self);
+    }else {
+      ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 " + obj.rewardName), false);
     }
+
     return 1;
   }
 }
