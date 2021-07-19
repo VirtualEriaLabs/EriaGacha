@@ -5,7 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 
-public class RegisterMyCommands implements Command<Object> {
+public class RegisterCommands implements Command<Object> {
 
 
 

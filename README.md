@@ -1,16 +1,23 @@
-# eriagacha
+# Eria Gacha
 
-## Que es
+## What is Eria Gacha
 
-EriaGacha es un mod que le permitira al usuario, a traves de un comando conseguir una recompensa de una tabla de loot a cambio de un item definido
+EriaGacha Its a mod that allows the player, from a command, get a reward in exchange of an specific item
 
-## Requerimientos
+## System Used
 - Java 16>
-- Minecraft 1.17
+- Minecraft 1.17 (Could change)
 - Fabric for Minecraft 1.17
+- Windows 10
+- Intellij IDEA Community Edition
 
-## Comandos y usos
+
+## Commands
 
 ### "gacha"
 
-El comando "gacha" nos dara un item aleatorio de la pool a cambio de lo que especifiquemos, en este caso una "Esmeralda"
+This command would give the user an random item from a pool of items and buffs in exchange of a specific item
+
+### "commision"
+
+This command gives the player a quest/objective to complete in exchange of the item needed to use the gacha, if the player have a ongoing commission, the command should not work

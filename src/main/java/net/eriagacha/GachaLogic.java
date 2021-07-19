@@ -18,7 +18,7 @@ public class GachaLogic {
 
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-  public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(GachaItem.INTERTWINED_FATE);
+  public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(RegisterItems.INTERTWINED_FATE);
 
   /**
    * Metodo donde se añaden los objetos al gacha con su rareza
@@ -29,7 +29,7 @@ public class GachaLogic {
     GachaObjectModel stone = new GachaObjectModel(Items.STONE, "Piedra(s)!", 32);
     GachaObjectModel
         diamond_picaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
-    GachaObjectModel eria_logo = new GachaObjectModel(GachaItem.ERIA_LOGO, "COMIDA TOCHA!", 1);
+    GachaObjectModel eria_logo = new GachaObjectModel(RegisterItems.ERIA_LOGO, "COMIDA TOCHA!", 1);
     GachaObjectModel
         haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
     GachaObjectModel
