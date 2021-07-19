@@ -30,11 +30,19 @@ public class RegisterMyCommands implements Command<Object> {
    */
   public static void registerCommands(){
 
-    // Normal gacha command
+    // common gacha command
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha")
           .executes(context -> {
             GachaLogic.giveItem(context);
+            return 1;
+          }));
+    });
+
+    CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+      dispatcher.register(CommandManager.literal("commision")
+          .executes(context -> {
+            Commissions.getCommision(context);
             return 1;
           }));
     });

@@ -3,6 +3,8 @@ package net.eriagacha;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.eriagacha.Utils.WeightedRandomBag;
+import net.eriagacha.models.GachaObjectModel;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,19 +18,22 @@ public class GachaLogic {
 
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-  public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(GachaItem.GACHA_COOKIE);
+  public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(GachaItem.INTERTWINED_FATE);
 
   /**
    * Metodo donde se añaden los objetos al gacha con su rareza
    */
   public static void loadTheGacha(){
-    GachaObject diamond = new GachaObject(Items.DIAMOND, "Diamante(s)!", 5);
-    GachaObject torch = new GachaObject(Items.TORCH, "Antorcha(s)!", 12);
-    GachaObject stone = new GachaObject(Items.STONE, "Piedra(s)!", 32);
-    GachaObject diamond_picaxe = new GachaObject(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
-    GachaObject eria_logo = new GachaObject(GachaItem.ERIA_LOGO, "COMIDA TOCHA!", 1);
-    GachaObject haste = new GachaObject( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
-    GachaObject speed = new GachaObject( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
+    GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, "Diamante(s)!", 5);
+    GachaObjectModel torch = new GachaObjectModel(Items.TORCH, "Antorcha(s)!", 12);
+    GachaObjectModel stone = new GachaObjectModel(Items.STONE, "Piedra(s)!", 32);
+    GachaObjectModel
+        diamond_picaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
+    GachaObjectModel eria_logo = new GachaObjectModel(GachaItem.ERIA_LOGO, "COMIDA TOCHA!", 1);
+    GachaObjectModel
+        haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
+    GachaObjectModel
+        speed = new GachaObjectModel( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
 
     GACHERIA_LIST.addEntry(diamond, 10);
     GACHERIA_LIST.addEntry(torch, 20);
@@ -48,7 +53,7 @@ public class GachaLogic {
    */
   public static int giveItem(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException{
     final ServerCommandSource source = ctx.getSource();
-    GachaObject obj = GACHERIA_LIST.getRandom();
+    GachaObjectModel obj = GACHERIA_LIST.getRandom();
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
     if(self.getInventory().contains(GACHA_REQUIEREMENT))
     {

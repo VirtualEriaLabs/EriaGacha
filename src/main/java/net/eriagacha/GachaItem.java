@@ -11,7 +11,9 @@ import net.minecraft.util.registry.Registry;
 public class GachaItem {
 
   //TODO : Investigar PlayerItemConsumeEvent para que se ejecute el comando al comer
-  public static final Item GACHA_COOKIE = new Item(new Item.Settings()
+  public static final Item INTERTWINED_FATE = new Item(new Item.Settings()
+      .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
+  public static final Item ACQUAINT_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
   public static final Item ERIA_LOGO = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible()
@@ -23,11 +25,15 @@ public class GachaItem {
                     .statusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 20000, 1), 2)
                       .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20000, 1), 2)
                         .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20000, 1), 2)
-            .build()));
+                          .build()));
+  public static final Item PRIMOGEM = new Item(new Item.Settings()
+      .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
 
   public static void init(){
 
-    Registry.register(Registry.ITEM, new Identifier("eriagacha", "gacha_cookie"), GACHA_COOKIE);
+    Registry.register(Registry.ITEM, new Identifier("eriagacha", "interwined_fate"), INTERTWINED_FATE);
+    Registry.register(Registry.ITEM, new Identifier("eriagacha", "acquaint_fate"), ACQUAINT_FATE);
     Registry.register(Registry.ITEM, new Identifier("eriagacha", "eria_logo"), ERIA_LOGO);
+    Registry.register(Registry.ITEM, new Identifier("eriagacha", "primogem"), PRIMOGEM);
   }
 }
