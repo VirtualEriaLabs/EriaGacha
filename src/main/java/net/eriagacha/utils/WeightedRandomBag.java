@@ -1,10 +1,11 @@
-package net.eriagacha;
+package net.eriagacha.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import net.eriagacha.models.GachaObjectModel;
 
-public class WeightedRandomBag <T extends GachaObject> {
+public class WeightedRandomBag <T extends GachaObjectModel> {
 
   private class Entry{
     double accumulatedWeight;
