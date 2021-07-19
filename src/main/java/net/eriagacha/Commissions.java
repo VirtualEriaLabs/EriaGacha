@@ -21,7 +21,6 @@ public class Commissions {
     Gson g = new Gson();
     Person person = g.fromJson("{\"name\": \"John\"}", Person.class);
     System.out.println(person.name); //John
-
     System.out.println(g.toJson(person)); // {"name":"John"}
   }
 }

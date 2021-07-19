@@ -78,9 +78,6 @@ public class GachaController {
     GACHERIA_LIST.addEntry(adeptusTemptation);
   }
 
-
-  //TODO: Messages in different langs
-
   /**
    * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
    *
