@@ -30,6 +30,9 @@ public class RegisterItems {
   public static final Item PRIMOGEM = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
 
+  private RegisterItems() {
+  }
+
   /**
    * Must be called to register all items
    */

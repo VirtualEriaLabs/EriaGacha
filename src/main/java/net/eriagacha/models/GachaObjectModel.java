@@ -7,14 +7,16 @@ import net.minecraft.item.Items;
 
 public class GachaObjectModel<T>{
 
-  public String rewardName = new String();
-  public int itemQuanty = 1;
-  public Items items = new Items();
-  public Item item = null;
-  public StatusEffect statusEffect = null;
-  public StatusEffectInstance statusEffectInstance = null;
+
+
+  private String rewardName = new String();
+  private int itemQuanty = 1;
+  private Items items = new Items();
+  private Item item = null;
+  private StatusEffect statusEffect = null;
+  private StatusEffectInstance statusEffectInstance = null;
   //TODO CREAR ENUM PARA DEFINIR EL TIPO DE RECOMPENSA
-  public int rewardType = 0;
+  private int rewardType = 0;
 
   //CONSTRUCTORES
 
@@ -53,5 +55,46 @@ public class GachaObjectModel<T>{
   public void setItems(Items item){this.items = item;}
 
   public Items getItems(){return this.items;}
+
+  public String getRewardName() {
+    return rewardName;
+  }
+
+  public void setRewardName(String rewardName) {
+    this.rewardName = rewardName;
+  }
+
+  public int getItemQuanty() {
+    return itemQuanty;
+  }
+
+  public void setItemQuanty(int itemQuanty) {
+    this.itemQuanty = itemQuanty;
+  }
+
+  public StatusEffect getStatusEffect() {
+    return statusEffect;
+  }
+
+  public void setStatusEffect(StatusEffect statusEffect) {
+    this.statusEffect = statusEffect;
+  }
+
+  public StatusEffectInstance getStatusEffectInstance() {
+    return statusEffectInstance;
+  }
+
+  public void setStatusEffectInstance(
+      StatusEffectInstance statusEffectInstance) {
+    this.statusEffectInstance = statusEffectInstance;
+  }
+
+  public int getRewardType() {
+    return rewardType;
+  }
+
+  public void setRewardType(int rewardType) {
+    this.rewardType = rewardType;
+  }
 
 }

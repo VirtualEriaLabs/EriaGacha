@@ -3,8 +3,8 @@ package net.eriagacha;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.eriagacha.Utils.WeightedRandomBag;
 import net.eriagacha.models.GachaObjectModel;
+import net.eriagacha.utils.WeightedRandomBag;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,31 +20,33 @@ public class GachaLogic {
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
   public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(RegisterItems.INTERTWINED_FATE);
 
+  private GachaLogic() {
+  }
+
+
   /**
-   * Method that
+   * Method that register the items in the gacha
    */
   public static void loadTheGacha(){
     GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, "Diamante(s)!", 5);
     GachaObjectModel torch = new GachaObjectModel(Items.TORCH, "Antorcha(s)!", 12);
     GachaObjectModel stone = new GachaObjectModel(Items.STONE, "Piedra(s)!", 32);
-    GachaObjectModel
-        diamond_picaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
-    GachaObjectModel eria_logo = new GachaObjectModel(RegisterItems.ERIA_LOGO, "COMIDA TOCHA!", 1);
-    GachaObjectModel
-        haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
-    GachaObjectModel
-        speed = new GachaObjectModel( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
+    GachaObjectModel diamondPickaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
+    GachaObjectModel eriaLogo = new GachaObjectModel(RegisterItems.ERIA_LOGO, "COMIDA TOCHA!", 1);
+    GachaObjectModel haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
+    GachaObjectModel speed = new GachaObjectModel( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
 
     GACHERIA_LIST.addEntry(diamond, 10);
     GACHERIA_LIST.addEntry(torch, 20);
     GACHERIA_LIST.addEntry(stone, 30);
-    GACHERIA_LIST.addEntry(diamond_picaxe, 20);
+    GACHERIA_LIST.addEntry(diamondPickaxe, 20);
     GACHERIA_LIST.addEntry(haste, 15);
     GACHERIA_LIST.addEntry(speed, 15);
-    GACHERIA_LIST.addEntry(eria_logo, 5);
+    GACHERIA_LIST.addEntry(eriaLogo, 5);
   }
 
 
+  //TODO: Messages in different langs
   /**
    * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
    * @param ctx
@@ -57,16 +59,16 @@ public class GachaLogic {
     final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
     if(self.getInventory().contains(GACHA_REQUIEREMENT))
     {
-      if(obj.rewardType==1){
-        if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.itemQuanty))) {
-          ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.itemQuanty + " " + obj.rewardName), false);
+      if(obj.getRewardType()==1){
+        if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.getItemQuanty()))) {
+          ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.getItemQuanty() + " " + obj.getRewardName()), false);
           self.getInventory().removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT),1);
         }else{
           throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
         }
-      }else if(obj.rewardType==2){
-        self.setStatusEffect(obj.statusEffectInstance, self);
-        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.rewardName), false);
+      }else if(obj.getRewardType()==2){
+        self.setStatusEffect(obj.getStatusEffectInstance(), self);
+        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.getRewardName()), false);
         self.getInventory().removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT),1);
       }else {
         ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 "), false);

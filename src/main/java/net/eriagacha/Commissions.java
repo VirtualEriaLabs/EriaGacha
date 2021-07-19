@@ -7,6 +7,7 @@ import net.minecraft.server.command.ServerCommandSource;
 public class Commissions {
 
 
+  //TODO: INVESTIGATE GSON to create, write, edit and remove a JSON File and its components
   private class Person {
     public String name;
 
