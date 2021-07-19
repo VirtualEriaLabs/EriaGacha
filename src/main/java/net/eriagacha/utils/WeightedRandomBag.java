@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.Random;
 import net.eriagacha.models.GachaObjectModel;
 
-public class WeightedRandomBag <T extends GachaObjectModel> {
+public class WeightedRandomBag<T extends GachaObjectModel> {
 
-  private class Entry{
-    double accumulatedWeight;
-    T gachaobject;
+  private final List<Entry> entries = new ArrayList<>();
+  private double accumulatedWeight;
+  private final Random rand = new Random();
+
+  public void addEntry(T gachaObject) {
+    this.addEntry(gachaObject, gachaObject.getWeight());
   }
 
-  private List<Entry> entries = new ArrayList<>();
-  private double accumulatedWeight;
-  private Random rand = new Random();
-
-  public void addEntry(T gachaobject, double weight) {
+  public void addEntry(T gachaObject, double weight) {
     accumulatedWeight += weight;
     Entry e = new Entry();
-    e.gachaobject = gachaobject;
+    e.gachaobject = gachaObject;
     e.accumulatedWeight = accumulatedWeight;
     entries.add(e);
   }
@@ -27,11 +26,16 @@ public class WeightedRandomBag <T extends GachaObjectModel> {
   public T getRandom() {
     double r = rand.nextDouble() * accumulatedWeight;
 
-    for (Entry entry: entries) {
+    for (Entry entry : entries) {
       if (entry.accumulatedWeight >= r) {
         return entry.gachaobject;
       }
     }
     return null; //should only happen when there are no entries
+  }
+
+  private class Entry {
+    double accumulatedWeight;
+    T gachaobject;
   }
 }
