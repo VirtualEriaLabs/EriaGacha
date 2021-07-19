@@ -5,21 +5,19 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.eriagacha.RegisterItems;
 import net.eriagacha.models.GachaObjectModel;
+import net.eriagacha.models.GachaObjectModelItem;
+import net.eriagacha.models.GachaObjectModelStatus;
+import net.eriagacha.utils.GachaUtils;
 import net.eriagacha.utils.WeightedRandomBag;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 public class GachaController {
 
-
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-  public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(RegisterItems.INTERTWINED_FATE);
 
   private GachaController() {
   }
@@ -28,58 +26,81 @@ public class GachaController {
   /**
    * Method that register the items in the gacha
    */
-  public static void loadTheGacha(){
-    GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, 5);
-    GachaObjectModel torch = new GachaObjectModel(Items.TORCH, 12);
-    GachaObjectModel stone = new GachaObjectModel(Items.STONE, 32);
-    GachaObjectModel diamondPickaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, 1);
-    GachaObjectModel adeptusTemptation = new GachaObjectModel(RegisterItems.ADEPTUS_TEMPTATION, 1);
-    GachaObjectModel haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
-    GachaObjectModel speed = new GachaObjectModel( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
+  public static void loadTheGacha() {
+    final GachaObjectModel diamond = GachaObjectModelItem.builder()
+        .item(Items.DIAMOND)
+        .itemQuantity(5)
+        .weight(10)
+        .build();
 
-    GACHERIA_LIST.addEntry(diamond, 10);
-    GACHERIA_LIST.addEntry(torch, 20);
-    GACHERIA_LIST.addEntry(stone, 30);
-    GACHERIA_LIST.addEntry(diamondPickaxe, 5);
-    GACHERIA_LIST.addEntry(haste, 15);
-    GACHERIA_LIST.addEntry(speed, 15);
-    GACHERIA_LIST.addEntry(adeptusTemptation, 3);
+    final GachaObjectModel torch = GachaObjectModelItem.builder()
+        .item(Items.TORCH)
+        .itemQuantity(12)
+        .weight(20)
+        .build();
+
+    final GachaObjectModel stone = GachaObjectModelItem.builder()
+        .item(Items.STONE)
+        .itemQuantity(32)
+        .weight(30)
+        .build();
+
+    final GachaObjectModel diamondPickaxe = GachaObjectModelItem.builder()
+        .item(Items.DIAMOND_PICKAXE)
+        .itemQuantity(1)
+        .weight(5)
+        .build();
+
+    final GachaObjectModel adeptusTemptation = GachaObjectModelItem.builder()
+        .item(RegisterItems.ADEPTUS_TEMPTATION)
+        .itemQuantity(1)
+        .weight(15)
+        .build();
+
+    final GachaObjectModel haste = GachaObjectModelStatus.builder()
+        .statusEffectInstance(new StatusEffectInstance(StatusEffects.HASTE, 20000, 3))
+        .rewardName("El efecto de rapidez!")
+        .weight(15)
+        .build();
+
+    final GachaObjectModel speed = GachaObjectModelStatus.builder()
+        .statusEffectInstance(new StatusEffectInstance(StatusEffects.HASTE, 20000, 3))
+        .rewardName("El efecto velocidad!")
+        .weight(3)
+        .build();
+
+    GACHERIA_LIST.addEntry(diamond);
+    GACHERIA_LIST.addEntry(torch);
+    GACHERIA_LIST.addEntry(stone);
+    GACHERIA_LIST.addEntry(diamondPickaxe);
+    GACHERIA_LIST.addEntry(haste);
+    GACHERIA_LIST.addEntry(speed);
+    GACHERIA_LIST.addEntry(adeptusTemptation);
   }
 
 
-
   //TODO: Messages in different langs
+
   /**
    * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
+   *
    * @param ctx
    * @return
    * @throws CommandSyntaxException
    */
-  public static int giveItem(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException{
-    final ServerCommandSource source = ctx.getSource();
-    GachaObjectModel obj = GACHERIA_LIST.getRandom();
-    final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
-    if(self.getInventory().contains(GACHA_REQUIEREMENT))
-    {
-      if(obj.getRewardType()==1){
-        if (self.getInventory().insertStack(new ItemStack(obj.getItem(), obj.getItemQuanty()))) {
-          //ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.getItemQuanty() + " " + obj.getRewardName()), false);
-          ctx.getSource().sendFeedback(new LiteralText( "Has obtenido "+ obj.getItemQuanty() + " " + new TranslatableText(obj.getItem().getTranslationKey()).getString()) , false);
-          self.getInventory().removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT),1);
-        }else{
-          throw new SimpleCommandExceptionType(new TranslatableText("Tienes el inventario lleno Puto")).create();
-        }
-      }else if(obj.getRewardType()==2){
-        self.setStatusEffect(obj.getStatusEffectInstance(), self);
-        ctx.getSource().sendFeedback(new LiteralText( "Has obtenido " + obj.getRewardName()), false);
-        self.getInventory().removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT),1);
-      }else{
-        ctx.getSource().sendFeedback(new LiteralText( "Ha ocurrido un error inesperado, contacta con un administrador si se repite este error :3 "), false);
-      }
-    }else{
-      throw new SimpleCommandExceptionType(new TranslatableText("Te falta una " + GACHA_REQUIEREMENT
-          .getTranslationKey())).create();
+  public static int giveItem(CommandContext<ServerCommandSource> ctx)
+      throws CommandSyntaxException {
+
+    boolean moneyConditionsMet =
+        ctx.getSource().getPlayer().getInventory().contains(GachaUtils.GACHA_REQUIEREMENT);
+
+    if (!moneyConditionsMet) {
+      throw new SimpleCommandExceptionType(
+          new TranslatableText("Te falta una " + GachaUtils.GACHA_REQUIEREMENT
+              .getTranslationKey())).create();
     }
+
+    GACHERIA_LIST.getRandom().reward(ctx);
     return 1;
   }
 }
