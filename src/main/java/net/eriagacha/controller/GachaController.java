@@ -29,13 +29,10 @@ public class GachaController {
    * Method that register the items in the gacha
    */
   public static void loadTheGacha(){
-    System.out.println(new TranslatableText("block.minecraft.torch"));
-    System.out.println(new TranslatableText("block.minecraft.torch").getString());
-    System.out.println(new TranslatableText("block.minecraft.torch").copy());
-    GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, "Diamante(s)!", 5);
-    GachaObjectModel torch = new GachaObjectModel(Items.TORCH, "Antorcha(s)!", 12);
-    GachaObjectModel stone = new GachaObjectModel(Items.STONE, "Piedra(s)!", 32);
-    GachaObjectModel diamondPickaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, "Pico de diamante!", 1);
+    GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, 5);
+    GachaObjectModel torch = new GachaObjectModel(Items.TORCH, 12);
+    GachaObjectModel stone = new GachaObjectModel(Items.STONE, 32);
+    GachaObjectModel diamondPickaxe = new GachaObjectModel(Items.DIAMOND_PICKAXE, 1);
     GachaObjectModel adeptusTemptation = new GachaObjectModel(RegisterItems.ADEPTUS_TEMPTATION, 1);
     GachaObjectModel haste = new GachaObjectModel( new StatusEffectInstance(StatusEffects.HASTE, 20000, 3), "El efecto Rapidez!");
     GachaObjectModel speed = new GachaObjectModel( new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), "El efecto Velocidad!");
@@ -43,10 +40,10 @@ public class GachaController {
     GACHERIA_LIST.addEntry(diamond, 10);
     GACHERIA_LIST.addEntry(torch, 20);
     GACHERIA_LIST.addEntry(stone, 30);
-    GACHERIA_LIST.addEntry(diamondPickaxe, 20);
+    GACHERIA_LIST.addEntry(diamondPickaxe, 5);
     GACHERIA_LIST.addEntry(haste, 15);
     GACHERIA_LIST.addEntry(speed, 15);
-    GACHERIA_LIST.addEntry(adeptusTemptation, 100);
+    GACHERIA_LIST.addEntry(adeptusTemptation, 3);
   }
 
 

@@ -7,8 +7,6 @@ import net.minecraft.item.Items;
 
 public class GachaObjectModel<T>{
 
-
-
   private String rewardName = new String();
   private int itemQuanty = 1;
   private Items items = new Items();
