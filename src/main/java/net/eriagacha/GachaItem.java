@@ -16,6 +16,13 @@ public class GachaItem {
   public static final Item ERIA_LOGO = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible()
           .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), 2)
+            .statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20000, 8), 2)
+              .statusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 20000, 0), 2)
+                .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20000, 0), 2)
+                  .statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20000, 1), 2)
+                    .statusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 20000, 1), 2)
+                      .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20000, 1), 2)
+                        .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20000, 1), 2)
             .build()));
 
   public static void init(){
