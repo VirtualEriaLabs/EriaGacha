@@ -2,6 +2,7 @@ package net.eriagacha;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import net.eriagacha.controller.GachaController;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 
@@ -19,7 +20,7 @@ public class RegisterCommands implements Command<Object> {
    * load the dependencies
    */
   public static void init() {
-    GachaLogic.loadTheGacha();
+    GachaController.loadTheGacha();
     registerCommands();
 
   }
@@ -34,7 +35,7 @@ public class RegisterCommands implements Command<Object> {
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha")
           .executes(context -> {
-            GachaLogic.giveItem(context);
+            GachaController.giveItem(context);
             return 1;
           }));
     });

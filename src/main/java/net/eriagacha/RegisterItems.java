@@ -1,5 +1,6 @@
 package net.eriagacha;
 
+import net.eriagacha.utils.NameSpaces;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
@@ -10,13 +11,14 @@ import net.minecraft.util.registry.Registry;
 
 public class RegisterItems {
 
+
   //TODO : Investigar PlayerItemConsumeEvent para que se ejecute el comando al comer
   //TODO : Investigate Mixing StatusEffects to dont make 7 calls to statusEffects
   public static final Item INTERTWINED_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
   public static final Item ACQUAINT_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
-  public static final Item ERIA_LOGO = new Item(new Item.Settings()
+  public static final Item ADEPTUS_TEMPTATION = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(20).saturationModifier(40f).snack().alwaysEdible()
           .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20000, 3), 2)
             .statusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20000, 8), 2)
@@ -29,7 +31,7 @@ public class RegisterItems {
                           .build()));
   public static final Item PRIMOGEM = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
-
+  public static final Item ERIA_LOGO = new Item(new Item.Settings().group(ItemGroup.DECORATIONS).fireproof().maxCount(1));
   private RegisterItems() {
   }
 
@@ -38,9 +40,10 @@ public class RegisterItems {
    */
   public static void init(){
 
-    Registry.register(Registry.ITEM, new Identifier("eriagacha", "interwined_fate"), INTERTWINED_FATE);
-    Registry.register(Registry.ITEM, new Identifier("eriagacha", "acquaint_fate"), ACQUAINT_FATE);
-    Registry.register(Registry.ITEM, new Identifier("eriagacha", "eria_logo"), ERIA_LOGO);
-    Registry.register(Registry.ITEM, new Identifier("eriagacha", "primogem"), PRIMOGEM);
+    Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "interwined_fate"), INTERTWINED_FATE);
+    Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "acquaint_fate"), ACQUAINT_FATE);
+    Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "adeptus_temptation"), ADEPTUS_TEMPTATION);
+    Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "primogem"), PRIMOGEM);
+    Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "eria_logo"), ERIA_LOGO);
   }
 }

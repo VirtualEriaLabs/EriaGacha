@@ -46,6 +46,12 @@ public class GachaObjectModel<T>{
     this.statusEffectInstance = statusEffectInstance;
   }
 
+  public GachaObjectModel(Item item,  int itemQuanty) {
+    this.rewardType = 1;
+    this.item = item;
+    this.rewardName = rewardName;
+    this.itemQuanty = itemQuanty;
+  }
 
   //SETTERS & GETTERS
   public void setItem(Item item){this.item = item;}
