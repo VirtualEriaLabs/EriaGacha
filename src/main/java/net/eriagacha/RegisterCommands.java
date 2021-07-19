@@ -48,6 +48,7 @@ public class RegisterCommands implements Command<Object> {
     });
   }
 
+  //TODO : INVESTIGATE USERS ARGUMENTS READING
   /*
   public static int serverMessage(CommandContext<ServerCommandSource> ctx) throws
       CommandSyntaxException {

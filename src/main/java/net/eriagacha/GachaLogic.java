@@ -21,7 +21,7 @@ public class GachaLogic {
   public static final ItemStack GACHA_REQUIEREMENT = new ItemStack(RegisterItems.INTERTWINED_FATE);
 
   /**
-   * Metodo donde se añaden los objetos al gacha con su rareza
+   * Method that
    */
   public static void loadTheGacha(){
     GachaObjectModel diamond = new GachaObjectModel(Items.DIAMOND, "Diamante(s)!", 5);
@@ -46,7 +46,7 @@ public class GachaLogic {
 
 
   /**
-   * Metodo para dar una recompensa del Gacha al usuario, requiere de una clase "CommandContext"
+   * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
    * @param ctx
    * @return
    * @throws CommandSyntaxException
