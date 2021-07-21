@@ -11,15 +11,9 @@ import lombok.extern.log4j.Log4j2;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 @Log4j2
-
+@Jacksonized
 public class CommissionModelItem extends CommissionModel {
 
   private int itemNeeded;
-  private int itemQuanty;
-
-  public int getItemQuanty() {
-    return itemQuanty;
-  }
-
-
+  private int itemQuantity;
 }
