@@ -27,7 +27,9 @@ public class RegisterItems {
                   .statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 20000, 1), 2)
                     .statusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 20000, 1), 2)
                       .statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20000, 1), 2)
-                        .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20000, 1), 2)
+                        .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20000, 2), 2)
+                          .statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20000, 2), 2)
+                            .statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20000, 0), 2)
                           .build()));
   public static final Item PRIMOGEM = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
