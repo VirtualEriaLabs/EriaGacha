@@ -13,9 +13,10 @@ public class CommissionsUtils {
         .commissionName("Coge piedra")
         .commissionTask("Eso")
         .itemNeeded(Item.getRawId(Items.OAK_WOOD))
-        .itemQuanty(32)
+        .itemQuantity(32)
         .build();
 
     return cm;
+
   }
 }

@@ -10,7 +10,6 @@ import java.io.IOException;
 import net.eriagacha.models.CommissionModel;
 import net.eriagacha.models.CommissionModelItem;
 import net.eriagacha.utils.CommissionsUtils;
-import net.minecraft.item.Item;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class Commissions {
@@ -33,22 +32,12 @@ public class Commissions {
       System.out.println("Si existia");
     }
 
-    System.out.println("------DATOS-------");
-    System.out.println(Item.getRawId(RegisterItems.INTERTWINED_FATE));
-
-
     CommissionModel cm = CommissionsUtils.getItemMission();
     mapper.writeValue(file.getAbsoluteFile(), cm);
 
     CommissionModel finalModel = mapper.readValue(file, CommissionModelItem.class);
-    System.out.println(finalModel);
 
 
 
-    // Java object to JSON string, default compact-print
-    //String jsonString = mapper.writeValueAsString(new CommissionModel());
-
-    // pretty-print
-    //String jsonString2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(new Staff());
   }
 }

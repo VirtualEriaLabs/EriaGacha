@@ -30,7 +30,7 @@ public class RegisterItems {
                         .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20000, 2), 2)
                           .statusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20000, 2), 2)
                             .statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20000, 0), 2)
-                          .build()));
+                              .build()));
   public static final Item PRIMOGEM = new Item(new Item.Settings()
       .group(ItemGroup.MISC).food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).snack().alwaysEdible().build()));
   public static final Item ERIA_LOGO = new Item(new Item.Settings().group(ItemGroup.DECORATIONS).fireproof().maxCount(1));
@@ -47,5 +47,9 @@ public class RegisterItems {
     Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "adeptus_temptation"), ADEPTUS_TEMPTATION);
     Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "primogem"), PRIMOGEM);
     Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "eria_logo"), ERIA_LOGO);
+
   }
+
+
+
 }
