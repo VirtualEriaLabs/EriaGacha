@@ -15,29 +15,39 @@ import net.minecraft.server.command.ServerCommandSource;
 public class Commissions {
 
 
+  private Commissions() {}
+
   //TODO: INVESTIGATE GSON to create, write, edit and remove a JSON File and its components
   public static void getCommision(CommandContext<ServerCommandSource> ctx)
       throws IOException, CommandSyntaxException {
-    ObjectMapper mapper = new ObjectMapper();
-    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
     File file = new File(ctx.getSource().getName() + ".json");
-
-
     if (!file.exists()){
       file.createNewFile();
       System.out.println("No existia");
+      getMissions(file);
     }
     else {
       System.out.println("Si existia");
+      getMissions(file);
     }
+
+
+
+
+  }
+
+
+  public static void getMissions(File file) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
     CommissionModel cm = CommissionsUtils.getItemMission();
     mapper.writeValue(file.getAbsoluteFile(), cm);
-
-    CommissionModel finalModel = mapper.readValue(file, CommissionModelItem.class);
-
-
-
+    CommissionModelItem finalModel = mapper.readValue(file, CommissionModelItem.class);
+    if (finalModel instanceof CommissionModelItem)
+    {
+      return;
+    }
   }
 }
