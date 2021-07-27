@@ -17,7 +17,8 @@ public class Commissions {
 
   private Commissions() {}
 
-  //TODO: INVESTIGATE GSON to create, write, edit and remove a JSON File and its components
+
+  //TODO: CREATE A CRUD FOR COMMISSIONS
   public static void getCommision(CommandContext<ServerCommandSource> ctx)
       throws IOException, CommandSyntaxException {
 
@@ -31,14 +32,14 @@ public class Commissions {
       System.out.println("Si existia");
       getMissions(file);
     }
-
-
-
-
   }
 
 
+
+
   public static void getMissions(File file) throws IOException {
+
+    //TODO CHECK IF THE USER HAVE AN ONGOING COMMISSION
     ObjectMapper mapper = new ObjectMapper();
     ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
@@ -49,5 +50,9 @@ public class Commissions {
     {
       return;
     }
+
+
   }
+
+
 }
