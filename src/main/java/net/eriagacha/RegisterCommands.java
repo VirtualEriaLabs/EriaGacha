@@ -2,6 +2,7 @@ package net.eriagacha;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import java.io.IOException;
 import net.eriagacha.controller.GachaController;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
@@ -43,7 +44,11 @@ public class RegisterCommands implements Command<Object> {
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("commision")
           .executes(context -> {
-            Commissions.getCommision(context);
+            try {
+              Commissions.getCommision(context);
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
             return 1;
           }));
     });
