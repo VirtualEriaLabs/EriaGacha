@@ -19,14 +19,14 @@ public class GachaController {
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
 
-  private GachaController() {
-  }
+  private GachaController() {}
 
 
   /**
    * Method that register the items in the gacha
    */
   public static void loadTheGacha() {
+
     final GachaObjectModel diamond = GachaObjectModelItem.builder()
         .item(Items.DIAMOND)
         .itemQuantity(5)
@@ -98,6 +98,10 @@ public class GachaController {
     }
 
     GACHERIA_LIST.getRandom().reward(ctx);
+
     return 1;
   }
+
+
+
 }

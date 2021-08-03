@@ -6,10 +6,13 @@ import static net.eriagacha.utils.PlayerHelper.getPlayer;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
+import net.eriagacha.controller.GachaTelemetry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
@@ -35,6 +38,17 @@ public class GachaObjectModelItem extends GachaObjectModel {
       log.error("Inventory is full");
       throw new SimpleCommandExceptionType(
           new TranslatableText("Tienes el inventario lleno Puto")).create();
+    }
+
+    try {
+      GachaTelemetry.registerTelemetry(GachaTelemetryModel.builder()
+          .rewardObtained(this.getRewardName())
+          .playerName(self.getName().getString())
+          .date(LocalDateTime.now().toString())
+          .build());
+
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
     ctx.getSource().sendFeedback(new LiteralText(
