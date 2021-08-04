@@ -2,6 +2,7 @@ package net.eriagacha.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import lombok.extern.log4j.Log4j2;
 import net.data.datasource.DataSource;
