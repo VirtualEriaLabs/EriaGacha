@@ -6,13 +6,13 @@ import static net.eriagacha.utils.PlayerHelper.getPlayer;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.controller.GachaTelemetry;
+import net.eriagacha.repository.GachaRepository;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
@@ -40,16 +40,20 @@ public class GachaObjectModelItem extends GachaObjectModel {
           new TranslatableText("Tienes el inventario lleno Puto")).create();
     }
 
+    //GachaTelemetryModel GTM = GachaTelemetry.registerTelemetry();
+
+    GachaRepository GR = new GachaRepository();
+
     try {
-      GachaTelemetry.registerTelemetry(GachaTelemetryModel.builder()
-          .rewardObtained(this.getRewardName())
+      GR.insertGachaTelemetry(GachaTelemetryModel.builder()
+          .rewardObtained(this.getItem().getTranslationKey())
           .playerName(self.getName().getString())
           .date(LocalDateTime.now().toString())
           .build());
-
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
     }
+
 
     ctx.getSource().sendFeedback(new LiteralText(
         "Has obtenido " + this.getItemQuantity() + " " +
