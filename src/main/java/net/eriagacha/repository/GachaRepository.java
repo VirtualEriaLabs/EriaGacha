@@ -43,4 +43,25 @@ public class GachaRepository {
       con.close();
     }
   }
+
+  public String selectGachaTelemetry(String username) throws SQLException {
+
+    Connection con = DataSource.getConnection();
+    String consulta = "select * from GACHA_TELEMETRY where user = ? ";
+    PreparedStatement ps = con.prepareStatement(consulta);
+    ps.setString(1, username);
+    ResultSet rs;
+    rs = ps.executeQuery();
+    String xD = null;
+    while( rs.next())
+    {
+      log.info(" INFO " + rs.getString(1) + rs.getString(2) + rs.getString(3) + rs.getString(4));
+      xD = xD
+          + "\n ********** "
+          + "\n Recompensa : "  + rs.getString(2)
+          + "\n Usuario : " + rs.getString(3)
+          + "\n Fecha :" + rs.getString(4);
+    }
+    return xD;
+  }
 }
