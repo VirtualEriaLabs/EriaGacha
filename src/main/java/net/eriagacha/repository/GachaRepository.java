@@ -12,9 +12,11 @@ import net.eriagacha.models.GachaTelemetryModel;
 public class GachaRepository {
 
 
+
+
   public void insertGachaTelemetry(GachaTelemetryModel gtm) throws SQLException {
     String insertString = """
-        INSERT INTO GACHA_TELEMETRY(Reward,User,Date) VALUES (?,?,?)
+        INSERT INTO GACHA_TELEMETRY(reward,user,date) VALUES (?,?,?)
         """;
 
     Connection con = DataSource.getConnection();
