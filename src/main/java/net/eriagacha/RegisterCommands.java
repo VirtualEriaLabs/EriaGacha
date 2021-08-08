@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
 import net.eriagacha.controller.GachaController;
 import net.eriagacha.repository.GachaRepository;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -53,6 +54,10 @@ public class RegisterCommands implements Command<Object> {
               texto = gr.selectGachaTelemetry(context.getSource().getPlayer().getName().asString());
             } catch (SQLException throwables) {
               throwables.printStackTrace();
+            } catch (ExecutionException e) {
+              e.printStackTrace();
+            } catch (InterruptedException e) {
+              e.printStackTrace();
             }
             context.getSource().sendFeedback(new LiteralText(texto), false);
             return 1;
