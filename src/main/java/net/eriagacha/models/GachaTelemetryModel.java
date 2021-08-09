@@ -1,21 +1,33 @@
 package net.eriagacha.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
+
+@Table("GACHA_TELEMETRY")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 @Log4j2
 @Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class GachaTelemetryModel {
 
-  private String playerName;
+  @Id
+  private Long gachaTelemetryId;
+  @Column("reward")
   private String rewardObtained;
+  @Column("user")
+  private String playerName;
+  @Column("date")
   private String date;
-
-
 }
