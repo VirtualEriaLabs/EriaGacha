@@ -1,15 +1,19 @@
 package net.eriagacha;
 
 import net.fabricmc.api.ModInitializer;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
-
+@SpringBootApplication
 public class EriaGachaMain implements ModInitializer {
 
-		@Override
-		public void onInitialize() {
+  public static ConfigurableApplicationContext springContext;
 
-			RegisterCommands.init();
-			RegisterItems.init();
-
-	}
+  @Override
+  public void onInitialize() {
+    springContext = SpringApplication.run(EriaGachaMain.class);
+    RegisterCommands.init();
+    RegisterItems.init();
+  }
 }

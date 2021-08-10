@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
+import net.eriagacha.controller.GachaTelemetryController;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
@@ -36,6 +37,12 @@ public class GachaObjectModelItem extends GachaObjectModel {
       throw new SimpleCommandExceptionType(
           new TranslatableText("Tienes el inventario lleno Puto")).create();
     }
+
+    GachaTelemetryController gt = new GachaTelemetryController();
+
+    GachaTelemetryController.InsertTelemetry(
+        this.getItem().getTranslationKey(),
+        ctx.getSource().getName());
 
     ctx.getSource().sendFeedback(new LiteralText(
         "Has obtenido " + this.getItemQuantity() + " " +

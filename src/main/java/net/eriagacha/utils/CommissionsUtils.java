@@ -7,8 +7,7 @@ import net.minecraft.item.Items;
 
 public class CommissionsUtils {
 
-  public static CommissionModel getItemMission()
-  {
+  public static CommissionModel getItemMission() {
     CommissionModel cm = CommissionModelItem.builder()
         .commissionName("Coge piedra")
         .commissionTask("Eso")

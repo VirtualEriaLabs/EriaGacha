@@ -3,10 +3,11 @@
   "id": "eriagacha",
   "version": "${version}",
 
-  "name": "Gacha Mod For Eria!",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "EriaGacha",
+  "description": "A Gacha mod that allows the player to get random rewards in exchange of something",
   "authors": [
-    "Serex"
+    "Serex",
+    "EriaLabs"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",

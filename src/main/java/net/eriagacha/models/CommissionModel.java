@@ -5,7 +5,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 import lombok.extern.log4j.Log4j2;
 
 @Data

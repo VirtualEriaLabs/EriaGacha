@@ -8,8 +8,8 @@ import net.eriagacha.models.GachaObjectModel;
 public class WeightedRandomBag<T extends GachaObjectModel> {
 
   private final List<Entry> entries = new ArrayList<>();
-  private double accumulatedWeight;
   private final Random rand = new Random();
+  private double accumulatedWeight;
 
   public void addEntry(T gachaObject) {
     this.addEntry(gachaObject, gachaObject.getWeight());
