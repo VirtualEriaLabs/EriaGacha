@@ -19,7 +19,8 @@ public class GachaController {
 
   public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
 
-  private GachaController() {}
+  private GachaController() {
+  }
 
 
   /**
@@ -101,7 +102,6 @@ public class GachaController {
 
     return 1;
   }
-
 
 
 }

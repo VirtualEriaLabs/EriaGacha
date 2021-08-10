@@ -4,9 +4,7 @@ import net.minecraft.item.Item;
 
 public class ItemHelper {
 
-  public static Item getItemByName(String item){
-
-
+  public static Item getItemByName(String item) {
 
 
     return null;

@@ -21,9 +21,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GachaTelemetryModel {
-
-
-
   @Id
   private Long ID;
   @Column("reward")

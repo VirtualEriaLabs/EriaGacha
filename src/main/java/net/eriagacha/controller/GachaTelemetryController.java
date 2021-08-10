@@ -1,12 +1,7 @@
 package net.eriagacha.controller;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import java.io.File;
-import java.io.IOException;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.EriaGachaMain;
 import net.eriagacha.models.GachaTelemetryModel;
@@ -45,13 +40,6 @@ public class GachaTelemetryController {
                 name.getDate()))
         .flatMap(gr::save);
 
-      /*
-      gr.deleteAll()
-          .thenMany( saved)
-          .thenMany( gr.findAll())
-          .subscribe(log::info);
-       */
-    log.info("Soy información");
     saved.subscribe(log::info);
   }
 
@@ -71,31 +59,5 @@ public class GachaTelemetryController {
                   + "\n Fecha :" + gachaTelemetry.getDate()), false);
           return 1;
         }).subscribe();
-
-
-    //gr.findByUser(ctx.getSource().getPlayer().getName().asString()).subscribe(log::info);
-  }
-
-
-  public static void registerTelemetry(GachaTelemetryModel gtm) throws IOException {
-
-    File file = new File(gtm.getUser() + ".json");
-    if (!file.exists()) {
-      file.createNewFile();
-      System.out.println("No existia");
-      writeNewTelemetryLine(file, gtm);
-    } else {
-      System.out.println("Si existia");
-      writeNewTelemetryLine(file, gtm);
-    }
-  }
-
-  private static void writeNewTelemetryLine(File file, GachaTelemetryModel gtm) throws IOException {
-
-    ObjectMapper mapper = new ObjectMapper();
-    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-    mapper.writeValue(file.getAbsoluteFile(), gtm);
-    GachaTelemetryModel finalModel = mapper.readValue(file, GachaTelemetryModel.class);
-
   }
 }

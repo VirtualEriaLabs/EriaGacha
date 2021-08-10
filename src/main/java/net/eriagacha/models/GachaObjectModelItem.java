@@ -38,8 +38,6 @@ public class GachaObjectModelItem extends GachaObjectModel {
           new TranslatableText("Tienes el inventario lleno Puto")).create();
     }
 
-    //GachaTelemetryModel GTM = GachaTelemetry.registerTelemetry();
-
     GachaTelemetryController gt = new GachaTelemetryController();
 
     GachaTelemetryController.InsertTelemetry(

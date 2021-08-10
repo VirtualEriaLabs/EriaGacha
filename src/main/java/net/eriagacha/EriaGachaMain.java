@@ -8,11 +8,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class EriaGachaMain implements ModInitializer {
 
-	public static ConfigurableApplicationContext springContext;
-		@Override
-		public void onInitialize() {
-			springContext = SpringApplication.run(EriaGachaMain.class, new String[] {});
-			RegisterCommands.init();
-			RegisterItems.init();
-	}
+  public static ConfigurableApplicationContext springContext;
+
+  @Override
+  public void onInitialize() {
+    springContext = SpringApplication.run(EriaGachaMain.class);
+    RegisterCommands.init();
+    RegisterItems.init();
+  }
 }
