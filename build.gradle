@@ -15,7 +15,20 @@ group = project.maven_group
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
+		name "GitLab"
+		credentials(HttpHeaderCredentials) {
+			name = 'Private-Token'
+			value = project.git_lab_private_token
+		}
+		authentication {
+			header(HttpHeaderAuthentication)
+		}
+	}
 }
+
+
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -61,6 +74,9 @@ jar {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 }
+bootJar {
+	enabled = false
+}
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -73,6 +89,16 @@ publishing {
 		}
 	}
 	repositories {
+		maven {
+			url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
+			credentials(HttpHeaderCredentials) {
+				name = "PRIVATE-TOKEN"
+				value = project.git_lab_private_token
+			}
+			authentication {
+				header(HttpHeaderAuthentication)
+			}
+		}
 
 	}
 }
