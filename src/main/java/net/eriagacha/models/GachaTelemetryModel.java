@@ -22,12 +22,20 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 public class GachaTelemetryModel {
 
+
+
   @Id
-  private Long gachaTelemetryId;
+  private Long ID;
   @Column("reward")
   private String rewardObtained;
   @Column("user")
-  private String playerName;
+  private String user;
   @Column("date")
   private String date;
+
+  public GachaTelemetryModel(String rewardObtained, String user, String date) {
+    this.rewardObtained = rewardObtained;
+    this.user = user;
+    this.date = date;
+  }
 }

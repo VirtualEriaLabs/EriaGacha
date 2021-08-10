@@ -10,15 +10,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.EriaGachaMain;
-import net.eriagacha.repository.GachaTelemetryRepository;
+import net.eriagacha.controller.GachaTelemetryController;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
-import reactor.core.publisher.Flux;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -42,30 +40,11 @@ public class GachaObjectModelItem extends GachaObjectModel {
 
     //GachaTelemetryModel GTM = GachaTelemetry.registerTelemetry();
 
-    GachaTelemetryRepository gr = EriaGachaMain.springContext.getBean(GachaTelemetryRepository.class);
+    GachaTelemetryController gt = new GachaTelemetryController();
 
-    final GachaTelemetryRepository gachaTelemetryRepository;
-    GachaTelemetryModel gtm = GachaTelemetryModel
-        .builder()
-        .playerName(ctx.getSource().getName())
-        .rewardObtained(this.getItem().toString())
-        .date("hoy")
-        .build();
-
-      var saved = Flux
-          .just(gtm)
-          .map(name -> new GachaTelemetryModel(null,name.getPlayerName(),name.getRewardObtained(),name.getDate()))
-          .flatMap(gr::save);
-
-      /*
-      gr.deleteAll()
-          .thenMany( saved)
-          .thenMany( gr.findAll())
-          .subscribe(log::info);
-       */
-      log.info("Soy información");
-      saved.subscribe(log::info);
-
+    GachaTelemetryController.InsertTelemetry(
+        this.getItem().getTranslationKey(),
+        ctx.getSource().getName());
 
     ctx.getSource().sendFeedback(new LiteralText(
         "Has obtenido " + this.getItemQuantity() + " " +

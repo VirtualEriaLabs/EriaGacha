@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import java.io.IOException;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.controller.GachaController;
+import net.eriagacha.controller.GachaTelemetryController;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 
@@ -47,9 +48,11 @@ public class RegisterCommands implements Command<Object> {
       dispatcher.register(CommandManager.literal("obtenerGacha")
           .executes(context -> {
 
-            //String texto = gr.selectGachaTelemetry(context.getSource().getPlayer().getName().asString());
+           GachaTelemetryController.selectTelemetry(context);
 
-            //context.getSource().sendFeedback(new LiteralText(), false);
+            //String texto = gr.selectGachaTelemetry(context.getSource().getPlayer().getName().asString());
+            //context.getSource().sendFeedback(new LiteralText(xD), false);
+
             return 1;
 
           }));
