@@ -38,11 +38,10 @@ public class GachaObjectModelItem extends GachaObjectModel {
           new TranslatableText("Tienes el inventario lleno Puto")).create();
     }
 
-    GachaTelemetryController gt = new GachaTelemetryController();
-
     GachaTelemetryController.InsertTelemetry(
-        this.getItem().getTranslationKey(),
-        ctx.getSource().getName());
+        ctx.getSource().getName(),
+        this.getItem().getTranslationKey()
+    );
 
     ctx.getSource().sendFeedback(new LiteralText(
         "Has obtenido " + this.getItemQuantity() + " " +

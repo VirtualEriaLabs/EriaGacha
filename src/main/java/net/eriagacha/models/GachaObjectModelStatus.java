@@ -25,6 +25,8 @@ public class GachaObjectModelStatus extends GachaObjectModel {
     self.setStatusEffect(this.getStatusEffectInstance(), self);
     ctx.getSource().sendFeedback(new LiteralText("Has obtenido " + this.getRewardName()), false);
 
+
+
     self.getInventory()
         .removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT), 1);
   }
