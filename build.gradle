@@ -1,8 +1,9 @@
 import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
+
 plugins {
     id 'fabric-loom' version '0.9.+'
     id 'maven-publish'
-    id 'org.springframework.boot' version '2.5.3'
+    id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'java'
@@ -16,8 +17,16 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-tasks.remapJar.dependsOn(shadowJar)
-(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+configurations {
+    shadow
+    all {
+        exclude group: 'io.netty', module: 'netty-all'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
@@ -34,19 +43,12 @@ repositories {
     }
 }
 
-configurations {
-    shadow
-    all {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
 
 shadowJar {
-    configurations = [project.configurations.compileClasspath]
-    exclude 'spring-boot-starter-logging'
+    configurations = [project.configurations.shadow]
+    archiveBaseName.set('shadow')
+    archiveClassifier.set('')
+    archiveVersion.set('')
     zip64 = true
     mergeServiceFiles()
     append("META-INF/spring.handlers")
@@ -60,10 +62,10 @@ shadowJar {
     }
 }
 
+tasks.remapJar.dependsOn(shadowJar)
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
 
 dependencies {
-    implementation 'io.netty:netty-handler:4.1.65.Final'
-    shadow 'io.netty:netty-handler:4.1.65.Final'
 
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -75,12 +77,35 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     implementation 'dev.miku:r2dbc-mysql:0.8.2.RELEASE'
     shadow 'dev.miku:r2dbc-mysql:0.8.2.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.5.3'
-    shadow 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    shadow 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    shadow 'org.slf4j:slf4j-api:1.7.32'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     shadow 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.projectreactor.netty:reactor-netty:0.9.8.RELEASE'
+    shadow 'io.projectreactor.netty:reactor-netty:0.9.8.RELEASE'
+    /*
+
+    implementation ('io.netty:netty-all:4.1.65.Final'){
+        version {
+            strictly '4.1.65'
+        }
+    }
+    shadow 'io.netty:netty-all:4.1.65.Final'
+    implementation 'io.projectreactor:reactor-core:3.3.8.RELEASE'
+    shadow 'io.projectreactor:reactor-core:3.3.8.RELEASE'
+    */
+}
+
+/*
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = "myapp"
 
 }
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
+*/
 
 processResources {
     inputs.property "version", project.version
@@ -99,49 +124,14 @@ java {
     withSourcesJar()
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-    /*
-    from() {
-        def filterList = [
-                "spring-boot-starter-data-r2dbc-2.5.3.jar",
-                "spring-data-r2dbc-1.3.3.jar",
-                "spring-data-relational-2.2.3.jar",
-                "spring-data-commons-2.5.3.jar",
-                "spring-r2dbc-5.3.9.jar",
-                "spring-boot-starter-2.5.3.jar",
-                "spring-boot-autoconfigure-2.5.3.jar",
-                "spring-boot-2.5.3.jar",
-                "spring-tx-5.3.9.jar",
-                "spring-context-5.3.9.jar",
-                "spring-aop-5.3.9.jar",
-                "spring-beans-5.3.9.jar",
-                "spring-expression-5.3.9.jar",
-                "spring-core-5.3.9.jar",
-                "spring-jcl-5.3.9.jar"]
-        FileTree m = null
-        var x = configurations
-                .runtimeClasspath
-                .filter {
-                    filterList.find { element -> element.equalsIgnoreCase(it.name) } == it.name
-                }
-                .collect {
-                    zipTree(it)
-                }
-
-    }
-     */
+bootJar {
     enabled = false
 }
 
-bootJar {
-    mainClass.set('net.eriagacha.EriaGachaMain')
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
+jar {
+    enabled = true
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -153,6 +143,7 @@ publishing {
             }
         }
     }
+
     repositories {
         maven {
             url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
