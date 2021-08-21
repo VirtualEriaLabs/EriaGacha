@@ -27,18 +27,7 @@ configurations {
 }
 
 repositories {
-    mavenCentral()
-    maven {
-        url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
-        name "GitLab"
-        credentials(HttpHeaderCredentials) {
-            name = 'Private-Token'
-            value = project.git_lab_private_token
-        }
-        authentication {
-            header(HttpHeaderAuthentication)
-        }
-    }
+	mavenCentral()
 }
 
 shadowJar {
@@ -101,28 +90,16 @@ jar {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
-            credentials(HttpHeaderCredentials) {
-                name = "PRIVATE-TOKEN"
-                value = project.git_lab_private_token
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
-        }
-
-    }
+	publications {
+		mavenJava(MavenPublication) {
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
+	repositories {}
 }
+
