@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
+
 plugins {
 	id 'fabric-loom' version '0.9.+'
 	id 'maven-publish'
@@ -15,17 +17,6 @@ group = project.maven_group
 
 repositories {
 	mavenCentral()
-	maven {
-		url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
-		name "GitLab"
-		credentials(HttpHeaderCredentials) {
-			name = 'Private-Token'
-			value = project.git_lab_private_token
-		}
-		authentication {
-			header(HttpHeaderAuthentication)
-		}
-	}
 }
 
 
@@ -88,17 +79,6 @@ publishing {
 			}
 		}
 	}
-	repositories {
-		maven {
-			url "https://gitlab.com/api/v4/projects/25316865/packages/maven"
-			credentials(HttpHeaderCredentials) {
-				name = "PRIVATE-TOKEN"
-				value = project.git_lab_private_token
-			}
-			authentication {
-				header(HttpHeaderAuthentication)
-			}
-		}
-
-	}
+	repositories {}
 }
+
