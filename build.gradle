@@ -19,7 +19,6 @@ group = project.maven_group
 configurations {
     shadow
     all {
-        exclude group: 'io.netty', module: 'netty-all'
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
     compileOnly {
