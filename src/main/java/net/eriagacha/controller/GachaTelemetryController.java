@@ -23,11 +23,7 @@ public class GachaTelemetryController {
     GachaTelemetryRepository gr =
         EriaGachaMain.springContext.getBean(GachaTelemetryRepository.class);
 
-    /*
-    Hooks.onErrorDropped(error -> {
-      log.info("Soy un error");
-    });
-    */
+
     final GachaTelemetryRepository gachaTelemetryRepository;
     GachaTelemetryModel gtm = GachaTelemetryModel
         .builder()
@@ -48,11 +44,7 @@ public class GachaTelemetryController {
                 name.getDate()))
         .flatMap(gr::save);
 
-    try {
       saved.subscribe();
-    }catch (Exception e){
-      log.error("Erorr de GTC" + e.getMessage());
-    }
 
   }
 
