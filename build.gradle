@@ -1,11 +1,14 @@
-plugins {
-	id 'fabric-loom' version '0.9.+'
-	id 'maven-publish'
-	id 'org.springframework.boot' version '2.5.3'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
 
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'com.github.johnrengelman.shadow'
+    id 'java'
 }
+
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
@@ -13,59 +16,79 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+configurations {
+    shadow
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
 	mavenCentral()
 }
 
+shadowJar {
+    configurations = [project.configurations.shadow]
+    archiveBaseName.set('shadow')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    zip64 = true
+    mergeServiceFiles()
+    append("META-INF/spring.handlers")
+    append("META-INF/spring.schemas")
+    append("META-INF/spring.tooling")
+    transform(PropertiesFileTransformer) {
+        paths = [
+                'META-INF/spring.factories'
+        ]
+        mergeStrategy = 'append'
+    }
+}
 
+tasks.remapJar.dependsOn(shadowJar)
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
-	compileOnly 'org.projectlombok:lombok:1.18.20'
-	annotationProcessor 'org.projectlombok:lombok:1.18.20'
-	implementation 'dev.miku:r2dbc-mysql:0.8.2.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.5.3'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
+    compileOnly "org.projectlombok:lombok:${project.loombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.loombok_version}"
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+    shadow 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 }
 
-configurations {
-	all {
-		exclude group: 'io.netty', module: 'netty-all'
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
 processResources {
-	inputs.property "version", project.version
+    inputs.property "version", project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 16
+    it.options.encoding = "UTF-8"
+    it.options.release = 16
 }
 
 java {
-	withSourcesJar()
+    withSourcesJar()
+}
+
+bootJar {
+    mainClass.set('net.eriagacha.EriaGachaMain')
+    enabled = false
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+    enabled = true
 }
-bootJar {
-	enabled = false
-}
+
 publishing {
 	publications {
 		mavenJava(MavenPublication) {

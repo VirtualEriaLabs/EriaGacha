@@ -12,16 +12,17 @@ import reactor.core.publisher.Flux;
 
 
 @Log4j2
+//@Environment(EnvType.SERVER) COMENTARIO IMPORTANTE
 public class GachaTelemetryController {
 
 
-  public GachaTelemetryController() {
-  }
+  private GachaTelemetryController() {}
 
 
   public static void InsertTelemetry(String playerName, String rewardObtained) {
     GachaTelemetryRepository gr =
         EriaGachaMain.springContext.getBean(GachaTelemetryRepository.class);
+
 
     final GachaTelemetryRepository gachaTelemetryRepository;
     GachaTelemetryModel gtm = GachaTelemetryModel
@@ -30,6 +31,9 @@ public class GachaTelemetryController {
         .rewardObtained(rewardObtained)
         .date(String.valueOf(java.time.LocalDateTime.now()))
         .build();
+
+    log.info(gtm.getUser() + gtm.getDate() + gtm.getRewardObtained());
+
 
     var saved = Flux
         .just(gtm)
@@ -40,7 +44,8 @@ public class GachaTelemetryController {
                 name.getDate()))
         .flatMap(gr::save);
 
-    saved.subscribe(log::info);
+      saved.subscribe();
+
   }
 
   public static void selectTelemetry(CommandContext<ServerCommandSource> ctx)
