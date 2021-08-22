@@ -11,24 +11,23 @@ import net.eriagacha.utils.GachaUtils;
 import net.eriagacha.utils.WeightedRandomBag;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 public class GachaController {
 
-  public static final WeightedRandomBag GACHERIA_LIST = new WeightedRandomBag();
-
-  private GachaController() {
-  }
-
+  public static final WeightedRandomBag CHEAP_GACHA_ENTRY_LIST = new WeightedRandomBag();
+  public static final WeightedRandomBag EXPENSIVE_GACHA_ENTRY_LIST = new WeightedRandomBag();
+  private GachaController() {}
 
   /**
    * Method that register the items in the gacha
    */
   public static void loadTheGacha() {
-
-    final GachaObjectModel diamond = GachaObjectModelItem.builder()
+        final GachaObjectModel diamond = GachaObjectModelItem.builder()
         .item(Items.DIAMOND)
         .itemQuantity(5)
         .weight(10)
@@ -70,13 +69,15 @@ public class GachaController {
         .weight(3)
         .build();
 
-    GACHERIA_LIST.addEntry(diamond);
-    GACHERIA_LIST.addEntry(torch);
-    GACHERIA_LIST.addEntry(stone);
-    GACHERIA_LIST.addEntry(diamondPickaxe);
-    GACHERIA_LIST.addEntry(haste);
-    GACHERIA_LIST.addEntry(speed);
-    GACHERIA_LIST.addEntry(adeptusTemptation);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(diamond);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(torch);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(stone);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(diamondPickaxe);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(haste);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(speed);
+    CHEAP_GACHA_ENTRY_LIST.addEntry(adeptusTemptation);
+
+    EXPENSIVE_GACHA_ENTRY_LIST.addEntry(adeptusTemptation);
   }
 
   /**
@@ -86,19 +87,26 @@ public class GachaController {
    * @return
    * @throws CommandSyntaxException
    */
-  public static int giveItem(CommandContext<ServerCommandSource> ctx)
+  public static int giveGachaReward(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition)
       throws CommandSyntaxException {
 
     boolean moneyConditionsMet =
-        ctx.getSource().getPlayer().getInventory().contains(GachaUtils.GACHA_REQUIEREMENT);
+        ctx.getSource().getPlayer().getInventory().contains(moneyCondition);
 
     if (!moneyConditionsMet) {
-      throw new SimpleCommandExceptionType(
-          new TranslatableText("Te falta una " + GachaUtils.GACHA_REQUIEREMENT
-              .getTranslationKey())).create();
+      String missingText = new TranslatableText("text.eriagacha.missing").getString();
+      String moneyConditionText = new TranslatableText(moneyCondition.getTranslationKey()).getString();
+      throw new SimpleCommandExceptionType(new LiteralText(
+          String.format("%s %s",
+              missingText,
+              moneyConditionText)
+      )).create();
     }
 
-    GACHERIA_LIST.getRandom().reward(ctx);
+    if(moneyCondition== GachaUtils.CHEAP_GACHA_REQUIEREMENT)
+      CHEAP_GACHA_ENTRY_LIST.getRandom().reward(ctx);
+    if(moneyCondition== GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT)
+      EXPENSIVE_GACHA_ENTRY_LIST.getRandom().reward(ctx);
 
     return 1;
   }

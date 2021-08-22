@@ -32,9 +32,6 @@ repositories {
 
 shadowJar {
     configurations = [project.configurations.shadow]
-    archiveBaseName.set('shadow')
-    archiveClassifier.set('')
-    archiveVersion.set('')
     zip64 = true
     mergeServiceFiles()
     append("META-INF/spring.handlers")

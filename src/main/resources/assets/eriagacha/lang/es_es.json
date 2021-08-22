@@ -1,8 +1,11 @@
 {
-  "item.eriagacha.eria_logo": "Eria",
-  "item.eriagacha.acquaint_fate": "Encuentro del destino",
-  "item.eriagacha.interwined_fate": "Destino Entrelazado",
-  "item.eriagacha.primogem": "Protogema",
-  "item.eriagacha.adeptus_temptation": "Tentación de los adeptus",
-  "text.eriagacha.missing": "Te falta"
+  "item.eriagacha.eria_logo": "Eria ",
+  "item.eriagacha.acquaint_fate": "Encuentro del destino ",
+  "item.eriagacha.interwined_fate": "Destino Entrelazado ",
+  "item.eriagacha.primogem": "Protogema ",
+  "item.eriagacha.adeptus_temptation": "Tentación de los adeptus ",
+  "text.eriagacha.missing": "Te falta ",
+  "text.eriagacha.inventory_full": "El inventario esta lleno ",
+  "text.eriagacha.player_reference_fail": "La referencia del jugador no es un jugador ",
+  "text.eriagacha.obtained": "Has conseguido "
 }
