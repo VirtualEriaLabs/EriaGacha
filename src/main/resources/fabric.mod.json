@@ -10,12 +10,12 @@
     "EriaLabs"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://gitlab.com/eria"
+    "homepage": "https://github.com/VirtualEriaLabs/EriaGacha",
+    "sources": "https://github.com/VirtualEriaLabs/EriaGacha"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/eriagacha/icon.png",
 
   "environment": "*",
   "entrypoints": {
