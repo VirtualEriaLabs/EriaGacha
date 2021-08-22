@@ -18,7 +18,7 @@ public class PlayerHelper {
     } catch (CommandSyntaxException e) {
       log.error("Is not a player.");
       throw new SimpleCommandExceptionType(
-          new TranslatableText("Player reference is not a real player")).create();
+          new TranslatableText("player_reference_fail")).create();
     }
   }
 }

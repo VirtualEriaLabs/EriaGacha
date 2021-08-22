@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.controller.GachaTelemetryController;
 import net.eriagacha.utils.GachaUtils;
+import net.eriagacha.utils.TextUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
@@ -32,9 +33,8 @@ public class GachaObjectModelItem extends GachaObjectModel {
     boolean hasBeenInserted =
         self.getInventory().insertStack(new ItemStack(this.getItem(), this.getItemQuantity()));
     if (!hasBeenInserted) {
-      log.error("Inventory is full");
       throw new SimpleCommandExceptionType(
-          new TranslatableText("Tienes el inventario lleno Puto")).create();
+          new TranslatableText("inventory.full")).create();
     }
 
     GachaTelemetryController.InsertTelemetry(
@@ -42,9 +42,13 @@ public class GachaObjectModelItem extends GachaObjectModel {
         this.getItem().getTranslationKey()
     );
 
+
     ctx.getSource().sendFeedback(new LiteralText(
-        "Has obtenido " + this.getItemQuantity() + " " +
-            new TranslatableText(this.getItem().getTranslationKey()).getString()), false);
+        TextUtils.translatedTextToString("text.eriagacha.obtained")
+            + this.getItemQuantity()
+            + " "
+            + TextUtils.translatedTextToString(this.getItem().getTranslationKey())) , false);
+
     self.getInventory()
         .removeStack(self.getInventory().getSlotWithStack(GachaUtils.CHEAP_GACHA_REQUIEREMENT), 1);
   }
