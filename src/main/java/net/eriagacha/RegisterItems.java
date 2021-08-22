@@ -3,11 +3,16 @@ package net.eriagacha;
 import net.eriagacha.utils.NameSpaces;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 public class RegisterItems {
 
@@ -16,7 +21,23 @@ public class RegisterItems {
   //TODO : Investigate Mixing StatusEffects to dont make 7 calls to statusEffects
   public static final Item INTERTWINED_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC)
-      .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
+      .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build())) {
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    if (this.isFood()) {
+      ItemStack itemStack = user.getStackInHand(hand);
+      if (user.canConsume(this.getFoodComponent().isAlwaysEdible())) {
+        user.setCurrentHand(hand);
+        EriaGachaMain.clientSide();
+        return TypedActionResult.consume(itemStack);
+      } else {
+        return TypedActionResult.fail(itemStack);
+      }
+    } else {
+      return TypedActionResult.pass(user.getStackInHand(hand));
+    }
+  }
+  };
   public static final Item ACQUAINT_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC)
       .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
