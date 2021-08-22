@@ -9,9 +9,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.RunArgs;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -58,10 +57,11 @@ public class EriaGachaMain implements ModInitializer {
         (server, player, handler, buf, responseSender) -> {
           server.execute(() -> {
             log.error("Me ha llegado el paquete de cliente.");
-            log.debug("Data: %s - %s - %s - %s", player, handler, buf, responseSender);
+            log.error(String.format("Data: %s - %s - %s - %s", player, handler, buf, responseSender));
           });
         });
 
+    ServerPlayerEntity.getOfflinePlayerUuid("SerexG");
 
   }
 
@@ -69,5 +69,6 @@ public class EriaGachaMain implements ModInitializer {
     ClientPlayNetworking.send(new Identifier("testo"),
         new PacketByteBuf(new EmptyByteBuf(new UnpooledByteBufAllocator(true))));
   }
+
 
 }
