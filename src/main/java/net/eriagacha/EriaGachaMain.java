@@ -1,10 +1,10 @@
 package net.eriagacha;
 
-import java.lang.reflect.InvocationTargetException;
 import lombok.extern.log4j.Log4j2;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,6 +21,12 @@ public class EriaGachaMain implements ModInitializer {
 
     RegisterCommands.init();
     RegisterItems.init();
+
+    if(FabricLoader.getInstance().getEnvironmentType()==EnvType.CLIENT)
+      log.info("Soy un cliente muy bonito");
+    else
+      initializeServerSide();
+    /*
     try {
       var x = getClass().getMethod("initializeServerSide");
       x.invoke(new EriaGachaMain());
@@ -32,6 +38,7 @@ public class EriaGachaMain implements ModInitializer {
     } catch (IllegalAccessException e) {
       log.info(e.getMessage());
     }
+    */
   }
   @Environment(EnvType.SERVER)
   public void initializeServerSide(){
