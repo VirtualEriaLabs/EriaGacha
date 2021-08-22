@@ -1,4 +1,5 @@
 package net.eriagacha.models;
+
 import static net.eriagacha.utils.PlayerHelper.getPlayer;
 
 import com.mojang.brigadier.context.CommandContext;
@@ -44,10 +45,11 @@ public class GachaObjectModelItem extends GachaObjectModel {
 
 
     ctx.getSource().sendFeedback(new LiteralText(
-        TextUtils.translatedTextToString("text.eriagacha.obtained")
-            + this.getItemQuantity()
-            + " "
-            + TextUtils.translatedTextToString(this.getItem().getTranslationKey())) , false);
+        String.format("%s%d %s",
+            TextUtils.translatedTextToString("text.eriagacha.obtained"),
+            this.getItemQuantity(),
+            TextUtils.translatedTextToString(this.getItem().getTranslationKey())
+        )), false);
 
     self.getInventory()
         .removeStack(self.getInventory().getSlotWithStack(GachaUtils.CHEAP_GACHA_REQUIEREMENT), 1);
