@@ -94,9 +94,9 @@ public class GachaController {
         ctx.getSource().getPlayer().getInventory().contains(moneyCondition);
 
     if (!moneyConditionsMet) {
-      String missing = new TranslatableText("text.eriagacha.missing").getString();
-      String MoneyCondition = new TranslatableText(moneyCondition.getTranslationKey()).getString();
-      throw new SimpleCommandExceptionType(new LiteralText(missing+" "+MoneyCondition)).create();
+      String missingText = new TranslatableText("text.eriagacha.missing").getString();
+      String moneyConditionText = new TranslatableText(moneyCondition.getTranslationKey()).getString();
+      throw new SimpleCommandExceptionType(new LiteralText(missingText+" "+moneyConditionText)).create();
     }
 
     if(moneyCondition== GachaUtils.CHEAP_GACHA_REQUIEREMENT)
