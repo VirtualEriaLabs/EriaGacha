@@ -6,13 +6,15 @@ import lombok.extern.log4j.Log4j2;
 import net.eriagacha.EriaGachaMain;
 import net.eriagacha.models.GachaTelemetryModel;
 import net.eriagacha.repository.GachaTelemetryRepository;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import reactor.core.publisher.Flux;
 
 
 @Log4j2
-//@Environment(EnvType.SERVER) COMENTARIO IMPORTANTE
+@Environment(EnvType.SERVER)
 public class GachaTelemetryController {
 
 

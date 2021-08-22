@@ -17,6 +17,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
+
 public class GachaController {
 
   public static final WeightedRandomBag CHEAP_GACHA_ENTRY_LIST = new WeightedRandomBag();
@@ -110,6 +111,4 @@ public class GachaController {
 
     return 1;
   }
-
-
 }
