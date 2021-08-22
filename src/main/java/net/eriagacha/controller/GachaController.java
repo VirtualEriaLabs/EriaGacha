@@ -96,7 +96,11 @@ public class GachaController {
     if (!moneyConditionsMet) {
       String missingText = new TranslatableText("text.eriagacha.missing").getString();
       String moneyConditionText = new TranslatableText(moneyCondition.getTranslationKey()).getString();
-      throw new SimpleCommandExceptionType(new LiteralText(missingText+" "+moneyConditionText)).create();
+      throw new SimpleCommandExceptionType(new LiteralText(
+          String.format("%s %s",
+              missingText,
+              moneyConditionText)
+      )).create();
     }
 
     if(moneyCondition== GachaUtils.CHEAP_GACHA_REQUIEREMENT)
