@@ -32,14 +32,14 @@ public class RegisterCommands implements Command<Object> {
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha_cheap_roll")
           .executes(context -> {
-            gachaRoll(context, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
+            giveReward(context, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
             return 1;
           }));
     });
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha_expensive_roll")
           .executes(context -> {
-            gachaRoll(context, GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
+            giveReward(context, GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
             return 1;
           }));
     });
@@ -54,7 +54,7 @@ public class RegisterCommands implements Command<Object> {
   }
 
 
-  public static void gachaRoll(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition) throws CommandSyntaxException {
+  public static void giveReward(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition) throws CommandSyntaxException {
     GachaController.giveGachaReward(ctx, moneyCondition);
   }
 
