@@ -6,7 +6,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.controller.GachaController;
 import net.eriagacha.controller.GachaTelemetryController;
+import net.eriagacha.utils.GachaUtils;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
@@ -28,9 +30,16 @@ public class RegisterCommands implements Command<Object> {
   public static void registerCommands() {
 
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-      dispatcher.register(CommandManager.literal("gacha")
+      dispatcher.register(CommandManager.literal("gacha_cheap_roll")
           .executes(context -> {
-            gachaRun(context);
+            gachaRoll(context, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
+            return 1;
+          }));
+    });
+    CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+      dispatcher.register(CommandManager.literal("gacha_expensive_roll")
+          .executes(context -> {
+            gachaRoll(context, GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
             return 1;
           }));
     });
@@ -45,8 +54,8 @@ public class RegisterCommands implements Command<Object> {
   }
 
 
-  public static void gachaRun(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-    GachaController.giveItem(ctx);
+  public static void gachaRoll(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition) throws CommandSyntaxException {
+    GachaController.giveGachaReward(ctx, moneyCondition);
   }
 
   public static void gachaRecord(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {

@@ -1,6 +1,5 @@
 package net.eriagacha.models;
 
-import static net.eriagacha.utils.GachaUtils.GACHA_REQUIEREMENT;
 import static net.eriagacha.utils.PlayerHelper.getPlayer;
 
 import com.mojang.brigadier.context.CommandContext;
@@ -8,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
+import net.eriagacha.utils.GachaUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -25,9 +25,7 @@ public class GachaObjectModelStatus extends GachaObjectModel {
     self.setStatusEffect(this.getStatusEffectInstance(), self);
     ctx.getSource().sendFeedback(new LiteralText("Has obtenido " + this.getRewardName()), false);
 
-
-
     self.getInventory()
-        .removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT), 1);
+        .removeStack(self.getInventory().getSlotWithStack(GachaUtils.CHEAP_GACHA_REQUIEREMENT), 1);
   }
 }

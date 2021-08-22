@@ -1,6 +1,4 @@
 package net.eriagacha.models;
-
-import static net.eriagacha.utils.GachaUtils.GACHA_REQUIEREMENT;
 import static net.eriagacha.utils.PlayerHelper.getPlayer;
 
 import com.mojang.brigadier.context.CommandContext;
@@ -11,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.controller.GachaTelemetryController;
+import net.eriagacha.utils.GachaUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
@@ -47,6 +46,6 @@ public class GachaObjectModelItem extends GachaObjectModel {
         "Has obtenido " + this.getItemQuantity() + " " +
             new TranslatableText(this.getItem().getTranslationKey()).getString()), false);
     self.getInventory()
-        .removeStack(self.getInventory().getSlotWithStack(GACHA_REQUIEREMENT), 1);
+        .removeStack(self.getInventory().getSlotWithStack(GachaUtils.CHEAP_GACHA_REQUIEREMENT), 1);
   }
 }
