@@ -55,7 +55,7 @@ public class RegisterCommands implements Command<Object> {
 
 
   public static void giveReward(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition) throws CommandSyntaxException {
-    GachaController.giveGachaReward(ctx, moneyCondition);
+    GachaController.giveGachaReward(ctx.getSource().getPlayer(), moneyCondition);
   }
 
   public static void gachaRecord(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {

@@ -1,17 +1,12 @@
 package net.eriagacha.models;
 
-import static net.eriagacha.utils.PlayerHelper.getPlayer;
-
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-import net.eriagacha.utils.GachaUtils;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -20,12 +15,12 @@ public class GachaObjectModelStatus extends GachaObjectModel {
   private StatusEffectInstance statusEffectInstance;
 
   @Override
-  public void reward(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-    ServerPlayerEntity self = getPlayer(ctx);
-    self.setStatusEffect(this.getStatusEffectInstance(), self);
-    ctx.getSource().sendFeedback(new LiteralText("Has obtenido " + this.getRewardName()), false);
+  public void reward(ServerPlayerEntity player, ItemStack moneyCondition) throws CommandSyntaxException {
+    player.setStatusEffect(this.getStatusEffectInstance(), player);
+    //getSource().sendFeedback(new LiteralText("Has obtenido " + this.getRewardName()), false);
+    //getSource().sendFeedback(new LiteralText("Has obtenido " + this.getRewardName()), false);
 
-    self.getInventory()
-        .removeStack(self.getInventory().getSlotWithStack(GachaUtils.CHEAP_GACHA_REQUIEREMENT), 1);
+    player.getInventory()
+        .removeStack(player.getInventory().getSlotWithStack(moneyCondition), 1);
   }
 }

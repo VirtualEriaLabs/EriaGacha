@@ -1,6 +1,5 @@
 package net.eriagacha.controller;
 
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.eriagacha.RegisterItems;
@@ -13,7 +12,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
@@ -84,15 +83,15 @@ public class GachaController {
   /**
    * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
    *
-   * @param ctx
+   * @param player
    * @return
    * @throws CommandSyntaxException
    */
-  public static int giveGachaReward(CommandContext<ServerCommandSource> ctx, ItemStack moneyCondition)
+  public static int giveGachaReward(ServerPlayerEntity player, ItemStack moneyCondition)
       throws CommandSyntaxException {
 
     boolean moneyConditionsMet =
-        ctx.getSource().getPlayer().getInventory().contains(moneyCondition);
+        player.getInventory().contains(moneyCondition);
 
     if (!moneyConditionsMet) {
       String missingText = new TranslatableText("text.eriagacha.missing").getString();
@@ -105,9 +104,9 @@ public class GachaController {
     }
 
     if(moneyCondition== GachaUtils.CHEAP_GACHA_REQUIEREMENT)
-      CHEAP_GACHA_ENTRY_LIST.getRandom().reward(ctx);
+      CHEAP_GACHA_ENTRY_LIST.getRandom().reward(player, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
     if(moneyCondition== GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT)
-      EXPENSIVE_GACHA_ENTRY_LIST.getRandom().reward(ctx);
+      EXPENSIVE_GACHA_ENTRY_LIST.getRandom().reward(player, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
 
     return 1;
   }
