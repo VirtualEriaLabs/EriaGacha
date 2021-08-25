@@ -23,6 +23,9 @@
       "net.eriagacha.EriaGachaMain"
     ]
   },
+  "mixins": [
+    "eriagacha.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
