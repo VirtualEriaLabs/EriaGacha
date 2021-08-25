@@ -1,33 +1,21 @@
-package net.eriagacha.controller;
+package net.eriagacha;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.eriagacha.RegisterItems;
 import net.eriagacha.models.GachaObjectModel;
 import net.eriagacha.models.GachaObjectModelItem;
 import net.eriagacha.models.GachaObjectModelStatus;
-import net.eriagacha.utils.GachaUtils;
 import net.eriagacha.utils.WeightedRandomBag;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
 
-
-public class GachaController {
+public class GachaBagRegister {
 
   public static final WeightedRandomBag CHEAP_GACHA_ENTRY_LIST = new WeightedRandomBag();
-  public static final WeightedRandomBag EXPENSIVE_GACHA_ENTRY_LIST = new WeightedRandomBag();
-  private GachaController() {}
 
-  /**
-   * Method that register the items in the gacha
-   */
-  public static void loadTheGacha() {
-        final GachaObjectModel diamond = GachaObjectModelItem.builder()
+  public static final WeightedRandomBag EXPENSIVE_GACHA_ENTRY_LIST = new WeightedRandomBag();
+
+  public static void registerItems() {
+    final GachaObjectModel diamond = GachaObjectModelItem.builder()
         .item(Items.DIAMOND)
         .itemQuantity(5)
         .weight(10)
@@ -80,34 +68,4 @@ public class GachaController {
     EXPENSIVE_GACHA_ENTRY_LIST.addEntry(adeptusTemptation);
   }
 
-  /**
-   * Method that return a reward from the gacha to an user, requieres a "CommandContext" class with the player context
-   *
-   * @param player
-   * @return
-   * @throws CommandSyntaxException
-   */
-  public static int giveGachaReward(ServerPlayerEntity player, ItemStack moneyCondition)
-      throws CommandSyntaxException {
-
-    boolean moneyConditionsMet =
-        player.getInventory().contains(moneyCondition);
-
-    if (!moneyConditionsMet) {
-      String missingText = new TranslatableText("text.eriagacha.missing").getString();
-      String moneyConditionText = new TranslatableText(moneyCondition.getTranslationKey()).getString();
-      throw new SimpleCommandExceptionType(new LiteralText(
-          String.format("%s %s",
-              missingText,
-              moneyConditionText)
-      )).create();
-    }
-
-    if(moneyCondition== GachaUtils.CHEAP_GACHA_REQUIEREMENT)
-      CHEAP_GACHA_ENTRY_LIST.getRandom().reward(player, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
-    if(moneyCondition== GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT)
-      EXPENSIVE_GACHA_ENTRY_LIST.getRandom().reward(player, GachaUtils.CHEAP_GACHA_REQUIEREMENT);
-
-    return 1;
-  }
 }

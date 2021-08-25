@@ -4,6 +4,6 @@ import net.minecraft.util.Identifier;
 
 public class NetworkHelper {
 
-  public static final Identifier IDEF_TEST_SEND = new Identifier("send");
-  public static final Identifier IDEF_TEST_RESPONSE = new Identifier("response");
+  public static final Identifier ID_TEST_SEND = new Identifier("send:test");
+  public static final Identifier ID_TEST_RESPONSE = new Identifier("response:test");
 }

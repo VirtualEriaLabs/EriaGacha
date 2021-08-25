@@ -1,44 +1,41 @@
 package net.eriagacha;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.controller.GachaController;
-import net.eriagacha.utils.GachaUtils;
+import net.eriagacha.services.GachaPool.GachaPoolService;
+import net.eriagacha.services.GachaPool.GachaPoolServiceFactory;
 import net.eriagacha.utils.NetworkHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 
 @Log4j2
-@Environment(EnvType.SERVER)
 public class NetworkServer {
 
-  public static void testNetwork() {
-    log.fatal("Testing networking");
+  public static void initializeNetwork() {
+    log.info("Loading server side network");
     serverSide();
   }
 
   public static void serverSide() {
-    ServerPlayNetworking.registerGlobalReceiver(NetworkHelper.IDEF_TEST_SEND,
+    ServerPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_TEST_SEND,
         (server, player, handler, buf, responseSender) -> {
+          int clientMoneyConditionRawId = buf.readInt();
+          int clientMoneyQuantity = buf.readInt();
           server.execute(() -> {
-            log.error("Me ha llegado el paquete de cliente.");
-            log.error(
-                String.format("Data: %s - %s - %s - %s", player, handler, buf, responseSender));
+            log.info("Server recived with ID : {}", NetworkHelper.ID_TEST_SEND);
+            log.info("Data: {} - {} - {} - {}", player, handler, buf, responseSender);
             try {
-              GachaController.giveGachaReward(player, GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
-              responseSender.sendPacket(NetworkHelper.IDEF_TEST_RESPONSE, buf);
-            } catch (CommandSyntaxException e) {
-              log.error(
-                  String.format("Exception in serverSide with IDEF %s - Message : %s",
-                      NetworkHelper.IDEF_TEST_SEND,
-                      e.getMessage()));
+              GachaPoolService gachaPoolService =
+                  GachaPoolServiceFactory.getInstance(clientMoneyConditionRawId);
+              if (gachaPoolService.conditionsMet()) {
+                gachaPoolService.getReward(player, clientMoneyConditionRawId, clientMoneyQuantity);
+              } else {
+                player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);
+              }
+            } catch (Exception e) {
+              log.error(String.format("Exception in serverSide with ID %s - Message : %s",
+                  NetworkHelper.ID_TEST_SEND, e.getMessage()));
             }
           });
         });
-
-    ServerPlayerEntity.getOfflinePlayerUuid("SerexG");
-
   }
 }

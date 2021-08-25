@@ -1,6 +1,7 @@
 package net.eriagacha;
 
 import lombok.extern.log4j.Log4j2;
+import net.eriagacha.utils.GachaUtils;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -34,9 +35,8 @@ public class RegisterItems {
           user.setCurrentHand(hand);
           if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             try {
-              NetworkClient.clientSide();
-            }catch (Exception e)
-            {
+              NetworkClient.gachaSend(GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
+            } catch (Exception e) {
               log.fatal(
                   String.format("Exception onInitialize at testNetwork() - Message : %s",
                       e.getMessage()));
@@ -51,9 +51,35 @@ public class RegisterItems {
       }
     }
   };
+
   public static final Item ACQUAINT_FATE = new Item(new Item.Settings()
       .group(ItemGroup.MISC)
-      .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
+      .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build())) {
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+      if (this.isFood()) {
+        ItemStack itemStack = user.getStackInHand(hand);
+        if (user.canConsume(this.getFoodComponent().isAlwaysEdible())) {
+          user.setCurrentHand(hand);
+          if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            try {
+              NetworkClient.gachaSend(GachaUtils.CHEAP_GACHA_REQUIEREMENT);
+            } catch (Exception e) {
+              log.fatal(
+                  String.format("Exception onInitialize at testNetwork() - Message : %s",
+                      e.getMessage()));
+            }
+          }
+          return TypedActionResult.consume(itemStack);
+        } else {
+          return TypedActionResult.fail(itemStack);
+        }
+      } else {
+        return TypedActionResult.pass(user.getStackInHand(hand));
+      }
+    }
+  };
+
   public static final Item ADEPTUS_TEMPTATION = new Item(new Item.Settings()
       .group(ItemGroup.MISC)
       .food(new FoodComponent.Builder().hunger(20).saturationModifier(40f).snack().alwaysEdible()
