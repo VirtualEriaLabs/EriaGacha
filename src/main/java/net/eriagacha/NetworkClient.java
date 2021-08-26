@@ -24,7 +24,7 @@ public class NetworkClient {
     message.writeInt(itemQuantity);
     try {
       ClientPlayNetworking.send(NetworkHelper.ID_TEST_SEND, message);
-    }catch (Exception e) {
+    } catch (Exception e) {
       log.fatal("Client exception in gachaSend() with error {}", e.getMessage());
     }
 
@@ -37,12 +37,9 @@ public class NetworkClient {
               String.format("Client Recived packet with ID %s", NetworkHelper.ID_TEST_RESPONSE));
           log.error(String.format("Data: %s - %s - %s - %s", player, handler, buf, packetSender));
           try {
-
             var bufInt = buf.readInt();
             var x = buf.readString();
             log.fatal("Data : {}", x);
-            log.info("Player metrics :{} \n Player Game Version {} \n Player Game \n",
-                player.getMetricsData(), player.getGameVersion(), player.getGame());
           } catch (Exception e) {
             log.error("Exception in client side with ID {} - Message : {}",
                 NetworkHelper.ID_TEST_RESPONSE, e.getMessage());
