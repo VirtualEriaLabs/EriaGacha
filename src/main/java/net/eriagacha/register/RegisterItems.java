@@ -1,6 +1,7 @@
-package net.eriagacha;
+package net.eriagacha.register;
 
 import lombok.extern.log4j.Log4j2;
+import net.eriagacha.network.NetworkClient;
 import net.eriagacha.utils.GachaUtils;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.api.EnvType;

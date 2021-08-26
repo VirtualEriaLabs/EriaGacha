@@ -1,12 +1,13 @@
-package net.eriagacha;
+package net.eriagacha.register;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.controller.GachaTelemetryController;
-import net.eriagacha.services.gachapool.GachaPoolService;
-import net.eriagacha.services.gachapool.GachaPoolServiceFactory;
+import net.eriagacha.gachapool.GachaBagRegister;
+import net.eriagacha.gachapool.GachaPoolService;
+import net.eriagacha.gachapool.GachaPoolServiceFactory;
+import net.eriagacha.telemetry.GachaTelemetryController;
 import net.eriagacha.utils.GachaUtils;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.item.Item;

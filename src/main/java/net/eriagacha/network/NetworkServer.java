@@ -1,8 +1,8 @@
-package net.eriagacha;
+package net.eriagacha.network;
 
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.services.gachapool.GachaPoolService;
-import net.eriagacha.services.gachapool.GachaPoolServiceFactory;
+import net.eriagacha.gachapool.GachaPoolService;
+import net.eriagacha.gachapool.GachaPoolServiceFactory;
 import net.eriagacha.utils.NetworkHelper;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.text.LiteralText;

@@ -1,4 +1,4 @@
-package net.eriagacha;
+package net.eriagacha.network;
 
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.utils.NetworkHelper;

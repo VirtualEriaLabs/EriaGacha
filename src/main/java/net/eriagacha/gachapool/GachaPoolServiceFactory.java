@@ -1,6 +1,5 @@
-package net.eriagacha.services.gachapool;
+package net.eriagacha.gachapool;
 
-import net.eriagacha.GachaBagRegister;
 import net.eriagacha.utils.GachaUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

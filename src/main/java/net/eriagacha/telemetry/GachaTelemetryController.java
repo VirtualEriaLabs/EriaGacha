@@ -1,10 +1,9 @@
-package net.eriagacha.controller;
+package net.eriagacha.telemetry;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.EriaGachaServerMain;
 import net.eriagacha.models.GachaTelemetryModel;
-import net.eriagacha.repository.GachaTelemetryRepository;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.server.network.ServerPlayerEntity;

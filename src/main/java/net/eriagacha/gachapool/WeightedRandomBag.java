@@ -1,4 +1,4 @@
-package net.eriagacha.utils;
+package net.eriagacha.gachapool;
 
 import java.util.ArrayList;
 import java.util.List;

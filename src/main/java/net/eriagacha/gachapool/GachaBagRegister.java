@@ -1,9 +1,9 @@
-package net.eriagacha;
+package net.eriagacha.gachapool;
 
 import net.eriagacha.models.GachaObjectModel;
 import net.eriagacha.models.GachaObjectModelItem;
 import net.eriagacha.models.GachaObjectModelStatus;
-import net.eriagacha.utils.WeightedRandomBag;
+import net.eriagacha.register.RegisterItems;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;

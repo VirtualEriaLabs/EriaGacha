@@ -1,6 +1,6 @@
 package net.eriagacha.utils;
 
-import net.eriagacha.RegisterItems;
+import net.eriagacha.register.RegisterItems;
 import net.minecraft.item.ItemStack;
 
 public class GachaUtils {
