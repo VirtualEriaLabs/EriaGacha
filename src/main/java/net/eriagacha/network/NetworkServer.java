@@ -1,14 +1,18 @@
 package net.eriagacha;
 
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.services.GachaPool.GachaPoolService;
-import net.eriagacha.services.GachaPool.GachaPoolServiceFactory;
+import net.eriagacha.services.gachapool.GachaPoolService;
+import net.eriagacha.services.gachapool.GachaPoolServiceFactory;
 import net.eriagacha.utils.NetworkHelper;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.text.LiteralText;
 
 @Log4j2
 public class NetworkServer {
+
+
+  private NetworkServer() {
+  }
 
   public static void initializeNetwork() {
     log.info("Loading server side network");

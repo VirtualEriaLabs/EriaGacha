@@ -1,8 +1,7 @@
-package net.eriagacha.services.GachaPool;
+package net.eriagacha.services.gachapool;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import net.eriagacha.controller.GachaTelemetryController;
+import net.eriagacha.EventHandler;
+import net.eriagacha.GachaRollEvent;
 import net.eriagacha.models.GachaObjectModel;
 import net.eriagacha.models.GachaObjectModelItem;
 import net.eriagacha.models.GachaObjectModelStatus;
@@ -12,29 +11,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
-@RequiredArgsConstructor
-public class CheapGachaPoolService implements GachaPoolService {
+public class GachaPoolService {
 
-  @NonNull
-  private final WeightedRandomBag weightedRandomBag;
+  GachaRollEvent gachaRollEvent;
+  WeightedRandomBag weightedRandomBag;
+  ItemStack rollCost;
 
-  @Override
-  public WeightedRandomBag<?> getWeightedRandomBag() {
-    return null;
+  public GachaPoolService(WeightedRandomBag weightedRandomBag, ItemStack rollCost) {
+    this.weightedRandomBag = weightedRandomBag;
+    this.rollCost = rollCost;
+    this.gachaRollEvent = EventHandler.gre;
   }
 
-  @Override
+
   public boolean conditionsMet() {
-    return false;
+    //TODO : Condiciones
+    return true;
   }
 
-  @Override
   public GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
                                     int gachaRollItemQuantity) {
 
-
     serverPlayerEntity.getInventory().removeStack(serverPlayerEntity.getInventory()
-        .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId))), 1);
+        .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId))), gachaRollItemQuantity);
 
     var gachaObjectModel = weightedRandomBag.getRandom();
     if (gachaObjectModel instanceof GachaObjectModelItem) {
@@ -44,13 +43,10 @@ public class CheapGachaPoolService implements GachaPoolService {
           new ItemStack(gachaModelItem.getItem(), gachaModelItem.getItemQuantity()));
 
       serverPlayerEntity.sendMessage(new TranslatableText("text.eriagacha.obtained_translated",
-              new Object[] {new TranslatableText(gachaModelItem.getItem().getTranslationKey())}),
+              new TranslatableText(gachaModelItem.getItem().getTranslationKey())),
           false);
 
-      GachaTelemetryController.InsertTelemetry(
-          serverPlayerEntity.getName().getString(),
-          gachaModelItem.getItem().getTranslationKey()
-      );
+      this.gachaRollEvent.notify(gachaModelItem, serverPlayerEntity);
 
     } else if (gachaObjectModel instanceof GachaObjectModelStatus) {
       var gachaModelStatus = (GachaObjectModelStatus) gachaObjectModel;

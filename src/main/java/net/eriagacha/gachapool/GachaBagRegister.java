@@ -14,6 +14,9 @@ public class GachaBagRegister {
 
   public static final WeightedRandomBag EXPENSIVE_GACHA_ENTRY_LIST = new WeightedRandomBag();
 
+  private GachaBagRegister() {
+  }
+
   public static void registerItems() {
     final GachaObjectModel diamond = GachaObjectModelItem.builder()
         .item(Items.DIAMOND)
