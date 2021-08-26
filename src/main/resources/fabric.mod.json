@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "net.eriagacha.EriaGachaMain"
+    ],
+    "server": [
+      "net.eriagacha.EriaGachaServerMain"
     ]
   },
   "mixins": [
