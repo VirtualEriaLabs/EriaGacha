@@ -7,7 +7,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public interface GachaPoolService {
 
   WeightedRandomBag<?> getWeightedRandomBag();
+
   boolean conditionsMet();
-  GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId, int gachaRollItemQuantity);
+
+  GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
+                             int gachaRollItemQuantity);
 
 }
