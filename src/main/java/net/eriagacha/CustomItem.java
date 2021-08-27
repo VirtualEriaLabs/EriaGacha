@@ -28,7 +28,7 @@ public class CustomItem extends Item {
           try {
             NetworkClient.gachaSend(new ItemStack(this));
           } catch (Exception e) {
-            log.fatal("Exception onInitialize at testNetwork() - Message : {}",
+            log.fatal("Exception CustomItem at use() - Message : {}",
                 e.getMessage());
           }
         }
