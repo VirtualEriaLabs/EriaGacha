@@ -20,12 +20,12 @@ public class NetworkServer {
   }
 
   public static void serverSide() {
-    ServerPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_TEST_SEND,
+    ServerPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_C2S_SEND_GACHA,
         (server, player, handler, buf, responseSender) -> {
           int clientMoneyConditionRawId = buf.readInt();
           int clientMoneyQuantity = buf.readInt();
           server.execute(() -> {
-            log.info("Server recived with ID : {}", NetworkHelper.ID_TEST_SEND);
+            log.info("Server recived with ID : {}", NetworkHelper.ID_C2S_SEND_GACHA);
             log.info("Data: {} - {} - {} - {}", player, handler, buf, responseSender);
             try {
               GachaPoolService gachaPoolService =
@@ -37,7 +37,7 @@ public class NetworkServer {
               }
             } catch (Exception e) {
               log.error("Exception in serverSide with ID %s - Message : {}",
-                  NetworkHelper.ID_TEST_SEND, e.getMessage());
+                  NetworkHelper.ID_C2S_SEND_GACHA, e.getMessage());
             }
           });
         });

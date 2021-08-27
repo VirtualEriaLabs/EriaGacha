@@ -23,7 +23,7 @@ public class NetworkClient {
     message.writeInt(moneyConditionId);
     message.writeInt(itemQuantity);
     try {
-      ClientPlayNetworking.send(NetworkHelper.ID_TEST_SEND, message);
+      ClientPlayNetworking.send(NetworkHelper.ID_C2S_SEND_GACHA, message);
     } catch (Exception e) {
       log.fatal("Client exception in gachaSend() with error {}", e.getMessage());
     }
@@ -31,9 +31,9 @@ public class NetworkClient {
   }
 
   public static void init() {
-    ClientPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_TEST_RESPONSE,
+    ClientPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_S2C_RESPONSE_GACHA,
         (player, handler, buf, packetSender) -> {
-          log.error("Client Recived packet with ID {}", NetworkHelper.ID_TEST_RESPONSE);
+          log.error("Client Recived packet with ID {}", NetworkHelper.ID_S2C_RESPONSE_GACHA);
           log.error("Data: {} - {} - {} - {}", player, handler, buf, packetSender);
           try {
             var bufInt = buf.readInt();
@@ -41,7 +41,7 @@ public class NetworkClient {
             log.fatal("Data : {}", x);
           } catch (Exception e) {
             log.error("Exception in client side with ID {} - Message : {}",
-                NetworkHelper.ID_TEST_RESPONSE, e.getMessage());
+                NetworkHelper.ID_S2C_RESPONSE_GACHA, e.getMessage());
           }
         });
   }
