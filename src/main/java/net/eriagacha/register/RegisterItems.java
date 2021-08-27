@@ -38,9 +38,8 @@ public class RegisterItems {
             try {
               NetworkClient.gachaSend(GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT);
             } catch (Exception e) {
-              log.fatal(
-                  String.format("Exception onInitialize at testNetwork() - Message : %s",
-                      e.getMessage()));
+              log.fatal("Exception onInitialize at testNetwork() - Message : {}",
+                  e.getMessage());
             }
           }
           return TypedActionResult.consume(itemStack);
@@ -66,9 +65,8 @@ public class RegisterItems {
             try {
               NetworkClient.gachaSend(GachaUtils.CHEAP_GACHA_REQUIEREMENT);
             } catch (Exception e) {
-              log.fatal(
-                  String.format("Exception onInitialize at testNetwork() - Message : %s",
-                      e.getMessage()));
+              log.fatal("Exception onInitialize at testNetwork() - Message : {}",
+                      e.getMessage());
             }
           }
           return TypedActionResult.consume(itemStack);

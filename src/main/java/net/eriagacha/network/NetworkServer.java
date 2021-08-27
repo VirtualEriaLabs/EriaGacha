@@ -36,8 +36,8 @@ public class NetworkServer {
                 player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);
               }
             } catch (Exception e) {
-              log.error(String.format("Exception in serverSide with ID %s - Message : %s",
-                  NetworkHelper.ID_TEST_SEND, e.getMessage()));
+              log.error("Exception in serverSide with ID %s - Message : {}",
+                  NetworkHelper.ID_TEST_SEND, e.getMessage());
             }
           });
         });

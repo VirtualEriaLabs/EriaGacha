@@ -33,9 +33,8 @@ public class NetworkClient {
   public static void init() {
     ClientPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_TEST_RESPONSE,
         (player, handler, buf, packetSender) -> {
-          log.error(
-              String.format("Client Recived packet with ID %s", NetworkHelper.ID_TEST_RESPONSE));
-          log.error(String.format("Data: %s - %s - %s - %s", player, handler, buf, packetSender));
+          log.error("Client Recived packet with ID {}", NetworkHelper.ID_TEST_RESPONSE);
+          log.error("Data: {} - {} - {} - {}", player, handler, buf, packetSender);
           try {
             var bufInt = buf.readInt();
             var x = buf.readString();
