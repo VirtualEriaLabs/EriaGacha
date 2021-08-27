@@ -4,6 +4,6 @@ import net.minecraft.util.Identifier;
 
 public class NetworkHelper {
 
-  public static final Identifier ID_TEST_SEND = new Identifier("send:test");
-  public static final Identifier ID_TEST_RESPONSE = new Identifier("response:test");
+  public static final Identifier ID_C2S_SEND_GACHA = new Identifier("send:gacha");
+  public static final Identifier ID_S2C_RESPONSE_GACHA = new Identifier("response:gacha");
 }
