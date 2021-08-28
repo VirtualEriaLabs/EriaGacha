@@ -16,7 +16,7 @@ public class NetworkClient {
   private NetworkClient() {
   }
 
-  public static void gachaSend(ItemStack moneyCondition) {
+  public static void clientToServerGachaRoll(ItemStack moneyCondition) {
     int moneyConditionId = Item.getRawId(moneyCondition.getItem());
     int itemQuantity = moneyCondition.getCount();
     PacketByteBuf message = PacketByteBufs.create();
@@ -27,7 +27,6 @@ public class NetworkClient {
     } catch (Exception e) {
       log.fatal("Client exception in gachaSend() with error {}", e.getMessage());
     }
-
   }
 
   public static void init() {

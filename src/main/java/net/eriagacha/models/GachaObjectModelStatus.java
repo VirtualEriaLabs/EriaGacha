@@ -12,6 +12,7 @@ public class GachaObjectModelStatus extends GachaObjectModel {
   private StatusEffectInstance statusEffectInstance;
 
   //TODO : REDO ALL THE GACHA REGISTER LOGIC
+  //Under comment saved for future refactor
   /*
   @Override
   public String reward(ServerPlayerEntity player, ItemStack moneyCondition) {
