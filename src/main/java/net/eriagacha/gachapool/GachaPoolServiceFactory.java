@@ -11,11 +11,11 @@ public class GachaPoolServiceFactory {
 
   public static GachaPoolService getInstance(int gachaRawId) {
     if (Item.getRawId(NameSpaces.GachaItems.EXPENSIVE_GACHA_REQUIEREMENT.getItem()) == gachaRawId) {
-      return new GachaPoolService(GachaBagRegister.EXPENSIVE_GACHA_ENTRY_LIST,
+      return new GachaPoolService(GachaBagRegister.EXPENSIVE_GACHA_BAG,
           new ItemStack(Item.byRawId(gachaRawId))
       );
     } else if (Item.getRawId(NameSpaces.GachaItems.CHEAP_GACHA_REQUIEREMENT.getItem()) == gachaRawId) {
-      return new GachaPoolService(GachaBagRegister.CHEAP_GACHA_ENTRY_LIST,
+      return new GachaPoolService(GachaBagRegister.CHEAP_GACHA_BAG,
           new ItemStack(Item.byRawId(gachaRawId)));
     }
     return null;

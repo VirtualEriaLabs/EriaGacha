@@ -10,9 +10,9 @@ import net.minecraft.item.Items;
 
 public class GachaBagRegister {
 
-  public static final WeightedRandomBag CHEAP_GACHA_ENTRY_LIST = new WeightedRandomBag();
+  public static final WeightedRandomBag CHEAP_GACHA_BAG = new WeightedRandomBag();
 
-  public static final WeightedRandomBag EXPENSIVE_GACHA_ENTRY_LIST = new WeightedRandomBag();
+  public static final WeightedRandomBag EXPENSIVE_GACHA_BAG = new WeightedRandomBag();
 
   private GachaBagRegister() {
   }
@@ -61,15 +61,15 @@ public class GachaBagRegister {
         .build();
 
 
-    CHEAP_GACHA_ENTRY_LIST.addEntry(diamond);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(torch);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(stone);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(diamondPickaxe);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(haste);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(speed);
-    CHEAP_GACHA_ENTRY_LIST.addEntry(adeptusTemptation);
+    CHEAP_GACHA_BAG.addEntry(diamond);
+    CHEAP_GACHA_BAG.addEntry(torch);
+    CHEAP_GACHA_BAG.addEntry(stone);
+    CHEAP_GACHA_BAG.addEntry(diamondPickaxe);
+    CHEAP_GACHA_BAG.addEntry(haste);
+    CHEAP_GACHA_BAG.addEntry(speed);
+    CHEAP_GACHA_BAG.addEntry(adeptusTemptation);
 
-    EXPENSIVE_GACHA_ENTRY_LIST.addEntry(adeptusTemptation);
+    EXPENSIVE_GACHA_BAG.addEntry(adeptusTemptation);
   }
 
 }
