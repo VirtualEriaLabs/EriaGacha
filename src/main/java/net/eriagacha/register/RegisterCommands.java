@@ -8,7 +8,7 @@ import net.eriagacha.gachapool.GachaBagRegister;
 import net.eriagacha.gachapool.GachaPoolService;
 import net.eriagacha.gachapool.GachaPoolServiceFactory;
 import net.eriagacha.telemetry.GachaTelemetryController;
-import net.eriagacha.utils.GachaUtils;
+import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.item.Item;
 import net.minecraft.server.command.CommandManager;
@@ -35,14 +35,16 @@ public class RegisterCommands implements Command<Object> {
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha_cheap_single_roll")
           .executes(context -> {
-            giveReward(context, Item.getRawId(GachaUtils.CHEAP_GACHA_REQUIEREMENT.getItem()), 1);
+            giveReward(context,
+                Item.getRawId(NameSpaces.GachaItems.CHEAP_GACHA_REQUIEREMENT.getItem()), 1);
             return 1;
           }));
     });
     CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
       dispatcher.register(CommandManager.literal("gacha_expensive_single_roll")
           .executes(context -> {
-            giveReward(context, Item.getRawId(GachaUtils.EXPENSIVE_GACHA_REQUIEREMENT.getItem()),
+            giveReward(context,
+                Item.getRawId(NameSpaces.GachaItems.EXPENSIVE_GACHA_REQUIEREMENT.getItem()),
                 1);
             return 1;
           }));

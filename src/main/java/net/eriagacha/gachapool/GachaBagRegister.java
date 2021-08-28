@@ -60,6 +60,7 @@ public class GachaBagRegister {
         .weight(3)
         .build();
 
+
     CHEAP_GACHA_ENTRY_LIST.addEntry(diamond);
     CHEAP_GACHA_ENTRY_LIST.addEntry(torch);
     CHEAP_GACHA_ENTRY_LIST.addEntry(stone);

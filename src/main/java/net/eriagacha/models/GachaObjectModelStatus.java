@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 public class GachaObjectModelStatus extends GachaObjectModel {
   private StatusEffectInstance statusEffectInstance;
 
-  //TODO : EKISDE
+  //TODO : REDO ALL THE GACHA REGISTER LOGIC
   /*
   @Override
   public String reward(ServerPlayerEntity player, ItemStack moneyCondition) {

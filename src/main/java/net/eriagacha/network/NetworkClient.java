@@ -1,7 +1,7 @@
 package net.eriagacha.network;
 
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.utils.NetworkHelper;
+import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -23,7 +23,7 @@ public class NetworkClient {
     message.writeInt(moneyConditionId);
     message.writeInt(itemQuantity);
     try {
-      ClientPlayNetworking.send(NetworkHelper.ID_C2S_SEND_GACHA, message);
+      ClientPlayNetworking.send(NameSpaces.Network.ID_C2S_SEND_GACHA, message);
     } catch (Exception e) {
       log.fatal("Client exception in gachaSend() with error {}", e.getMessage());
     }
@@ -31,9 +31,9 @@ public class NetworkClient {
   }
 
   public static void init() {
-    ClientPlayNetworking.registerGlobalReceiver(NetworkHelper.ID_S2C_RESPONSE_GACHA,
+    ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_S2C_RESPONSE_GACHA,
         (player, handler, buf, packetSender) -> {
-          log.error("Client Recived packet with ID {}", NetworkHelper.ID_S2C_RESPONSE_GACHA);
+          log.error("Client Recived packet with ID {}", NameSpaces.Network.ID_S2C_RESPONSE_GACHA);
           log.error("Data: {} - {} - {} - {}", player, handler, buf, packetSender);
           try {
             var bufInt = buf.readInt();
@@ -41,7 +41,7 @@ public class NetworkClient {
             log.fatal("Data : {}", x);
           } catch (Exception e) {
             log.error("Exception in client side with ID {} - Message : {}",
-                NetworkHelper.ID_S2C_RESPONSE_GACHA, e.getMessage());
+                NameSpaces.Network.ID_S2C_RESPONSE_GACHA, e.getMessage());
           }
         });
   }
