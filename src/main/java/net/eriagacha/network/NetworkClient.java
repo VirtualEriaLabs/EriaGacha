@@ -33,16 +33,6 @@ public class NetworkClient {
   public static void init() {
     ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_S2C_RESPONSE_GACHA,
         (player, handler, buf, packetSender) -> {
-          log.error("Client Recived packet with ID {}", NameSpaces.Network.ID_S2C_RESPONSE_GACHA);
-          log.error("Data: {} - {} - {} - {}", player, handler, buf, packetSender);
-          try {
-            var bufInt = buf.readInt();
-            var x = buf.readString();
-            log.fatal("Data : {}", x);
-          } catch (Exception e) {
-            log.error("Exception in client side with ID {} - Message : {}",
-                NameSpaces.Network.ID_S2C_RESPONSE_GACHA, e.getMessage());
-          }
         });
   }
 

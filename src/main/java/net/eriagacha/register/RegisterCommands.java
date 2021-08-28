@@ -67,7 +67,7 @@ public class RegisterCommands implements Command<Object> {
     var player = ctx.getSource().getPlayer();
     GachaPoolService gachaPoolService =
         GachaPoolServiceFactory.getInstance(clientMoneyConditionRawId);
-    if (gachaPoolService.conditionsMet()) {
+    if (gachaPoolService.conditionsMet(player, clientMoneyConditionRawId, clientMoneyQuantity)) {
       gachaPoolService.getReward(player, clientMoneyConditionRawId, clientMoneyQuantity);
     } else {
       player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);

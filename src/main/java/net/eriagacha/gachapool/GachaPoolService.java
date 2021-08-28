@@ -23,9 +23,18 @@ public class GachaPoolService {
   }
 
 
-  public boolean conditionsMet() {
+  public boolean conditionsMet(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
+                               int gachaRollItemQuantity) {
     //TODO : Condiciones
-    return true;
+    if (serverPlayerEntity.getInventory().contains(new ItemStack(Item.byRawId(gachaRollRawId)))) {
+      if (serverPlayerEntity.getInventory().getStack(serverPlayerEntity.getInventory()
+          .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId)))).getCount() >=
+          gachaRollItemQuantity) {
+          return true;
+      }
+    }
+
+    return false;
   }
 
   public GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,

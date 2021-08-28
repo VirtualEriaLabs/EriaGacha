@@ -25,12 +25,10 @@ public class NetworkServer {
           int clientMoneyConditionRawId = buf.readInt();
           int clientMoneyQuantity = buf.readInt();
           server.execute(() -> {
-            log.info("Server recived with ID : {}", NameSpaces.Network.ID_C2S_SEND_GACHA);
-            log.info("Data: {} - {} - {} - {}", player, handler, buf, responseSender);
             try {
               GachaPoolService gachaPoolService =
                   GachaPoolServiceFactory.getInstance(clientMoneyConditionRawId);
-              if (gachaPoolService.conditionsMet()) {
+              if (gachaPoolService.conditionsMet(player, clientMoneyConditionRawId, clientMoneyQuantity)) {
                 gachaPoolService.getReward(player, clientMoneyConditionRawId, clientMoneyQuantity);
               } else {
                 player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);
