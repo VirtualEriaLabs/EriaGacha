@@ -25,16 +25,12 @@ public class GachaPoolService {
 
   public boolean conditionsMet(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
                                int gachaRollItemQuantity) {
-    //TODO : Condiciones
-    if (serverPlayerEntity.getInventory().contains(new ItemStack(Item.byRawId(gachaRollRawId)))) {
-      if (serverPlayerEntity.getInventory().getStack(serverPlayerEntity.getInventory()
-          .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId)))).getCount() >=
-          gachaRollItemQuantity) {
-          return true;
-      }
-    }
 
-    return false;
+    return (
+        serverPlayerEntity.getInventory().contains(new ItemStack(Item.byRawId(gachaRollRawId))) &&
+            serverPlayerEntity.getInventory().getStack(serverPlayerEntity.getInventory()
+                .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId)))).getCount() >=
+                gachaRollItemQuantity);
   }
 
   public GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
@@ -43,7 +39,7 @@ public class GachaPoolService {
     serverPlayerEntity.getInventory().removeStack(serverPlayerEntity.getInventory()
         .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId))), gachaRollItemQuantity);
 
-    var gachaObjectModel = weightedRandomBag.getRandom();
+    var gachaObjectModel = this.weightedRandomBag.getRandom();
     if (gachaObjectModel instanceof GachaObjectModelItem) {
 
       var gachaModelItem = (GachaObjectModelItem) gachaObjectModel;
