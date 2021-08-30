@@ -21,8 +21,8 @@ public class EriaGachaMain implements ModInitializer {
       try {
         NetworkServer.initializeNetwork();
       } catch (Exception e) {
-        log.error("Exception onInitialize at testNetwork() - Message : {}",
-                e.getMessage());
+        log.error("Exception onInitialize at EriaGachaMain - Message : {}",
+            e.getMessage());
       }
     });
     if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
