@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "eriagacha:blocks/essence_block_tex",
+    "up": "eriagacha:blocks/essence_block_tex",
+    "north": "eriagacha:blocks/essence_block_tex",
+    "east": "eriagacha:blocks/essence_block_tex",
+    "south": "eriagacha:blocks/essence_block_tex",
+    "west": "eriagacha:blocks/essence_block_tex",
+    "particle": "eriagacha:blocks/essence_block_tex"
+  }
+}
