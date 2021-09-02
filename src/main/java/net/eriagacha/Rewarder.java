@@ -12,7 +12,7 @@ public class Rewarder {
       for (var player : spe) {
         player.getInventory()
             .removeStack(player.getInventory()
-                .getSlotWithStack(gr.getMoneyCondition()), gr.getRollQuantity());
+                .getSlotWithStack(gr.getMoneyCondition()), 1);
         if (reward.item != null) {
           player.getInventory()
               .insertStack(new ItemStack(reward.getItem(), reward.getItemQuantity()));
@@ -20,7 +20,7 @@ public class Rewarder {
               new TranslatableText(reward.getItem().getTranslationKey())), false);
         } else if (reward.statusEffectInstance != null) {
           player.setStatusEffect(reward.getStatusEffectInstance(), player);
-          player.sendMessage(new TranslatableText("Eres peruano"), false);
+          player.sendMessage(new TranslatableText("TOTRANSLATESTRING: I'm a buff"), false);
         }
       }
     }

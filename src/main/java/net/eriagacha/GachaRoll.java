@@ -16,7 +16,6 @@ public class GachaRoll {
 
   private List<GachaRewardModel> gachaRewards;
   private ItemStack moneyCondition;
-  private int rollQuantity;
   private String name;
   private double weight;
   private String feebackMessage;

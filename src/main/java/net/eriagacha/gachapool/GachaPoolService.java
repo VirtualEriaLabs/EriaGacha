@@ -37,9 +37,10 @@ public class GachaPoolService {
   public void getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
                         int gachaRollItemQuantity) {
 
-    GachaRoll gr = GachaRoll.builder().gachaRewards(new ArrayList<>())
+    GachaRoll gr = GachaRoll.builder()
+        .gachaRewards(new ArrayList<>())
         .moneyCondition(new ItemStack(Item.byRawId(gachaRollRawId)))
-        .rollQuantity(gachaRollItemQuantity).build();
+        .build();
 
     for (int i = 0; i < gachaRollItemQuantity; i++) {
       if (GachaType.getGachaType(gachaRollRawId) == GachaType.CHEAP_GACHA_ID) {
