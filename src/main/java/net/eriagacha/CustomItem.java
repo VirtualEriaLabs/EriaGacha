@@ -26,7 +26,9 @@ public class CustomItem extends Item {
         user.setCurrentHand(hand);
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
           try {
-            NetworkClient.clientToServerGachaRoll(new ItemStack(this));
+            if (world.isClient()) {
+              NetworkClient.clientToServerGachaRoll(new ItemStack(this));
+            }
           } catch (Exception e) {
             log.fatal("Exception CustomItem at use() - Message : {}",
                 e.getMessage());
