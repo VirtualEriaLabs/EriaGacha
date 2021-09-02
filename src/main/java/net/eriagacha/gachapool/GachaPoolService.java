@@ -1,14 +1,15 @@
 package net.eriagacha.gachapool;
 
+import java.util.ArrayList;
+import java.util.List;
+import net.eriagacha.GachaRoll;
+import net.eriagacha.Rewarder;
 import net.eriagacha.event.EventHandler;
 import net.eriagacha.event.GachaRollEvent;
-import net.eriagacha.models.GachaObjectModel;
-import net.eriagacha.models.GachaObjectModelItem;
-import net.eriagacha.models.GachaObjectModelStatus;
+import net.eriagacha.utils.GachaType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
 
 public class GachaPoolService {
 
@@ -33,31 +34,24 @@ public class GachaPoolService {
                 gachaRollItemQuantity);
   }
 
-  public GachaObjectModel getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
-                                    int gachaRollItemQuantity) {
+  public void getReward(ServerPlayerEntity serverPlayerEntity, int gachaRollRawId,
+                        int gachaRollItemQuantity) {
 
-    serverPlayerEntity.getInventory().removeStack(serverPlayerEntity.getInventory()
-        .getSlotWithStack(new ItemStack(Item.byRawId(gachaRollRawId))), gachaRollItemQuantity);
+    GachaRoll gr = GachaRoll.builder().gachaRewards(new ArrayList<>())
+        .moneyCondition(new ItemStack(Item.byRawId(gachaRollRawId)))
+        .rollQuantity(gachaRollItemQuantity).build();
 
-    var gachaObjectModel = this.weightedRandomBag.getRandom();
-    if (gachaObjectModel instanceof GachaObjectModelItem) {
-
-      var gachaModelItem = (GachaObjectModelItem) gachaObjectModel;
-      serverPlayerEntity.getInventory().insertStack(
-          new ItemStack(gachaModelItem.getItem(), gachaModelItem.getItemQuantity()));
-
-      serverPlayerEntity.sendMessage(new TranslatableText("text.eriagacha.obtained_translated",
-              new TranslatableText(gachaModelItem.getItem().getTranslationKey())),
-          false);
-
-      this.gachaRollEvent.notify(gachaModelItem, serverPlayerEntity);
-
-    } else if (gachaObjectModel instanceof GachaObjectModelStatus) {
-      var gachaModelStatus = (GachaObjectModelStatus) gachaObjectModel;
-      serverPlayerEntity
-          .setStatusEffect(gachaModelStatus.getStatusEffectInstance(), serverPlayerEntity);
+    for (int i = 0; i < gachaRollItemQuantity; i++) {
+      if (GachaType.getGachaType(gachaRollRawId) == GachaType.CHEAP_GACHA_ID) {
+        gr.setGachaRewards(GachaBagRegister.CHEAP_GACHA_BAG.getRandom());
+      }
+      if (GachaType.getGachaType(gachaRollRawId) == GachaType.EXPENSIVE_GACHA_ID) {
+        gr.setGachaRewards(GachaBagRegister.EXPENSIVE_GACHA_BAG.getRandom());
+      }
     }
+    List<ServerPlayerEntity> spe = new ArrayList<>();
+    spe.add(serverPlayerEntity);
+    Rewarder.reward(spe, gr);
 
-    return gachaObjectModel;
   }
 }

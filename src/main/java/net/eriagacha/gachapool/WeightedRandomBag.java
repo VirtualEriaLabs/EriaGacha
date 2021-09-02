@@ -3,9 +3,11 @@ package net.eriagacha.gachapool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.eriagacha.models.GachaObjectModel;
+import lombok.extern.log4j.Log4j2;
+import net.eriagacha.models.GachaRewardModel;
 
-public class WeightedRandomBag<T extends GachaObjectModel> {
+@Log4j2
+public class WeightedRandomBag<T extends GachaRewardModel> {
 
   private final List<Entry> entries = new ArrayList<>();
   private final Random rand = new Random();
@@ -16,17 +18,24 @@ public class WeightedRandomBag<T extends GachaObjectModel> {
   }
 
   public void addEntry(T gachaObject, double weight) {
-    accumulatedWeight += weight;
+    this.accumulatedWeight += weight;
     Entry e = new Entry();
     e.gachaobject = gachaObject;
-    e.accumulatedWeight = accumulatedWeight;
-    entries.add(e);
+    e.accumulatedWeight = this.accumulatedWeight;
+    log.error("New Entry Name : {} \n New Entry Weight : {}", e.gachaobject.toString(),
+        e.accumulatedWeight);
+    this.entries.add(e);
   }
 
   public T getRandom() {
-    double r = rand.nextDouble() * accumulatedWeight;
+    double r = this.rand.nextDouble() * this.accumulatedWeight;
 
-    for (Entry entry : entries) {
+    log.error("rand.nextDouble : {} \n accumulatedWeight : {} \n ", this.rand.nextDouble(),
+        this.accumulatedWeight);
+
+    log.error("r value : {}", r);
+    for (Entry entry : this.entries) {
+      log.error("Entry accumulated Weight : {}", entry.accumulatedWeight);
       if (entry.accumulatedWeight >= r) {
         return entry.gachaobject;
       }

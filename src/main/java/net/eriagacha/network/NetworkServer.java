@@ -28,13 +28,14 @@ public class NetworkServer {
             try {
               GachaPoolService gachaPoolService =
                   GachaPoolServiceFactory.getInstance(clientMoneyConditionRawId);
-              if (gachaPoolService.conditionsMet(player, clientMoneyConditionRawId, clientMoneyQuantity)) {
+              if (gachaPoolService
+                  .conditionsMet(player, clientMoneyConditionRawId, clientMoneyQuantity)) {
                 gachaPoolService.getReward(player, clientMoneyConditionRawId, clientMoneyQuantity);
               } else {
                 player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);
               }
             } catch (Exception e) {
-              log.error("Exception in serverSide with ID %s - Message : {}",
+              log.error("Exception in serverSide with ID {} - Message : {}",
                   NameSpaces.Network.ID_C2S_SEND_GACHA, e.getMessage());
             }
           });

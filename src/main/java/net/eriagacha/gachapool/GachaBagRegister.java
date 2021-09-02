@@ -1,8 +1,6 @@
 package net.eriagacha.gachapool;
 
-import net.eriagacha.models.GachaObjectModel;
-import net.eriagacha.models.GachaObjectModelItem;
-import net.eriagacha.models.GachaObjectModelStatus;
+import net.eriagacha.models.GachaRewardModel;
 import net.eriagacha.register.RegisterItems;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -18,43 +16,43 @@ public class GachaBagRegister {
   }
 
   public static void registerItems() {
-    final GachaObjectModel diamond = GachaObjectModelItem.builder()
+    GachaRewardModel diamond = GachaRewardModel.builder()
         .item(Items.DIAMOND)
         .itemQuantity(5)
         .weight(10)
         .build();
 
-    final GachaObjectModel torch = GachaObjectModelItem.builder()
+    GachaRewardModel torch = GachaRewardModel.builder()
         .item(Items.TORCH)
         .itemQuantity(12)
         .weight(20)
         .build();
 
-    final GachaObjectModel stone = GachaObjectModelItem.builder()
+    GachaRewardModel stone = GachaRewardModel.builder()
         .item(Items.STONE)
         .itemQuantity(32)
         .weight(30)
         .build();
 
-    final GachaObjectModel diamondPickaxe = GachaObjectModelItem.builder()
+    GachaRewardModel diamondPickaxe = GachaRewardModel.builder()
         .item(Items.DIAMOND_PICKAXE)
         .itemQuantity(1)
         .weight(5)
         .build();
 
-    final GachaObjectModel adeptusTemptation = GachaObjectModelItem.builder()
+    GachaRewardModel adeptusTemptation = GachaRewardModel.builder()
         .item(RegisterItems.ADEPTUS_TEMPTATION)
         .itemQuantity(1)
         .weight(15)
         .build();
 
-    final GachaObjectModel haste = GachaObjectModelStatus.builder()
+    GachaRewardModel haste = GachaRewardModel.builder()
         .statusEffectInstance(new StatusEffectInstance(StatusEffects.HASTE, 20000, 3))
         .rewardName("El efecto de rapidez!")
         .weight(15)
         .build();
 
-    final GachaObjectModel speed = GachaObjectModelStatus.builder()
+    GachaRewardModel speed = GachaRewardModel.builder()
         .statusEffectInstance(new StatusEffectInstance(StatusEffects.HASTE, 20000, 3))
         .rewardName("El efecto velocidad!")
         .weight(3)
