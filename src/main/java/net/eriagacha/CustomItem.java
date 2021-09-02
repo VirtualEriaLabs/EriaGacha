@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import net.eriagacha.network.NetworkClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,5 +42,13 @@ public class CustomItem extends Item {
     } else {
       return TypedActionResult.pass(user.getStackInHand(hand));
     }
+  }
+
+  @Override
+  public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+    if (world.isClient()) {
+      NetworkClient.clientToServerGachaRoll(new ItemStack(this.asItem(), 5));
+    }
+    return this.isFood() ? user.eatFood(world, stack) : stack;
   }
 }
