@@ -52,6 +52,5 @@ public class GachaPoolService {
     List<ServerPlayerEntity> spe = new ArrayList<>();
     spe.add(serverPlayerEntity);
     Rewarder.reward(spe, gr);
-
   }
 }
