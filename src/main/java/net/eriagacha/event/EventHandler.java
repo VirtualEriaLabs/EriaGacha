@@ -5,10 +5,10 @@ public class EventHandler {
   private EventHandler() {
   }
 
-  public static GachaRollEvent gre;
+  public static EriaEvent GACHA_ROLL_EVENT;
 
   public static void init() {
-    gre = new GachaRollEvent();
+    GACHA_ROLL_EVENT = GachaRollEvent.builder().build();
   }
 
 }

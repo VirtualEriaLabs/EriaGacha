@@ -1,13 +1,12 @@
-package net.eriagacha.gachapool;
+package net.eriagacha.gacha;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.models.GachaRewardModel;
 
 @Log4j2
-public class WeightedRandomBag<T extends GachaRewardModel> {
+public class WeightedRandomBag<T extends GachaRoll> {
 
   private final List<Entry> entries = new ArrayList<>();
   private final Random rand = new Random();
@@ -15,6 +14,10 @@ public class WeightedRandomBag<T extends GachaRewardModel> {
 
   public void addEntry(T gachaObject) {
     this.addEntry(gachaObject, gachaObject.getWeight());
+  }
+
+  public void addEntries(List<T> gachaRolls) {
+    gachaRolls.stream().forEach(roll -> this.addEntry(roll));
   }
 
   public void addEntry(T gachaObject, double weight) {
