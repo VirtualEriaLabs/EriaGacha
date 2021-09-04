@@ -2,9 +2,9 @@ package net.eriagacha.gacha;
 
 import java.util.Arrays;
 import java.util.List;
+import net.eriagacha.api.MinecraftGivable;
 import net.eriagacha.giveable.GivableItemStack;
 import net.eriagacha.giveable.GivableStatusEffect;
-import net.eriagacha.api.MinecraftGivable;
 import net.eriagacha.register.RegisterItems;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -90,7 +90,6 @@ public class GachaBagRegister {
             .rollMessage(new TranslatableText("Speed Bitch"))
             .build()
     );
-
     EXPENSIVE_GACHA_BAG.addEntries(expensiveGachaRoll);
 
     List<GachaRoll> cheapGachaRolls = Arrays.asList(
@@ -113,8 +112,6 @@ public class GachaBagRegister {
             .rollMessage(new TranslatableText("Speed Bitch"))
             .build()
     );
-
     CHEAP_GACHA_BAG.addEntries(cheapGachaRolls);
   }
-
 }

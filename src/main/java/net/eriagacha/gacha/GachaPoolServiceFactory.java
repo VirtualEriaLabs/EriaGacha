@@ -18,10 +18,12 @@ public class GachaPoolServiceFactory {
       return GachaPoolService.builder()
           .rollCost(new ItemStack(RegisterItems.INTERTWINED_FATE, 1))
           .gachaRollEvent(GACHA_ROLL_EVENT)
-          .minecraftRewarder(new GachaRewarder())
+          .minecraftRewarder((player, reward) -> player.stream()
+              .forEach(serverPlayerEntity -> reward.apply(serverPlayerEntity)))
           .weightedRandomBag(GachaBagRegister.EXPENSIVE_GACHA_BAG)
           .build();
-    } else if (Item.getRawId(NameSpaces.GachaItems.CHEAP_GACHA_REQUIEREMENT.getItem()) == gachaRawId) {
+    } else if (Item.getRawId(NameSpaces.GachaItems.CHEAP_GACHA_REQUIEREMENT.getItem()) ==
+        gachaRawId) {
       return GachaPoolService.builder()
           .rollCost(new ItemStack(RegisterItems.ACQUAINT_FATE, 1))
           .gachaRollEvent(GACHA_ROLL_EVENT)
@@ -29,7 +31,6 @@ public class GachaPoolServiceFactory {
           .weightedRandomBag(GachaBagRegister.CHEAP_GACHA_BAG)
           .build();
     }
-
     return null;
   }
 
