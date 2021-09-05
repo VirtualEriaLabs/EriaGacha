@@ -21,8 +21,14 @@
   "entrypoints": {
     "main": [
       "net.eriagacha.EriaGachaMain"
+    ],
+    "server": [
+      "net.eriagacha.EriaGachaServerMain"
     ]
   },
+  "mixins": [
+    "eriagacha.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",

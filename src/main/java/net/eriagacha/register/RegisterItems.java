@@ -1,11 +1,14 @@
-package net.eriagacha;
+package net.eriagacha.register;
 
 import static net.eriagacha.RichSaplingBlock.RICH_SAPLING;
 
+import net.eriagacha.RichSaplingBlock;
 import net.eriagacha.block.EssenceOreBlock;
 import net.eriagacha.item.EssenceItem;
 import net.eriagacha.item.EssenceSwordTool;
 import net.eriagacha.item.ScrollItem;
+import lombok.extern.log4j.Log4j2;
+import net.eriagacha.CustomItem;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -37,16 +40,20 @@ import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
+@Log4j2
 public class RegisterItems {
+
 
   //TODO : Investigar PlayerItemConsumeEvent para que se ejecute el comando al comer
   //TODO : Investigate Mixing StatusEffects to dont make 7 calls to statusEffects
-  public static final Item INTERTWINED_FATE = new Item(new Item.Settings()
+  public static final Item INTERTWINED_FATE = new CustomItem(new Item.Settings()
       .group(ItemGroup.MISC)
       .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
-  public static final Item ACQUAINT_FATE = new Item(new Item.Settings()
+
+  public static final Item ACQUAINT_FATE = new CustomItem(new Item.Settings()
       .group(ItemGroup.MISC)
       .food(new FoodComponent.Builder().hunger(1).saturationModifier(1f).alwaysEdible().build()));
+
   public static final Item ADEPTUS_TEMPTATION = new Item(new Item.Settings()
       .group(ItemGroup.MISC)
       .food(new FoodComponent.Builder().hunger(20).saturationModifier(40f).snack().alwaysEdible()
@@ -126,6 +133,7 @@ public class RegisterItems {
       .repeat(20);
 
   public static void init() {
+
     Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "interwined_fate"),
         INTERTWINED_FATE);
     Registry.register(Registry.ITEM, new Identifier(NameSpaces.PROJECT_NAME, "acquaint_fate"),

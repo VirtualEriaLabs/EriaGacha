@@ -1,30 +1,27 @@
-package net.eriagacha.controller;
+package net.eriagacha.telemetry;
 
-import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.EriaGachaMain;
+import net.eriagacha.EriaGachaServerMain;
 import net.eriagacha.models.GachaTelemetryModel;
-import net.eriagacha.repository.GachaTelemetryRepository;
-import net.minecraft.server.command.ServerCommandSource;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import reactor.core.publisher.Flux;
 
 
 @Log4j2
-//@Environment(EnvType.SERVER) COMENTARIO IMPORTANTE
+@Environment(EnvType.SERVER)
 public class GachaTelemetryController {
 
+  private GachaTelemetryController() {
+  }
 
-  private GachaTelemetryController() {}
+  public static void insertTelemetry(String playerName, String rewardObtained) {
+    final GachaTelemetryRepository gr =
+        EriaGachaServerMain.springContext.getBean(GachaTelemetryRepository.class);
 
-
-  public static void InsertTelemetry(String playerName, String rewardObtained) {
-    GachaTelemetryRepository gr =
-        EriaGachaMain.springContext.getBean(GachaTelemetryRepository.class);
-
-
-    final GachaTelemetryRepository gachaTelemetryRepository;
     GachaTelemetryModel gtm = GachaTelemetryModel
         .builder()
         .user(playerName)
@@ -33,7 +30,6 @@ public class GachaTelemetryController {
         .build();
 
     log.info(gtm.getUser() + gtm.getDate() + gtm.getRewardObtained());
-
 
     var saved = Flux
         .just(gtm)
@@ -44,24 +40,26 @@ public class GachaTelemetryController {
                 name.getDate()))
         .flatMap(gr::save);
 
-      saved.subscribe();
+    saved.subscribe();
 
   }
 
-  public static void selectTelemetry(CommandContext<ServerCommandSource> ctx)
+  public static void selectTelemetry(ServerPlayerEntity player)
       throws CommandSyntaxException {
     GachaTelemetryRepository gr =
-        EriaGachaMain.springContext.getBean(GachaTelemetryRepository.class);
+        EriaGachaServerMain.springContext.getBean(GachaTelemetryRepository.class);
 
-    gr.findByUser(ctx.getSource().getPlayer().getName().asString())
+    gr.findByUser(player.getName().asString())
         .map(gachaTelemetry ->
         {
-          ctx.getSource().sendFeedback(new
+          player.sendMessage(new
               LiteralText(
               "\n ********** "
                   + "\n Recompensa : " + gachaTelemetry.getRewardObtained()
                   + "\n Usuario : " + gachaTelemetry.getUser()
-                  + "\n Fecha :" + gachaTelemetry.getDate()), false);
+                  + "\n Fecha :" + gachaTelemetry.getDate()), false
+
+          );
           return 1;
         }).subscribe();
   }

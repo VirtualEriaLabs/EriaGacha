@@ -1,7 +1,8 @@
 package net.eriagacha.world.biomes;
 
-import net.eriagacha.RegisterItems;
+
 import net.eriagacha.RichSaplingBlock;
+import net.eriagacha.register.RegisterItems;
 import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
 import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
 import net.minecraft.block.Blocks;

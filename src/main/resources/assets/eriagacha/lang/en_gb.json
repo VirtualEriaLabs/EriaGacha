@@ -7,5 +7,6 @@
   "text.eriagacha.missing": "You're missing ",
   "text.eriagacha.inventory_full": "Inventory is full ",
   "text.eriagacha.player_reference_fail": "Player reference is not a real player ",
-  "text.eriagacha.obtained": "You have obtained "
+  "text.eriagacha.obtained": "You have obtained ",
+  "text.eriagacha.roll.error":  "There was an error rolling gacha"
 }

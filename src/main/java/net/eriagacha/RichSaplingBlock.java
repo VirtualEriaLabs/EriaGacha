@@ -1,5 +1,6 @@
 package net.eriagacha;
 
+import net.eriagacha.register.RegisterItems;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;

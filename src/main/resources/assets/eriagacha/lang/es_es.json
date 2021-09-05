@@ -7,5 +7,7 @@
   "text.eriagacha.missing": "Te falta ",
   "text.eriagacha.inventory_full": "El inventario esta lleno ",
   "text.eriagacha.player_reference_fail": "La referencia del jugador no es un jugador ",
-  "text.eriagacha.obtained": "Has conseguido "
+  "text.eriagacha.obtained": "Has conseguido ",
+  "text.eriagacha.obtained_translated": "Has obtenido %s",
+  "text.eriagacha.roll.error":  "Hubo un error tirando el gacha"
 }
