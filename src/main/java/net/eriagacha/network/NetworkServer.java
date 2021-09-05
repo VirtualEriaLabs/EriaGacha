@@ -1,11 +1,12 @@
 package net.eriagacha.network;
 
 import lombok.extern.log4j.Log4j2;
-import net.eriagacha.gachapool.GachaPoolService;
-import net.eriagacha.gachapool.GachaPoolServiceFactory;
+import net.eriagacha.gacha.GachaPoolService;
+import net.eriagacha.gacha.GachaPoolServiceFactory;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.text.LiteralText;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 @Log4j2
 public class NetworkServer {
@@ -24,17 +25,16 @@ public class NetworkServer {
         (server, player, handler, buf, responseSender) -> {
           int clientMoneyConditionRawId = buf.readInt();
           int clientMoneyQuantity = buf.readInt();
+          ItemStack itemStack =
+              new ItemStack(Item.byRawId(clientMoneyConditionRawId), clientMoneyQuantity);
           server.execute(() -> {
             try {
               GachaPoolService gachaPoolService =
                   GachaPoolServiceFactory.getInstance(clientMoneyConditionRawId);
-              if (gachaPoolService.conditionsMet(player, clientMoneyConditionRawId, clientMoneyQuantity)) {
-                gachaPoolService.getReward(player, clientMoneyConditionRawId, clientMoneyQuantity);
-              } else {
-                player.sendMessage(new LiteralText("Conditions to use the gacha not met"), false);
-              }
+              assert gachaPoolService != null : "NullPointerException";
+              gachaPoolService.rollGacha(player, itemStack);
             } catch (Exception e) {
-              log.error("Exception in serverSide with ID %s - Message : {}",
+              log.error("Exception in serverSide with ID {} - Message : {}",
                   NameSpaces.Network.ID_C2S_SEND_GACHA, e.getMessage());
             }
           });

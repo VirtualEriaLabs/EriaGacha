@@ -18,7 +18,7 @@ public class EriaGachaServerMain implements DedicatedServerModInitializer {
 
   @Override
   public void onInitializeServer() {
-    EventHandler.gre.addObserver(new GachaRollTelemetryObserver());
+    EventHandler.GACHA_ROLL_EVENT.addObserver(new GachaRollTelemetryObserver());
 
     ServerLifecycleEvents.SERVER_STOPPED.register(minecraftServer -> {
       try {

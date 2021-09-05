@@ -1,22 +1,15 @@
 package net.eriagacha.event;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.eriagacha.models.GachaObjectModelItem;
+import lombok.Builder;
+import net.eriagacha.gacha.GachaRoll;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class GachaRollEvent {
-  public List<GachaRollObserver> gros = new ArrayList<>();
+@Builder
+public class GachaRollEvent extends EriaEvent {
 
-  public void addObserver(GachaRollObserver gro) {
-    gros.add(gro);
-  }
-  public void removeObserver(GachaRollObserver gro){
-    gros.remove(gro);
-  }
-  public void notify(GachaObjectModelItem gomi, ServerPlayerEntity player){
-    for (GachaRollObserver gro:gros) {
-      gro.onNotify(gomi,player,this);
+  public void notify(GachaRoll gomi, ServerPlayerEntity player) {
+    for (GachaRollObserver observer : this.observer) {
+      observer.onNotify(gomi, player, this);
     }
   }
 

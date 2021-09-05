@@ -1,9 +1,8 @@
 package net.eriagacha.event;
 
-import net.eriagacha.models.GachaObjectModelItem;
+import net.eriagacha.api.MinecraftGivable;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public interface GachaRollObserver {
-
-  void onNotify(GachaObjectModelItem gmi, ServerPlayerEntity spe, GachaRollEvent gachaRollEvent);
+  void onNotify(MinecraftGivable givable, ServerPlayerEntity spe, GachaRollEvent gachaRollEvent);
 }
