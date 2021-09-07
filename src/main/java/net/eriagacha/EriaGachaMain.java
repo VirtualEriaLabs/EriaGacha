@@ -30,6 +30,5 @@ public class EriaGachaMain implements ModInitializer {
     }
     RegisterCommands.init();
     RegisterItems.init();
-    //CrimsonBiome.init();
   }
 }

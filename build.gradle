@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
-
 plugins {
     id 'fabric-loom'
     id 'maven-publish'
@@ -17,7 +15,6 @@ version = project.mod_version
 group = project.maven_group
 
 configurations {
-    shadow
     all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
@@ -27,9 +24,10 @@ configurations {
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
+/*
 shadowJar {
     configurations = [project.configurations.shadow]
     zip64 = true
@@ -44,9 +42,9 @@ shadowJar {
         mergeStrategy = 'append'
     }
 }
-
-tasks.remapJar.dependsOn(shadowJar)
-(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+*/
+//tasks.remapJar.dependsOn(shadowJar)
+//(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -57,7 +55,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${project.loombok_version}"
     annotationProcessor "org.projectlombok:lombok:${project.loombok_version}"
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
-    shadow 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+    //shadow 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 }
 
 processResources {
@@ -87,16 +85,16 @@ jar {
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-	repositories {}
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+    repositories {}
 }
 

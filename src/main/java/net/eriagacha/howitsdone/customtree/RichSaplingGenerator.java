@@ -1,4 +1,4 @@
-package net.eriagacha;
+package net.eriagacha.howitsdone.customtree;
 
 import java.util.Random;
 import net.minecraft.block.sapling.SaplingGenerator;

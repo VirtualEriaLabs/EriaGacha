@@ -1,4 +1,4 @@
-package net.eriagacha;
+package net.eriagacha.gacha;
 
 import java.util.List;
 import net.eriagacha.api.MinecraftGivable;
@@ -9,6 +9,6 @@ public class GachaRewarder implements MinecraftRewarder {
 
   @Override
   public void reward(List<ServerPlayerEntity> player, MinecraftGivable reward) {
-     player.stream().forEach(serverPlayerEntity ->  reward.apply(serverPlayerEntity));
+    player.stream().forEach(serverPlayerEntity -> reward.apply(serverPlayerEntity));
   }
 }

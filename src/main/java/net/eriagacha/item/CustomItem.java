@@ -1,4 +1,4 @@
-package net.eriagacha;
+package net.eriagacha.item;
 
 import lombok.extern.log4j.Log4j2;
 import net.eriagacha.network.NetworkClient;
@@ -28,7 +28,7 @@ public class CustomItem extends Item {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
           try {
             if (world.isClient()) {
-              NetworkClient.clientToServerGachaRoll(new ItemStack(this,5));
+              NetworkClient.clientToServerGachaRoll(new ItemStack(this, 5));
             }
           } catch (Exception e) {
             log.fatal("Exception CustomItem at use() - Message : {}",

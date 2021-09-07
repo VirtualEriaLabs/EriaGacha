@@ -2,7 +2,6 @@ package net.eriagacha.gacha;
 
 import static net.eriagacha.event.EventHandler.GACHA_ROLL_EVENT;
 
-import net.eriagacha.GachaRewarder;
 import net.eriagacha.register.RegisterItems;
 import net.eriagacha.utils.NameSpaces;
 import net.minecraft.item.Item;

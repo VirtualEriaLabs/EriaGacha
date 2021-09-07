@@ -1,6 +1,5 @@
-package net.eriagacha;
+package net.eriagacha.howitsdone.customtree;
 
-import net.eriagacha.register.RegisterItems;
 import net.eriagacha.utils.NameSpaces;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;
@@ -18,7 +17,7 @@ public class RichSaplingBlock extends SaplingBlock {
   }
 
   public static final RichSaplingBlock RICH_SAPLING =
-      new RichSaplingBlock(new RichSaplingGenerator(RegisterItems.TREE_RICH),
+      new RichSaplingBlock(new RichSaplingGenerator(TreeRich.TREE_RICH),
           FabricBlockSettings.copyOf(
               Blocks.OAK_SAPLING));
 

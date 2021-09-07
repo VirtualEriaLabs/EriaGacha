@@ -1,7 +1,7 @@
-package net.eriagacha.world.biomes;
+package net.eriagacha.howitsdone.world.biomes;
 
 
-import net.eriagacha.RichSaplingBlock;
+import net.eriagacha.howitsdone.customtree.RichSaplingBlock;
 import net.eriagacha.register.RegisterItems;
 import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
 import net.fabricmc.fabric.api.biome.v1.OverworldClimate;

@@ -1,4 +1,4 @@
-package net.eriagacha.block;
+package net.eriagacha.howitsdone.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -13,5 +13,4 @@ public class EssenceOreBlock extends Block {
         .luminance(0)
         .breakByTool(FabricToolTags.PICKAXES, 1).requiresTool());
   }
-
 }
