@@ -1,8 +1,9 @@
 package net.eriagacha.howitsdone.world.biomes;
 
 
+import static net.eriagacha.register.RegisterItems.id;
+
 import net.eriagacha.howitsdone.customtree.RichSaplingBlock;
-import net.eriagacha.register.RegisterItems;
 import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
 import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
 import net.minecraft.block.Blocks;
@@ -10,9 +11,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.BiomeParticleConfig;
@@ -35,7 +38,15 @@ import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
 public class CrimsonBiome {
+
+  public static final Identifier crimsonambient_ID = id("crimsonambient");
+  public static final SoundEvent crimsonambientEvent = new SoundEvent(crimsonambient_ID);
+
+  public static final RegistryKey<Biome> Crimson_KEY =
+      RegistryKey.of(Registry.BIOME_KEY, id("crimson"));
+
   private static Biome theBiome;
+
   private static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> SURFACE_BUILDER =
       SurfaceBuilder.DEFAULT
           .withConfig(new TernarySurfaceConfig(Blocks.GRASS_BLOCK.getDefaultState(),
@@ -45,12 +56,12 @@ public class CrimsonBiome {
 
   public static void init() {
     Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER,
-        RegisterItems.Crimson_KEY.getValue(), SURFACE_BUILDER);
+        Crimson_KEY.getValue(), SURFACE_BUILDER);
     BiomeEffects effects =
         new BiomeEffects.Builder().fogColor(-44732).waterColor(-13434829).waterFogColor(-13434829)
             .skyColor(-44732)
             .grassColor(-1295814).foliageColor(-12768475)
-            .loopSound((SoundEvent) RegisterItems.crimsonambientEvent)
+            .loopSound((SoundEvent) crimsonambientEvent)
             .particleConfig(new BiomeParticleConfig(ParticleTypes.SMOKE, 0.002f))
             .particleConfig(new BiomeParticleConfig(ParticleTypes.EXPLOSION, 0.50f))
             .build();
@@ -114,8 +125,8 @@ public class CrimsonBiome {
     biomeBuilder.category(Biome.Category.NONE);
     biomeBuilder.precipitation(Biome.Precipitation.RAIN);
     theBiome = biomeBuilder.build();
-    Registry.register(BuiltinRegistries.BIOME, RegisterItems.Crimson_KEY.getValue(), theBiome);
-    OverworldBiomes.addContinentalBiome(RegisterItems.Crimson_KEY,
+    Registry.register(BuiltinRegistries.BIOME, Crimson_KEY.getValue(), theBiome);
+    OverworldBiomes.addContinentalBiome(Crimson_KEY,
         OverworldClimate.TEMPERATE, 100d);
   }
 }
