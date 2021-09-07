@@ -7,23 +7,5 @@
         "stream": false
       }
     ]
-  },
-  "crimsonmusic": {
-    "category": "music",
-    "sounds": [
-      {
-        "name": "eriagacha:the_way_of_my_sword_by_calapm__most_epic_sound-p",
-        "stream": true
-      }
-    ]
-  },
-  "bossmusic": {
-    "category": "hostile",
-    "sounds": [
-      {
-        "name": "eriagacha:devil_may_cry_5_-_bury_the_light_boss_dante_battle_theme_extended_mix_hq_high_quality___dmc5se-p",
-        "stream": false
-      }
-    ]
   }
 }

@@ -8,7 +8,6 @@ import com.eriagacha.item.EssenceItem;
 import com.eriagacha.item.EssenceOreItem;
 import com.eriagacha.item.EssenceSwordTool;
 import com.eriagacha.item.InterwinedFate;
-import com.eriagacha.item.Primogem;
 import com.eriagacha.item.ScrollItem;
 import com.eriagacha.utils.NameSpaces;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +30,6 @@ public class RegisterItems {
   public static final Block EssenceOre_BLOCK = new EssenceOreBlock();
   public static final BlockItem EssenceOre_ITEM = new EssenceOreItem();
   public static final Item EssenceSword_ITEM = EssenceSwordTool.INSTANCE;
-  public static final Item PRIMOGEM = new Primogem();
   public static final Item ERIA_LOGO = new EriaLogo();
 
   private RegisterItems() {
@@ -41,13 +39,12 @@ public class RegisterItems {
     Registry.register(Registry.ITEM, id("interwined_fate"), INTERTWINED_FATE);
     Registry.register(Registry.ITEM, id("acquaint_fate"), ACQUAINT_FATE);
     Registry.register(Registry.ITEM, id("adeptus_temptation"), ADEPTUS_TEMPTATION);
-    Registry.register(Registry.ITEM, id("primogem"), PRIMOGEM);
     Registry.register(Registry.ITEM, id("eria_logo"), ERIA_LOGO);
     Registry.register(Registry.ITEM, id("essence_sword"), EssenceSword_ITEM);
     Registry.register(Registry.ITEM, id("essence"), Essence_ITEM);
     Registry.register(Registry.ITEM, id("essence_ore"), EssenceOre_ITEM);
-    Registry.register(Registry.ITEM, id("scroll"), Scroll_ITEM);
     Registry.register(Registry.BLOCK, id("essence_ore"), EssenceOre_BLOCK);
+    Registry.register(Registry.ITEM, id("scroll"), Scroll_ITEM);
   }
 
   public static final Identifier id(String identifierName) {
