@@ -1,9 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.eriagacha.mixin",
+  "package": "com.eriagacha.mixin",
   "compatibilityLevel": "JAVA_16",
-  "mixins": [],
+  "mixins": [
+    "MainMixin"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1
