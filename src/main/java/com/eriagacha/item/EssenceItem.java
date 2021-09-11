@@ -33,7 +33,7 @@ public class EssenceItem extends Item {
   @Environment(EnvType.CLIENT)
   @Override
   public boolean hasGlint(ItemStack stack) {
-    return true;
+    return false;
   }
 
   @Override

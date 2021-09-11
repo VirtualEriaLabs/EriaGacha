@@ -16,7 +16,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
 
-public class essenceOreGeneration {
+public class EssenceOreGeneration {
 
   private static final ConfiguredFeature<?, ?> ORE_ESSENCE_OVERWORLD = Feature.ORE
       .configure(new OreFeatureConfig(

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "eriagacha:block/essence_ore"
+      "model": "eriagacha:block/gacha_table"
     }
   }
 }

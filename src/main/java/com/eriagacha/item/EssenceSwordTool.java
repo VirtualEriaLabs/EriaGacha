@@ -3,7 +3,6 @@ package com.eriagacha.item;
 import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -16,6 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.world.World;
 
 public class EssenceSwordTool {
+
   public static final ToolMaterial ESSENCESWORD_TOOL_MATERIAL = new ToolMaterial() {
     @Override
     public int getDurability() {
@@ -29,7 +29,7 @@ public class EssenceSwordTool {
 
     @Override
     public float getAttackDamage() {
-      return 14F;
+      return 25F;
     }
 
     @Override
@@ -47,14 +47,17 @@ public class EssenceSwordTool {
       return Ingredient.EMPTY;
     }
   };
-  public static final Item INSTANCE = new SwordItem(ESSENCESWORD_TOOL_MATERIAL, 0, (float) -3.8,
-      (new FabricItemSettings().group(ItemGroup.COMBAT))) {
+
+  public static final Item INSTANCE = new SwordItem(ESSENCESWORD_TOOL_MATERIAL, 25, (float) -1.8,
+      (new Item.Settings().group(ItemGroup.COMBAT))) {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip,
                               TooltipContext context) {
       tooltip.add(new LiteralText("A sword from some fallen god"));
       tooltip.add(new LiteralText("use at your own risk"));
+      
+
     }
 
     @Environment(EnvType.CLIENT)

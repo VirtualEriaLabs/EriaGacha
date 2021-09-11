@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "eriagacha:items/essence_sword_tex"
+    "layer0": "eriagacha:item/essence_sword_tex"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "eriagacha:item/adeptus_temptation"
+    "layer0": "eriagacha:item/adeptus_temptation/adeptus_temptation_tex"
   }
 }

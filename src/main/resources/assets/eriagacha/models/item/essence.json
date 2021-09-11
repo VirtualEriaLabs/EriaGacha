@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "eriagacha:items/essence_tex"
+    "layer0": "eriagacha:item/essence_tex/essence_tex"
   }
 }
