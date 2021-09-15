@@ -1,6 +1,6 @@
 package com.eriagacha;
 
-import com.eriagacha.gui.GachaTableScreen;
+import com.eriagacha.item.GachaTable.gui.GachaTableScreen;
 import com.eriagacha.register.RegisterItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -15,6 +15,6 @@ public class EriaGachaClientMain implements ClientModInitializer {
         (gui, inventory, title) -> new GachaTableScreen(gui, inventory.player, title));
 
      */
-    ScreenRegistry.register(RegisterItems.SCREEN_HANDLER_INVENTORY_TYPE, GachaTableScreen::new);
+    ScreenRegistry.register(RegisterItems.SCREEN_HANDLER_INVENTORY_TYPE, GachaTableScreen.FACTORY);
   }
 }

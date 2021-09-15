@@ -57,6 +57,7 @@ public interface ImplementedInventory extends Inventory {
    */
   @Override
   default ItemStack getStack(int slot) {
+    this.markDirty();
     return this.getItems().get(slot);
   }
 
@@ -68,6 +69,7 @@ public interface ImplementedInventory extends Inventory {
    */
   @Override
   default ItemStack removeStack(int slot, int count) {
+    this.markDirty();
     ItemStack result = Inventories.splitStack(this.getItems(), slot, count);
     if (!result.isEmpty()) {
       this.markDirty();
@@ -81,6 +83,7 @@ public interface ImplementedInventory extends Inventory {
    */
   @Override
   default ItemStack removeStack(int slot) {
+    this.markDirty();
     return Inventories.removeStack(this.getItems(), slot);
   }
 
@@ -93,6 +96,7 @@ public interface ImplementedInventory extends Inventory {
    */
   @Override
   default void setStack(int slot, ItemStack stack) {
+    this.markDirty();
     this.getItems().set(slot, stack);
     if (stack.getCount() > this.getMaxCountPerStack()) {
       stack.setCount(this.getMaxCountPerStack());
@@ -114,7 +118,7 @@ public interface ImplementedInventory extends Inventory {
    */
   @Override
   default void markDirty() {
-    // Override if you want behavior.
+
   }
 
   /**

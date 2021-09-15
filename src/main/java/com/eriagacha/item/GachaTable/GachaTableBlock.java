@@ -1,19 +1,23 @@
 package com.eriagacha.item.GachaTable;
 
+import com.eriagacha.register.RegisterItems;
 import java.util.Random;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -21,12 +25,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class GachaTable extends BlockWithEntity {
+public class GachaTableBlock extends GachaTableAbstractBlock<GachaTableEntity> {
 
-  protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
+  protected static final VoxelShape SHAPE =
+      Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
-  public GachaTable() {
-    super(AbstractBlock.Settings.of(Material.STONE).hardness(2f));
+  public GachaTableBlock() {
+    super(AbstractBlock.Settings.of(Material.STONE).strength(1F).sounds(BlockSoundGroup.ANVIL),
+        () -> RegisterItems.GACHA_TABLE_ENTITY);
+    this.setDefaultState(this.stateManager.getDefaultState());
   }
 
   @Override
@@ -35,21 +42,58 @@ public class GachaTable extends BlockWithEntity {
   }
 
   @Override
-  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos,
+                                    ShapeContext context) {
     return SHAPE;
   }
 
+
+  /*
+  @Override
+  public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack)
+  {
+
+    if (blockEntity != null) {
+      DefaultedList<ItemStack> items = DefaultedList.ofSize(35, ItemStack.EMPTY);
+      Inventories.readNbt(blockEntity.toInitialChunkDataNbt(), items);
+      for (var item : items)
+      {
+        world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), item));
+      }
+    }
+  }
+*/
   @Override
   public BlockRenderType getRenderType(BlockState state) {
     return BlockRenderType.MODEL;
   }
 
+
   @Override
-  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+  public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState,
+                              boolean moved) {
+    if (!state.isOf(newState.getBlock())) {
+
+      BlockEntity blockEntity = world.getBlockEntity(pos);
+      if (blockEntity instanceof Inventory) {
+        ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+        world.updateComparators(pos, this);
+      }
+
+      super.onStateReplaced(state, world, pos, newState, moved);
+    }
+  }
+
+  @Override
+  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player,
+                            Hand hand, BlockHitResult hit) {
     if (world.isClient) {
       return ActionResult.SUCCESS;
     } else {
-      player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+      NamedScreenHandlerFactory namedScreenHandlerFactory = this.createScreenHandlerFactory(state, world, pos);
+      if (namedScreenHandlerFactory != null) {
+        player.openHandledScreen(namedScreenHandlerFactory);
+      }
       return ActionResult.CONSUME;
     }
   }
@@ -57,34 +101,56 @@ public class GachaTable extends BlockWithEntity {
   @Nullable
   @Override
   public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new GachaTableEntity(pos,state);
+    return new GachaTableEntity(pos, state);
   }
 
   @Override
   public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
     super.randomDisplayTick(state, world, pos, random);
 
-    for(int i = -2; i <= 2; ++i) {
-      for(int j = -2; j <= 2; ++j) {
+    for (int i = -2; i <= 2; ++i) {
+      for (int j = -2; j <= 2; ++j) {
         if (i > -2 && i < 2 && j == -1) {
           j = 2;
         }
 
         if (random.nextInt(16) == 0) {
-          for(int k = 0; k <= 1; ++k) {
+          for (int k = 0; k <= 1; ++k) {
             BlockPos blockPos = pos.add(i, k, j);
             if (world.getBlockState(blockPos).isOf(Blocks.BOOKSHELF)) {
               if (!world.isAir(pos.add(i / 2, 0, j / 2))) {
                 break;
               }
-
-              world.addParticle(ParticleTypes.ENCHANT, (double)pos.getX() + 0.5D, (double)pos.getY() + 2.0D, (double)pos.getZ() + 0.5D, (double)((float)i + random.nextFloat()) - 0.5D, (double)((float)k - random.nextFloat() - 1.0F), (double)((float)j + random.nextFloat()) - 0.5D);
+              world.addParticle(ParticleTypes.ASH, (double) pos.getX() + 0.5D,
+                  (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+                  (double) ((float) i + random.nextFloat()) - 0.5D,
+                  (float) k - random.nextFloat() - 1.0F,
+                  (double) ((float) j + random.nextFloat()) - 0.5D);
+              world.addParticle(ParticleTypes.GLOW, (double) pos.getX() + 0.5D,
+                  (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+                  (double) ((float) i + random.nextFloat()) - 0.5D,
+                  (float) k - random.nextFloat() - 1.0F,
+                  (double) ((float) j + random.nextFloat()) - 0.5D);
+              world.addParticle(ParticleTypes.SOUL, (double) pos.getX() + 0.5D,
+                  (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+                  (double) ((float) i + random.nextFloat()) - 0.5D,
+                  (float) k - random.nextFloat() - 1.0F,
+                  (double) ((float) j + random.nextFloat()) - 0.5D);
+              world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, (double) pos.getX() + 0.5D,
+                  (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+                  (double) ((float) i + random.nextFloat()) - 0.5D,
+                  (float) k - random.nextFloat() - 1.0F,
+                  (double) ((float) j + random.nextFloat()) - 0.5D);
+              world.addParticle(ParticleTypes.ENCHANT, (double) pos.getX() + 0.5D,
+                  (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+                  (double) ((float) i + random.nextFloat()) - 0.5D,
+                  (float) k - random.nextFloat() - 1.0F,
+                  (double) ((float) j + random.nextFloat()) - 0.5D);
             }
           }
         }
       }
     }
   }
-
 }
 

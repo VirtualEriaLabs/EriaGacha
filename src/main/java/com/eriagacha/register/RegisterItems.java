@@ -1,6 +1,5 @@
 package com.eriagacha.register;
 
-import com.eriagacha.gui.GachaTableScreenHandler;
 import com.eriagacha.howitsdone.block.EssenceOreBlock;
 import com.eriagacha.item.AcquaintFate;
 import com.eriagacha.item.AdeptusTemptation;
@@ -8,9 +7,10 @@ import com.eriagacha.item.EriaLogo;
 import com.eriagacha.item.EssenceItem;
 import com.eriagacha.item.EssenceOreItem;
 import com.eriagacha.item.EssenceSwordTool;
-import com.eriagacha.item.GachaTable.GachaTable;
+import com.eriagacha.item.GachaTable.GachaTableBlock;
 import com.eriagacha.item.GachaTable.GachaTableEntity;
 import com.eriagacha.item.GachaTable.GachaTableItem;
+import com.eriagacha.item.GachaTable.gui.GachaTableGui;
 import com.eriagacha.item.InterwinedFate;
 import com.eriagacha.item.ScrollItem;
 import com.eriagacha.utils.NameSpaces;
@@ -23,6 +23,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -39,10 +40,10 @@ public class RegisterItems {
   public static final BlockItem EssenceOre_ITEM = new EssenceOreItem();
   public static final Item EssenceSword_ITEM = EssenceSwordTool.INSTANCE;
   public static final Item ERIA_LOGO = new EriaLogo();
-  public static final Block GACHA_TABLE = new GachaTable();
+  public static final Block GACHA_TABLE = new GachaTableBlock();
   public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
   public static BlockEntityType<GachaTableEntity> GACHA_TABLE_ENTITY;
-  public static final ScreenHandlerType<GachaTableScreenHandler> SCREEN_HANDLER_INVENTORY_TYPE;
+  public static ScreenHandlerType<GachaTableGui> SCREEN_HANDLER_INVENTORY_TYPE;
 
 
   static {
@@ -56,17 +57,20 @@ public class RegisterItems {
                       .orElseThrow(AssertionError::new));
             });
      */
-    SCREEN_HANDLER_INVENTORY_TYPE = ScreenHandlerRegistry.registerExtended(id("gacha_table_gui"),
-        GachaTableScreenHandler::new);
+
+
   }
 
-  private RegisterItems() {
-  }
+  private RegisterItems() {}
 
   public static void init() {
-
-    GACHA_TABLE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "tutorial:demo_block_entity",
+    GACHA_TABLE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, id("gacha_table_entity"),
         FabricBlockEntityTypeBuilder.create(GachaTableEntity::new, GACHA_TABLE).build(null));
+
+    SCREEN_HANDLER_INVENTORY_TYPE = ScreenHandlerRegistry.registerExtended(
+        id("gacha_table_gui"),
+        (syncId, inventory, buf) -> new GachaTableGui(syncId, inventory, ScreenHandlerContext
+            .create(inventory.player.world, buf.readBlockPos())));
 
     Registry.register(Registry.ITEM, id("interwined_fate"), INTERTWINED_FATE);
     Registry.register(Registry.ITEM, id("acquaint_fate"), ACQUAINT_FATE);
