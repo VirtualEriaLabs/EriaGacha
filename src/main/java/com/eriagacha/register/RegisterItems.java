@@ -7,6 +7,9 @@ import com.eriagacha.item.EriaLogo;
 import com.eriagacha.item.EssenceItem;
 import com.eriagacha.item.EssenceOreItem;
 import com.eriagacha.item.EssenceSwordTool;
+import com.eriagacha.item.GachaFurnace.GachaFurnaceBlock;
+import com.eriagacha.item.GachaFurnace.GachaFurnaceEntity;
+import com.eriagacha.item.GachaFurnace.GachaFurnaceItem;
 import com.eriagacha.item.GachaTable.GachaTableBlock;
 import com.eriagacha.item.GachaTable.GachaTableEntity;
 import com.eriagacha.item.GachaTable.GachaTableItem;
@@ -42,8 +45,13 @@ public class RegisterItems {
   public static final Item ERIA_LOGO = new EriaLogo();
   public static final Block GACHA_TABLE = new GachaTableBlock();
   public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
+
+
+  public static final Block GACHA_FURNACE = new GachaFurnaceBlock();
+  public static final Item GACHA_FURNACE_ITEM = new GachaFurnaceItem();
   public static BlockEntityType<GachaTableEntity> GACHA_TABLE_ENTITY;
   public static ScreenHandlerType<GachaTableGui> SCREEN_HANDLER_INVENTORY_TYPE;
+  public static BlockEntityType<GachaFurnaceEntity> GACHA_FURNACE_ENTITY;
 
 
   static {
@@ -67,10 +75,14 @@ public class RegisterItems {
     GACHA_TABLE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, id("gacha_table_entity"),
         FabricBlockEntityTypeBuilder.create(GachaTableEntity::new, GACHA_TABLE).build(null));
 
+    GACHA_FURNACE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, id("gacha_furnace_entity"),
+        FabricBlockEntityTypeBuilder.create(GachaFurnaceEntity::new, GACHA_FURNACE).build(null));
+
     SCREEN_HANDLER_INVENTORY_TYPE = ScreenHandlerRegistry.registerExtended(
         id("gacha_table_gui"),
         (syncId, inventory, buf) -> new GachaTableGui(syncId, inventory, ScreenHandlerContext
             .create(inventory.player.world, buf.readBlockPos())));
+
 
     Registry.register(Registry.ITEM, id("interwined_fate"), INTERTWINED_FATE);
     Registry.register(Registry.ITEM, id("acquaint_fate"), ACQUAINT_FATE);
@@ -83,6 +95,9 @@ public class RegisterItems {
     Registry.register(Registry.ITEM, id("scroll"), Scroll_ITEM);
     Registry.register(Registry.BLOCK, id("gacha_table"), GACHA_TABLE);
     Registry.register(Registry.ITEM, id("gacha_table"), GACHA_TABLE_ITEM);
+
+    Registry.register(Registry.BLOCK, id("gacha_furnace"), GACHA_FURNACE);
+    Registry.register(Registry.ITEM, id("gacha_furnace"), GACHA_FURNACE_ITEM);
   }
 
   public static Identifier id(String identifierName) {
