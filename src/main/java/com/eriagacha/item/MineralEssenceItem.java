@@ -14,8 +14,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 
-public class EssenceItem extends Item {
-  public EssenceItem() {
+public class MineralEssenceItem extends Item {
+  public MineralEssenceItem() {
     super(new FabricItemSettings().group(ItemGroup.MISC).maxCount(64).fireproof()
         .rarity(Rarity.RARE));
   }

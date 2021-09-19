@@ -1,6 +1,7 @@
 package com.eriagacha.item.GachaFurnace;
 
-import com.eriagacha.register.RegisterItems;
+import static com.eriagacha.register.RegisterBlockEntity.GACHA_FURNACE_ENTITY;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -28,7 +29,7 @@ public class GachaFurnaceBlock extends GachaFurnaceAbstractBlock<GachaFurnaceEnt
 
   public GachaFurnaceBlock() {
     super(Settings.of(Material.STONE).strength(1F).sounds(BlockSoundGroup.ANVIL),
-        () -> RegisterItems.GACHA_FURNACE_ENTITY);
+        () -> GACHA_FURNACE_ENTITY);
     this.setDefaultState(this.stateManager.getDefaultState());
   }
 
@@ -86,7 +87,8 @@ public class GachaFurnaceBlock extends GachaFurnaceAbstractBlock<GachaFurnaceEnt
     if (world.isClient) {
       return ActionResult.SUCCESS;
     } else {
-      NamedScreenHandlerFactory namedScreenHandlerFactory = this.createScreenHandlerFactory(state, world, pos);
+      NamedScreenHandlerFactory namedScreenHandlerFactory =
+          this.createScreenHandlerFactory(state, world, pos);
       if (namedScreenHandlerFactory != null) {
         player.openHandledScreen(namedScreenHandlerFactory);
       }

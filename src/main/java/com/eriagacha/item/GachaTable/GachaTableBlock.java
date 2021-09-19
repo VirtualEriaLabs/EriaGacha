@@ -1,6 +1,7 @@
 package com.eriagacha.item.GachaTable;
 
-import com.eriagacha.register.RegisterItems;
+import static com.eriagacha.register.RegisterBlockEntity.GACHA_TABLE_ENTITY;
+
 import java.util.Random;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -32,7 +33,7 @@ public class GachaTableBlock extends GachaTableAbstractBlock<GachaTableEntity> {
 
   public GachaTableBlock() {
     super(AbstractBlock.Settings.of(Material.STONE).strength(1F).sounds(BlockSoundGroup.ANVIL),
-        () -> RegisterItems.GACHA_TABLE_ENTITY);
+        () -> GACHA_TABLE_ENTITY);
     this.setDefaultState(this.stateManager.getDefaultState());
   }
 

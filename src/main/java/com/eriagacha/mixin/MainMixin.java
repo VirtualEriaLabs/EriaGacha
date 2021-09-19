@@ -1,6 +1,6 @@
 package com.eriagacha.mixin;
 
-import com.eriagacha.register.RegisterItems;
+import com.eriagacha.register.RegisterItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -34,6 +34,6 @@ public class MainMixin {
       multiplier = 1.5;
     }
     world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(),
-        new ItemStack(RegisterItems.Essence_ITEM, (int) Math.floor(Math.random() * multiplier))));
+        new ItemStack(RegisterItem.MINERAL_ESSENCE_ITEM, (int) Math.floor(Math.random() * multiplier))));
   }
 }

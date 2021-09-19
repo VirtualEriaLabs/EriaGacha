@@ -31,8 +31,6 @@ public class NetworkClient {
 
   public static void init() {
     ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_S2C_RESPONSE_GACHA,
-        (player, handler, buf, packetSender) -> {
-        });
+        (player, handler, buf, packetSender) -> {});
   }
-
 }

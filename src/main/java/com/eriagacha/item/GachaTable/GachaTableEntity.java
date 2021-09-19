@@ -1,8 +1,9 @@
 package com.eriagacha.item.GachaTable;
 
+import static com.eriagacha.register.RegisterBlockEntity.GACHA_TABLE_ENTITY;
+
 import com.eriagacha.ImplementedInventory;
 import com.eriagacha.item.GachaTable.gui.GachaTableGui;
-import com.eriagacha.register.RegisterItems;
 import lombok.extern.log4j.Log4j2;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
@@ -34,7 +35,7 @@ public class GachaTableEntity extends BlockEntity implements ExtendedScreenHandl
   public int color = DEFAULT_COLOR;
 
   public GachaTableEntity(BlockPos pos, BlockState state) {
-    super(RegisterItems.GACHA_TABLE_ENTITY, pos, state);
+    super(GACHA_TABLE_ENTITY, pos, state);
 
 
   }

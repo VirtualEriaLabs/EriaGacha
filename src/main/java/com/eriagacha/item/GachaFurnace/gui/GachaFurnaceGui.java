@@ -1,6 +1,7 @@
 package com.eriagacha.item.GachaFurnace.gui;
 
-import com.eriagacha.register.RegisterItems;
+import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_INVENTORY_TYPE;
+
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
@@ -10,21 +11,8 @@ import net.minecraft.screen.ScreenHandlerContext;
 
 public class GachaFurnaceGui extends SyncedGuiDescription {
 
-  /*
-  public GachaTableGui(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-    this(
-        syncId,
-        playerInventory,
-        context,
-        context.get((world, pos) -> (GachaTableEntity) world.getBlockEntity(pos))
-            .orElseThrow(() -> new IllegalArgumentException(
-                "FrameGuiDescription can only be used with FrameBlockEntity."))
-    );
-  }
-*/
-
   public GachaFurnaceGui(int syncId, PlayerInventory inv, ScreenHandlerContext ctx) {
-    super(RegisterItems.SCREEN_HANDLER_INVENTORY_TYPE, syncId, inv,
+    super(SCREEN_HANDLER_INVENTORY_TYPE, syncId, inv,
         getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
     if(super.canUse(inv.player))
     {
