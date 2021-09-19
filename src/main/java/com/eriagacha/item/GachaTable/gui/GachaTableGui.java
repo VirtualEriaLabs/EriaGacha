@@ -1,6 +1,6 @@
 package com.eriagacha.item.GachaTable.gui;
 
-import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_INVENTORY_TYPE;
+import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_TABLE_TYPE;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -25,7 +25,7 @@ public class GachaTableGui extends SyncedGuiDescription {
 */
 
   public GachaTableGui(int syncId, PlayerInventory inv, ScreenHandlerContext ctx) {
-    super(SCREEN_HANDLER_INVENTORY_TYPE, syncId, inv,
+    super(SCREEN_HANDLER_TABLE_TYPE, syncId, inv,
         getBlockInventory(ctx), getBlockPropertyDelegate(ctx));
     if(super.canUse(inv.player))
     {

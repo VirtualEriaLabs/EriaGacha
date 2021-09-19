@@ -1,9 +1,10 @@
 package com.eriagacha.gacha;
 
+import static com.eriagacha.register.RegisterItem.ADEPTUS_TEMPTATION_ITEM;
+
 import com.eriagacha.api.MinecraftGivable;
 import com.eriagacha.giveable.GivableItemStack;
 import com.eriagacha.giveable.GivableStatusEffect;
-import com.eriagacha.register.RegisterItem;
 import java.util.Arrays;
 import java.util.List;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -35,7 +36,7 @@ public class GachaBagRegister {
         .itemStack(new ItemStack(Items.DIAMOND_PICKAXE, 1))
         .build();
     MinecraftGivable adeptusTemptation = GivableItemStack.builder()
-        .itemStack(new ItemStack(RegisterItem.ADEPTUS_TEMPTATION, 1))
+        .itemStack(new ItemStack(ADEPTUS_TEMPTATION_ITEM, 1))
         .build();
     MinecraftGivable haste = GivableStatusEffect.builder()
         .statusEffectInstance(new StatusEffectInstance(StatusEffects.HASTE, 20000, 3))

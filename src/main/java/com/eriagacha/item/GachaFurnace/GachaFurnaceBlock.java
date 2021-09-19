@@ -87,8 +87,7 @@ public class GachaFurnaceBlock extends GachaFurnaceAbstractBlock<GachaFurnaceEnt
     if (world.isClient) {
       return ActionResult.SUCCESS;
     } else {
-      NamedScreenHandlerFactory namedScreenHandlerFactory =
-          this.createScreenHandlerFactory(state, world, pos);
+      NamedScreenHandlerFactory namedScreenHandlerFactory = this.createScreenHandlerFactory(state, world, pos);
       if (namedScreenHandlerFactory != null) {
         player.openHandledScreen(namedScreenHandlerFactory);
       }

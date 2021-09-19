@@ -124,7 +124,7 @@ public class GachaFurnaceEntity extends BlockEntity implements ExtendedScreenHan
 
   @Override
   public Text getDisplayName() {
-    return new LiteralText("Mi mesita");
+    return new LiteralText("Mi hornito");
   }
 
   @Nullable

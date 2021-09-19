@@ -1,6 +1,8 @@
 package com.eriagacha.utils;
 
-import com.eriagacha.register.RegisterItem;
+import static com.eriagacha.register.RegisterItem.ACQUAINT_FATE_ITEM;
+import static com.eriagacha.register.RegisterItem.INTERTWINED_FATE_ITEM;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -21,9 +23,9 @@ public class NameSpaces {
 
   public class GachaItems {
     public static final ItemStack CHEAP_GACHA_REQUIEREMENT =
-        new ItemStack(RegisterItem.ACQUAINT_FATE);
+        new ItemStack(ACQUAINT_FATE_ITEM);
     public static final ItemStack EXPENSIVE_GACHA_REQUIEREMENT =
-        new ItemStack(RegisterItem.INTERTWINED_FATE);
+        new ItemStack(INTERTWINED_FATE_ITEM);
 
     private GachaItems() {
     }
