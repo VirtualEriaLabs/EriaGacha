@@ -1,5 +1,6 @@
 package com.eriagacha.register;
 
+import static com.eriagacha.register.RegisterBlock.GACHA_BENCH;
 import static com.eriagacha.utils.RegisterUtils.id;
 
 import com.eriagacha.item.AcquaintFate;
@@ -11,13 +12,13 @@ import com.eriagacha.item.GachaTable.GachaTableItem;
 import com.eriagacha.item.InterwinedFate;
 import com.eriagacha.item.MineralEssenceItem;
 import com.eriagacha.item.ScrollItem;
+import com.eriagacha.item.gachabench.GachaBenchItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 @Log4j2
 public class RegisterItem {
-
   public static final Item INTERTWINED_FATE_ITEM = new InterwinedFate();
   public static final Item ACQUAINT_FATE_ITEM = new AcquaintFate();
   public static final Item ADEPTUS_TEMPTATION_ITEM = new AdeptusTemptation();
@@ -27,6 +28,7 @@ public class RegisterItem {
   public static final Item ERIA_LOGO_ITEM = new EriaLogo();
   public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
   public static final Item GACHA_FURNACE_ITEM = new GachaFurnaceItem();
+  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings());
 
   private RegisterItem() {}
 
@@ -40,5 +42,6 @@ public class RegisterItem {
     Registry.register(Registry.ITEM, id("scroll"), SCROLL_ITEM);
     Registry.register(Registry.ITEM, id("gacha_table"), GACHA_TABLE_ITEM);
     Registry.register(Registry.ITEM, id("gacha_furnace"), GACHA_FURNACE_ITEM);
+    Registry.register(Registry.ITEM, id("gacha_bench"), GACHA_BENCH_ITEM);
   }
 }

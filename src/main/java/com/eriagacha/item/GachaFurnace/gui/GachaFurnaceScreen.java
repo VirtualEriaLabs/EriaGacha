@@ -1,10 +1,13 @@
 package com.eriagacha.item.GachaFurnace.gui;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 
+@Environment(EnvType.CLIENT)
 public class GachaFurnaceScreen extends CottonInventoryScreen<GachaFurnaceGui> {
 
   public static final ScreenRegistry.Factory<GachaFurnaceGui, GachaFurnaceScreen> FACTORY =

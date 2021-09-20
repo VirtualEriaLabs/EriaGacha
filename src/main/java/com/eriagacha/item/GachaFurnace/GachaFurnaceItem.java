@@ -6,9 +6,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 
 public class GachaFurnaceItem extends BlockItem {
-
   public GachaFurnaceItem() {
     super(GACHA_FURNACE, new Settings().group(ItemGroup.DECORATIONS));
-
   }
 }

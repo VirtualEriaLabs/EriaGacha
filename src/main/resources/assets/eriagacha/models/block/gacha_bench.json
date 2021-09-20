@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "eriagacha:block/gachadilla_block",
+    "up": "eriagacha:block/gachadilla_block",
+    "north": "eriagacha:block/gachadilla_block",
+    "east": "eriagacha:block/gachadilla_block",
+    "south": "eriagacha:block/gachadilla_block",
+    "west": "eriagacha:block/gachadilla_block",
+    "particle": "eriagacha:block/gachadilla_block"
+  }
+
+}
