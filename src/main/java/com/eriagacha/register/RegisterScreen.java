@@ -28,6 +28,6 @@ public class RegisterScreen {
 
     SCREEN_HANDLER_BENCH_TYPE = ScreenHandlerRegistry.registerSimple(
         id("gacha_bench_gui"),
-        (syncId, inventory) -> new GachaBenchGui(SCREEN_HANDLER_BENCH_TYPE, syncId, inventory));
+        GachaBenchGui::new);
   }
 }
