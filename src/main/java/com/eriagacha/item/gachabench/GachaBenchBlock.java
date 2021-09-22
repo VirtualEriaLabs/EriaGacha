@@ -1,24 +1,26 @@
 package com.eriagacha.item.gachabench;
 
-import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_BENCH_TYPE;
+import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
 
 import java.util.Optional;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.Stainable;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 
-public class GachaBenchBlock extends Block implements NamedScreenHandlerFactory {
+public class GachaBenchBlock extends BlockWithEntity implements Stainable {
   public GachaBenchBlock(Settings settings) {
     super(settings);
   }
@@ -29,27 +31,39 @@ public class GachaBenchBlock extends Block implements NamedScreenHandlerFactory 
     if (world.isClient) {
       return ActionResult.SUCCESS;
     }
-    Optional.ofNullable(this.createScreenHandlerFactory(state, world, pos))
+    Optional.ofNullable(super.createScreenHandlerFactory(state, world, pos))
         .ifPresent(player::openHandledScreen);
     return ActionResult.CONSUME;
   }
 
-  @Nullable
-  @Override
-  public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world,
-                                                              BlockPos pos) {
-    return state.getBlock() instanceof NamedScreenHandlerFactory namedScreenHandlerFactory ?
-        namedScreenHandlerFactory : null;
-  }
-
-  @Override
-  public Text getDisplayName() {
-    return new LiteralText("GachaBench");
-  }
 
   @Nullable
   @Override
-  public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-    return SCREEN_HANDLER_BENCH_TYPE.create(syncId, inv);
+  public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    return new GachaBenchEntity(pos, state);
+  }
+
+  @Override
+  public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
+
+  @Nullable
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state,
+                                                                BlockEntityType<T> type) {
+    return checkType(type, GACHA_BENCH_ENTITY, GachaBenchEntity::tick);
+  }
+
+  @Nullable
+  @Override
+  public <T extends BlockEntity> GameEventListener getGameEventListener(World world,
+                                                                        T blockEntity) {
+    return super.getGameEventListener(world, blockEntity);
+  }
+
+  @Override
+  public DyeColor getColor() {
+    return DyeColor.MAGENTA;
   }
 }
