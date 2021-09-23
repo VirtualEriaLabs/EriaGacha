@@ -26,8 +26,15 @@ public class RegisterScreen {
         (syncId, inventory, buf) -> new GachaFurnaceGui(syncId, inventory, ScreenHandlerContext
             .create(inventory.player.world, buf.readBlockPos())));
 
+    /*
     SCREEN_HANDLER_BENCH_TYPE = ScreenHandlerRegistry.registerSimple(
         id("gacha_bench_gui"),
         GachaBenchGui::new);
+    */
+
+    SCREEN_HANDLER_BENCH_TYPE = ScreenHandlerRegistry.registerExtended(
+        id("gacha_bench_gui"),
+        (syncId, inventory, buf) -> new GachaBenchGui(syncId, inventory, ScreenHandlerContext
+            .create(inventory.player.world, buf.readBlockPos())));
   }
 }

@@ -39,8 +39,8 @@ public class GachaFurnaceEntity extends BlockEntity implements ExtendedScreenHan
   }
 
   @Override
-  public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
-    packetByteBuf.writeBlockPos(this.pos);
+  public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf buf) {
+    buf.writeBlockPos(this.pos);
   }
 
   @Override

@@ -1,25 +1,30 @@
 package com.eriagacha.item.gachabench;
 
 import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
-import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_BENCH_TYPE;
 
 import blue.endless.jankson.annotation.Nullable;
+import com.eriagacha.item.gachabench.gui.GachaBenchGui;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class GachaBenchEntity extends LockableContainerBlockEntity {
+public class GachaBenchEntity extends LockableContainerBlockEntity implements
+    ExtendedScreenHandlerFactory {
 
-  public final int INVENTORY_SIZE = 3;
+  public final int INVENTORY_SIZE = 9;
   private final DefaultedList<ItemStack>
       inventory = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
   public static final int DEFAULT_COLOR = 0xA06540;
@@ -105,7 +110,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity {
   @Nullable
   @Override
   public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-    return SCREEN_HANDLER_BENCH_TYPE.create(syncId, inv);
+    return  new GachaBenchGui(syncId, inv, ScreenHandlerContext.create(this.world,this.pos));
   }
 
   @Override
@@ -115,6 +120,11 @@ public class GachaBenchEntity extends LockableContainerBlockEntity {
 
   public static void tick(World world, BlockPos pos, BlockState state,
                           GachaBenchEntity blockEntity) {
-    System.out.println("xd");
+    //System.out.println("xd");
+  }
+
+  @Override
+  public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+    buf.writeBlockPos(this.pos);
   }
 }

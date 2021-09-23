@@ -22,7 +22,7 @@ public class GachaTableGui extends SyncedGuiDescription {
                 "FrameGuiDescription can only be used with FrameBlockEntity."))
     );
   }
-*/
+  */
 
   public GachaTableGui(int syncId, PlayerInventory inv, ScreenHandlerContext ctx) {
     super(SCREEN_HANDLER_TABLE_TYPE, syncId, inv,
