@@ -28,7 +28,6 @@ public class GachaBenchGui extends SyncedGuiDescription {
     root.setSize(164, 200);
     root.setInsets(Insets.ROOT_PANEL);
 
-
     WItemSlot baseItem = WItemSlot.of(super.blockInventory, 0);
     root.add(baseItem, 73, 8);
 

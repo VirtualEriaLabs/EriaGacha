@@ -4,6 +4,9 @@ import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
 
 import blue.endless.jankson.annotation.Nullable;
 import com.eriagacha.item.gachabench.gui.GachaBenchGui;
+import com.eriagacha.register.RegisterItem;
+import lombok.extern.log4j.Log4j2;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -11,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -21,8 +25,9 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@Log4j2
 public class GachaBenchEntity extends LockableContainerBlockEntity implements
-    ExtendedScreenHandlerFactory {
+    ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 
   public final int INVENTORY_SIZE = 9;
   private final DefaultedList<ItemStack>
@@ -84,6 +89,17 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     if (stack.getCount() > this.getMaxCountPerStack()) {
       stack.setCount(this.getMaxCountPerStack());
     }
+
+  }
+  @Override
+  public boolean isValid(int slot, ItemStack stack) {
+    if(slot==0&&stack.isItemEqual(new ItemStack(RegisterItem.SCROLL_ITEM)))
+    {
+      return true;
+    }else if(slot>0&&slot<7&&stack.isItemEqual(new ItemStack(RegisterItem.MINERAL_ESSENCE_ITEM))){
+      return true;
+    }
+    return false;
   }
 
   @Override
@@ -92,9 +108,10 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     if (this.world.getBlockEntity(this.pos) != this) {
       return false;
     }
-    return player
-        .squaredDistanceTo((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-            (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    return player.squaredDistanceTo(
+        (double) this.pos.getX() + 0.5D,
+        (double) this.pos.getY() + 0.5D,
+        (double) this.pos.getZ() + 0.5D) <= 64.0D;
   }
 
   @Override
@@ -126,5 +143,34 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   @Override
   public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
     buf.writeBlockPos(this.pos);
+  }
+
+  @Override
+  public void fromClientTag(NbtCompound tag) {
+    DefaultedList<ItemStack> items = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
+    Inventories.readNbt(tag, items);
+
+    for(int i = 0; i < this.inventory.size(); i++) {
+      this.inventory.set(i, items.get(i));
+    }
+  }
+
+  @Override
+  public NbtCompound toClientTag(NbtCompound tag) {
+    return this.writeNbt(tag);
+  }
+
+
+  @Override
+  public NbtCompound writeNbt(NbtCompound nbt) {
+    nbt = super.writeNbt(nbt);
+    nbt = Inventories.writeNbt(nbt, this.inventory);
+    return nbt;
+  }
+
+  @Override
+  public void readNbt(NbtCompound nbt) {
+    super.readNbt(nbt);
+    Inventories.readNbt(nbt, this.inventory);
   }
 }
