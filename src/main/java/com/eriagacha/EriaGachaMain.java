@@ -5,7 +5,6 @@ import com.eriagacha.network.NetworkClient;
 import com.eriagacha.network.NetworkServer;
 import com.eriagacha.register.RegisterBlock;
 import com.eriagacha.register.RegisterBlockEntity;
-import com.eriagacha.register.RegisterBlockEntityRenderer;
 import com.eriagacha.register.RegisterCommands;
 import com.eriagacha.register.RegisterItem;
 import com.eriagacha.register.RegisterScreen;
@@ -39,6 +38,6 @@ public class EriaGachaMain implements ModInitializer {
     RegisterBlock.init();
     RegisterBlockEntity.init();
     RegisterScreen.init();
-    RegisterBlockEntityRenderer.init();
+
   }
 }
