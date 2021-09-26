@@ -15,6 +15,7 @@ import com.eriagacha.item.ScrollItem;
 import com.eriagacha.item.gachabench.GachaBenchItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 
 @Log4j2
@@ -28,7 +29,8 @@ public class RegisterItem {
   public static final Item ERIA_LOGO_ITEM = new EriaLogo();
   public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
   public static final Item GACHA_FURNACE_ITEM = new GachaFurnaceItem();
-  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings());
+  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings().group(
+      ItemGroup.DECORATIONS));
 
   private RegisterItem() {}
 
@@ -38,7 +40,7 @@ public class RegisterItem {
     Registry.register(Registry.ITEM, id("adeptus_temptation"), ADEPTUS_TEMPTATION_ITEM);
     Registry.register(Registry.ITEM, id("eria_logo"), ERIA_LOGO_ITEM);
     Registry.register(Registry.ITEM, id("essence_sword"), ESSENCE_SWORD_ITEM);
-    Registry.register(Registry.ITEM, id("essence"), MINERAL_ESSENCE_ITEM);
+    Registry.register(Registry.ITEM, id("mineral_essence"), MINERAL_ESSENCE_ITEM);
     Registry.register(Registry.ITEM, id("scroll"), SCROLL_ITEM);
     Registry.register(Registry.ITEM, id("gacha_table"), GACHA_TABLE_ITEM);
     Registry.register(Registry.ITEM, id("gacha_furnace"), GACHA_FURNACE_ITEM);
