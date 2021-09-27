@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
 plugins {
     id 'fabric-loom'
     id 'maven-publish'
@@ -31,7 +32,6 @@ repositories {
     }
 }
 
-/*
 shadowJar {
     configurations = [project.configurations.shadow]
     zip64 = true
@@ -46,9 +46,8 @@ shadowJar {
         mergeStrategy = 'append'
     }
 }
-*/
-//tasks.remapJar.dependsOn(shadowJar)
-//(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+tasks.remapJar.dependsOn(shadowJar)
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
