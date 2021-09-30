@@ -1,6 +1,6 @@
 package com.eriagacha.item.gachabench;
 
-import static com.eriagacha.register.RegisterItem.SCROLL_ITEM;
+import static com.eriagacha.register.RegisterItem.BASE_SCROLL_ITEM;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,7 +16,7 @@ import net.minecraft.util.math.Vec3f;
 public class GachaBenchEntityRenderer
     implements BlockEntityRenderer<GachaBenchEntity> {
 
-  private static ItemStack stack = new ItemStack(SCROLL_ITEM, 1);
+  private static ItemStack stack = new ItemStack(BASE_SCROLL_ITEM, 1);
 
   public GachaBenchEntityRenderer(BlockEntityRendererFactory.Context ctx) {
   }
