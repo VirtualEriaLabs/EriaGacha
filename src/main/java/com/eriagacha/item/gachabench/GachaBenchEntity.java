@@ -5,17 +5,23 @@ import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
 import blue.endless.jankson.annotation.Nullable;
 import com.eriagacha.item.gachabench.gui.GachaBenchGui;
 import com.eriagacha.register.RegisterItem;
+import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import lombok.extern.log4j.Log4j2;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,20 +29,56 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Log4j2
 public class GachaBenchEntity extends LockableContainerBlockEntity implements
-    ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
+    ExtendedScreenHandlerFactory, BlockEntityClientSerializable, PropertyDelegateHolder {
 
   public final int INVENTORY_SIZE = 9;
   private final DefaultedList<ItemStack>
       inventory = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
   public static final int DEFAULT_COLOR = 0xA06540;
   public int color = DEFAULT_COLOR;
+  private int brewTime;
+  public int fuel;
+  private Item itemBrewing;
+  protected final PropertyDelegate propertyDelegate;
 
   public GachaBenchEntity(BlockPos pos, BlockState state) {
     super(GACHA_BENCH_ENTITY, pos, state);
+
+    this.propertyDelegate = new PropertyDelegate() {
+      @Override
+      public int get(int index) {
+        switch (index) {
+          case 0:
+            return GachaBenchEntity.this.brewTime;
+          case 1:
+            return GachaBenchEntity.this.fuel;
+          default:
+            return 0;
+        }
+      }
+
+      @Override
+      public void set(int index, int value) {
+        switch (index) {
+          case 0:
+            GachaBenchEntity.this.brewTime = value;
+            break;
+          case 1:
+            GachaBenchEntity.this.fuel = value;
+        }
+
+      }
+
+      @Override
+      public int size() {
+        return 2;
+      }
+    };
   }
 
   @Override
@@ -91,12 +133,15 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     }
 
   }
+
   @Override
   public boolean isValid(int slot, ItemStack stack) {
-    if(slot==0&&stack.isItemEqual(new ItemStack(RegisterItem.SCROLL_ITEM)))
-    {
+    if (slot == 0 && stack.isItemEqual(new ItemStack(RegisterItem.BASE_SCROLL_ITEM))) {
       return true;
-    }else if(slot>0&&slot<7&&stack.isItemEqual(new ItemStack(RegisterItem.MINERAL_ESSENCE_ITEM))){
+    } else if (slot > 0 && slot < 7 &&
+        stack.isItemEqual(new ItemStack(RegisterItem.MINERAL_ESSENCE_ITEM))) {
+      return true;
+    } else if (slot == 7) {
       return true;
     }
     return false;
@@ -124,10 +169,15 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     return new LiteralText("GachaBench");
   }
 
+  @Override
+  public PropertyDelegate getPropertyDelegate() {
+    return this.propertyDelegate;
+  }
+
   @Nullable
   @Override
   public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-    return  new GachaBenchGui(syncId, inv, ScreenHandlerContext.create(this.world,this.pos));
+    return new GachaBenchGui(syncId, inv, ScreenHandlerContext.create(this.world, this.pos));
   }
 
   @Override
@@ -137,7 +187,65 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
 
   public static void tick(World world, BlockPos pos, BlockState state,
                           GachaBenchEntity blockEntity) {
-    //System.out.println("xd");
+
+    if (blockEntity.fuel <= 0 && blockEntity.inventory.get(0).isOf(RegisterItem.BASE_SCROLL_ITEM)) {
+      blockEntity.fuel = 1;
+      blockEntity.inventory.get(0).decrement(1);
+      markDirty(world, pos, state);
+    }
+    boolean canCraft = canCraft(blockEntity.inventory);
+    boolean brewActive = blockEntity.brewTime < 200;
+
+    if (brewActive) {
+      blockEntity.brewTime++;
+      boolean brewTimeConsumed = blockEntity.brewTime == 0;
+      if (brewTimeConsumed && canCraft) {
+        craft(world, pos, blockEntity.inventory);
+        markDirty(world, pos, state);
+      }
+    } else if (canCraft && blockEntity.fuel > 0) {
+      --blockEntity.fuel;
+      blockEntity.brewTime = 0;
+      blockEntity.itemBrewing = blockEntity.inventory.get(1).getItem();
+      if (blockEntity.inventory.get(7).getItem() == RegisterItem.ACQUAINT_FATE_ITEM
+          || blockEntity.inventory.get(7).getItem() == Items.AIR) {
+
+        blockEntity.inventory.set(7, new ItemStack(RegisterItem.ACQUAINT_FATE_ITEM,
+            1 + blockEntity.inventory.get(7).getCount()));
+        LightningEntity lightningEntity = (LightningEntity) EntityType.LIGHTNING_BOLT.create(world);
+        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos));
+        world.spawnEntity(lightningEntity);
+      }
+      markDirty(world, pos, state);
+    }
+  }
+
+  private static void craft(World world, BlockPos pos, DefaultedList<ItemStack> slots) {
+    for (int i = 1; i < 7; ++i) {
+      ItemStack itemStack = slots.get(i);
+      itemStack.decrement(1);
+      slots.set(i, itemStack);
+    }
+  }
+
+  private static boolean canCraft(DefaultedList<ItemStack> slots) {
+    ItemStack itemStack = (ItemStack) slots.get(3);
+    if (itemStack.isEmpty()) {
+      return false;
+    } else {
+      int count = 0;
+      for (int i = 1; i < 7; ++i) {
+        ItemStack itemStack2 = (ItemStack) slots.get(i);
+        if (!itemStack2.isEmpty() || itemStack2.getItem() != Items.AIR) {
+          count++;
+        }
+        if (count == 6) {
+          return true;
+        }
+      }
+
+      return false;
+    }
   }
 
   @Override
@@ -150,7 +258,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     DefaultedList<ItemStack> items = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
     Inventories.readNbt(tag, items);
 
-    for(int i = 0; i < this.inventory.size(); i++) {
+    for (int i = 0; i < this.inventory.size(); i++) {
       this.inventory.set(i, items.get(i));
     }
   }
@@ -162,15 +270,20 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
 
 
   @Override
-  public NbtCompound writeNbt(NbtCompound nbt) {
-    nbt = super.writeNbt(nbt);
-    nbt = Inventories.writeNbt(nbt, this.inventory);
-    return nbt;
+  public void readNbt(NbtCompound nbt) {
+    super.readNbt(nbt);
+    DefaultedList<ItemStack> items = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
+    Inventories.readNbt(nbt, this.inventory);
+    this.brewTime = nbt.getShort("BrewTime");
+    this.fuel = nbt.getByte("Fuel");
   }
 
   @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
-    Inventories.readNbt(nbt, this.inventory);
+  public NbtCompound writeNbt(NbtCompound nbt) {
+    super.writeNbt(nbt);
+    nbt.putShort("BrewTime", (short) this.brewTime);
+    Inventories.writeNbt(nbt, this.inventory);
+    nbt.putByte("Fuel", (byte) this.fuel);
+    return nbt;
   }
 }
