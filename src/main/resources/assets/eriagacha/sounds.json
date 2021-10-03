@@ -1,14 +1,15 @@
 {
-  "crimsonambient": {
-    "category": "ambient",
-    "sounds": [
-      {
-        "name": "eriagacha:terraria_music_-_crimson-p",
-        "stream": false
-      }
-    ]
-  },
+  "hit1": {
+  "category": "combat",
+  "sounds": [
+    {
+      "name": "eriagacha:hit_1",
+      "stream": false
+    }
+  ]
+},
   "firespell": {
+    "category": "combat",
     "sounds": [
       {
         "name": "eriagacha:fire_spell",

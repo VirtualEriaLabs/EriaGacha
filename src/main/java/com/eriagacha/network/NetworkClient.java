@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.math.BlockPos;
 
 @Log4j2
 @Environment(EnvType.CLIENT)
@@ -38,8 +37,7 @@ public class NetworkClient {
 
     ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_C2S_SEND_PARTICLE,
         (player, handler, buf, packetSender) -> {
-        BlockPos pos = buf.readBlockPos();
-        ParticleUtils.soulFlameArea(pos,player);
+        ParticleUtils.soulFlameArea(buf.readBlockPos(),player,buf.readInt(),buf.readInt());
         });
   }
 }

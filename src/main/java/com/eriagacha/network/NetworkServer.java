@@ -28,10 +28,12 @@ public class NetworkServer {
   }
 
 
-  public static void serverToClientDrawParticule(World world, BlockPos pos) {
+  public static void serverToClientDrawParticule(World world, BlockPos pos, int radio, int distanceFromPlayer) {
     try {
       PacketByteBuf message = PacketByteBufs.create();
       message.writeBlockPos(pos);
+      message.writeInt(radio);
+      message.writeInt(distanceFromPlayer);
       for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, pos)) {
         ServerPlayNetworking.send((ServerPlayerEntity) player, NameSpaces.Network.ID_C2S_SEND_PARTICLE, message);
       }

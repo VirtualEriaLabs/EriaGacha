@@ -1,15 +1,14 @@
 package com.eriagacha.item;
 
 import static com.eriagacha.network.NetworkServer.serverToClientDrawParticule;
-import static com.eriagacha.utils.RegisterUtils.id;
+import static com.eriagacha.register.RegisterSound.FIRE_SPELL_SOUND;
+import static com.eriagacha.register.RegisterSound.HIT_1_SOUND;
 
 import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +19,6 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -46,7 +44,7 @@ public class EssenceSwordTool {
 
     @Override
     public float getAttackDamage() {
-      return 25F;
+      return 13F;
     }
 
     @Override
@@ -81,48 +79,31 @@ public class EssenceSwordTool {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
       int radio = 5;
-      int distance = 5;
-      Vec3d playerDirection = user.getRotationVector().normalize();
-      Vec3d center = user.getPos().add(playerDirection.multiply(distance));
+      int xRadio = 5;
+      int yRadio = 1;
+      int zRadio = 5;
+      int distanceFromPlayer = 5;
+      Vec3d center = user.getPos().add(user.getRotationVector().normalize().multiply(distanceFromPlayer));
       BlockPos blockPos = new BlockPos(center.getX(), center.getY(), center.getZ());
-      System.out.println("Despues del add " + center);
-      System.out.println("Soy el player direction " + playerDirection);
       if (!world.isClient()) {
-       serverToClientDrawParticule(world, blockPos);
+        user.sendMessage(new LiteralText("Hola"),false);
+        world.playSoundFromEntity(null,user,FIRE_SPELL_SOUND, SoundCategory.PLAYERS,100,100);
+       serverToClientDrawParticule(world, blockPos, radio, distanceFromPlayer);
       }
-      if (world.isClient) {
-          //ParticleUtils.soulFlameArea(blockPos, user);
-      }
-      SoundEvent se = new SoundEvent(id("firespell"));
-      world.playSoundFromEntity(null,user,se, SoundCategory.PLAYERS,100,100);
+
       List<Entity> listEntities = world.getOtherEntities(user,
           new Box(center.getX() - radio, center.getY() - radio, center.getZ() - radio,
               center.getX() + radio, center.getY() + radio, center.getZ() + radio));
 
-      double totalCount =0;
-      for (double z = center.getZ() + 5; z > center.getZ() - 5; z--) {
-        for (double x = (center.getX() + 5); x > center.getX() - 5; x--) {
-          for (double y = (center.getY() + 1); y > center.getY() - 1; y--) {
-            totalCount++;
-            if (Math.random() >= 0.99) {
-              LightningEntity lightningEntity =
-                  (LightningEntity) EntityType.LIGHTNING_BOLT.create(world);
-              lightningEntity
-                  .refreshPositionAfterTeleport(Vec3d.ofBottomCenter(new BlockPos(x, y, z)));
-              //lightningEntity.applyDamageEffects();
-              world.spawnEntity(lightningEntity);
-            }
-          }
-        }
-      }
       for (Entity entity : listEntities) {
         if(entity instanceof MobEntity){
+          world.playSoundFromEntity(null,entity,HIT_1_SOUND, SoundCategory.PLAYERS,100,100);
           entity.setOnFireFor(5);
-          entity.damage(DamageSource.explosion(user), 50);
+          entity.damage(DamageSource.explosion(user), 5);
         }
       }
 
-      return TypedActionResult.pass(user.getStackInHand(hand));
+      return TypedActionResult.success(user.getStackInHand(hand));
     }
 
     @Environment(EnvType.CLIENT)
