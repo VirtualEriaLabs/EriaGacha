@@ -36,7 +36,12 @@ import net.minecraft.world.World;
 public class GachaBenchEntity extends LockableContainerBlockEntity implements
     ExtendedScreenHandlerFactory, BlockEntityClientSerializable, PropertyDelegateHolder {
 
-  public final int INVENTORY_SIZE = 9;
+  public final static int INVENTORY_SIZE = 7;
+  public final static int BASE = 0;
+  public final static int CRAFT_RESULT = 6;
+  public final static int[] ESSENCE_INDEX = new int[] {
+      1,2,3,4,5
+  };
   private final DefaultedList<ItemStack>
       inventory = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
   public static final int DEFAULT_COLOR = 0xA06540;
@@ -138,11 +143,11 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   public boolean isValid(int slot, ItemStack stack) {
     if (slot == 0 && stack.isItemEqual(new ItemStack(RegisterItem.BASE_SCROLL_ITEM))) {
       return true;
-    } else if (slot > 0 && slot < 7 &&
+    } else if (slot > 0 && slot < CRAFT_RESULT &&
         stack.isItemEqual(new ItemStack(RegisterItem.MINERAL_ESSENCE_ITEM))) {
       return true;
-    } else if (slot == 7) {
-      return true;
+    } else if (slot == CRAFT_RESULT) {
+      return false;
     }
     return false;
   }
@@ -207,11 +212,11 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       --blockEntity.fuel;
       blockEntity.brewTime = 0;
       blockEntity.itemBrewing = blockEntity.inventory.get(1).getItem();
-      if (blockEntity.inventory.get(7).getItem() == RegisterItem.ACQUAINT_FATE_ITEM
-          || blockEntity.inventory.get(7).getItem() == Items.AIR) {
+      if (blockEntity.inventory.get(CRAFT_RESULT).getItem() == RegisterItem.ACQUAINT_FATE_ITEM
+          || blockEntity.inventory.get(CRAFT_RESULT).getItem() == Items.AIR) {
 
-        blockEntity.inventory.set(7, new ItemStack(RegisterItem.ACQUAINT_FATE_ITEM,
-            1 + blockEntity.inventory.get(7).getCount()));
+        blockEntity.inventory.set(CRAFT_RESULT, new ItemStack(RegisterItem.ACQUAINT_FATE_ITEM,
+            1 + blockEntity.inventory.get(CRAFT_RESULT).getCount()));
         LightningEntity lightningEntity = (LightningEntity) EntityType.LIGHTNING_BOLT.create(world);
         lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos));
         world.spawnEntity(lightningEntity);
@@ -221,7 +226,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   }
 
   private static void craft(World world, BlockPos pos, DefaultedList<ItemStack> slots) {
-    for (int i = 1; i < 7; ++i) {
+    for (int i = 1; i < CRAFT_RESULT; ++i) {
       ItemStack itemStack = slots.get(i);
       itemStack.decrement(1);
       slots.set(i, itemStack);
@@ -234,12 +239,12 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       return false;
     } else {
       int count = 0;
-      for (int i = 1; i < 7; ++i) {
+      for (int i = 1; i < CRAFT_RESULT; ++i) {
         ItemStack itemStack2 = (ItemStack) slots.get(i);
         if (!itemStack2.isEmpty() || itemStack2.getItem() != Items.AIR) {
           count++;
         }
-        if (count == 6) {
+        if (count == ESSENCE_INDEX.length) {
           return true;
         }
       }

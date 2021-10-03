@@ -16,7 +16,8 @@ public class NameSpaces {
   public class Network {
     public static final Identifier ID_C2S_SEND_GACHA = new Identifier("send:gacha");
     public static final Identifier ID_S2C_RESPONSE_GACHA = new Identifier("response:gacha");
-
+    public static final Identifier ID_C2S_SEND_PARTICLE = new Identifier("send:particle");
+    public static final Identifier ID_S2C_RESPONSE_PARTICLE = new Identifier("response:particle");
     private Network() {
     }
   }
