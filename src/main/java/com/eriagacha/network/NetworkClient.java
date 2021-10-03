@@ -1,6 +1,7 @@
 package com.eriagacha.network;
 
 import com.eriagacha.utils.NameSpaces;
+import com.eriagacha.utils.ParticleUtils;
 import lombok.extern.log4j.Log4j2;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,6 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.math.BlockPos;
 
 @Log4j2
 @Environment(EnvType.CLIENT)
@@ -29,8 +31,15 @@ public class NetworkClient {
     }
   }
 
+
   public static void init() {
     ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_S2C_RESPONSE_GACHA,
         (player, handler, buf, packetSender) -> {});
+
+    ClientPlayNetworking.registerGlobalReceiver(NameSpaces.Network.ID_C2S_SEND_PARTICLE,
+        (player, handler, buf, packetSender) -> {
+        BlockPos pos = buf.readBlockPos();
+        ParticleUtils.soulFlameArea(pos,player);
+        });
   }
 }
