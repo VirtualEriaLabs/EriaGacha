@@ -86,7 +86,6 @@ public class EssenceSwordTool {
       Vec3d center = user.getPos().add(user.getRotationVector().normalize().multiply(distanceFromPlayer));
       BlockPos blockPos = new BlockPos(center.getX(), center.getY(), center.getZ());
       if (!world.isClient()) {
-        user.sendMessage(new LiteralText("Hola"),false);
         world.playSoundFromEntity(null,user,FIRE_SPELL_SOUND, SoundCategory.PLAYERS,100,100);
        serverToClientDrawParticule(world, blockPos, radio, distanceFromPlayer);
       }
