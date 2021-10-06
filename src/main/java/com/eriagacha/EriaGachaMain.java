@@ -7,6 +7,7 @@ import com.eriagacha.register.RegisterBlock;
 import com.eriagacha.register.RegisterBlockEntity;
 import com.eriagacha.register.RegisterCommands;
 import com.eriagacha.register.RegisterItem;
+import com.eriagacha.register.RegisterLootTable;
 import com.eriagacha.register.RegisterScreen;
 import lombok.extern.log4j.Log4j2;
 import net.fabricmc.api.EnvType;
@@ -32,12 +33,11 @@ public class EriaGachaMain implements ModInitializer {
     if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
       NetworkClient.init();
     }
-
+    RegisterLootTable.init();
     RegisterCommands.init();
     RegisterItem.init();
     RegisterBlock.init();
     RegisterBlockEntity.init();
     RegisterScreen.init();
-
   }
 }

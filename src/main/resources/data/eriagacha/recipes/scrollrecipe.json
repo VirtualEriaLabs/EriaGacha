@@ -2,41 +2,29 @@
   "group": "eriagacha",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "012",
+    " 1 ",
     "345",
-    "678"
+    " 7 "
   ],
   "key": {
-    "0": {
-      "item": "minecraft:paper"
-    },
     "1": {
       "item": "minecraft:paper"
     },
-    "2": {
-      "item": "minecraft:paper"
-    },
     "3": {
-      "item": "minecraft:paper"
+      "item": "minecraft:ink_sac"
     },
     "4": {
-      "item": "eriagacha:essence"
+      "item": "minecraft:paper"
     },
     "5": {
-      "item": "minecraft:paper"
-    },
-    "6": {
-      "item": "minecraft:paper"
+      "item": "minecraft:ink_sac"
     },
     "7": {
-      "item": "minecraft:paper"
-    },
-    "8": {
       "item": "minecraft:paper"
     }
   },
   "result": {
-    "item": "eriagacha:scroll",
+    "item": "eriagacha:base_scroll",
     "count": 1
   }
 }
