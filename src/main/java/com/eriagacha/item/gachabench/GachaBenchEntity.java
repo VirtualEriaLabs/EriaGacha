@@ -27,6 +27,7 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -46,9 +47,9 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       inventory = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
   public static final int DEFAULT_COLOR = 0xA06540;
   public int color = DEFAULT_COLOR;
-  private int brewTime;
+  private int signTime;
   public int fuel;
-  private Item itemBrewing;
+  private Item itemSigning;
   protected final PropertyDelegate propertyDelegate;
 
   public GachaBenchEntity(BlockPos pos, BlockState state) {
@@ -59,7 +60,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       public int get(int index) {
         switch (index) {
           case 0:
-            return GachaBenchEntity.this.brewTime;
+            return GachaBenchEntity.this.signTime;
           case 1:
             return GachaBenchEntity.this.fuel;
           default:
@@ -71,7 +72,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       public void set(int index, int value) {
         switch (index) {
           case 0:
-            GachaBenchEntity.this.brewTime = value;
+            GachaBenchEntity.this.signTime = value;
             break;
           case 1:
             GachaBenchEntity.this.fuel = value;
@@ -88,7 +89,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
 
   @Override
   protected Text getContainerName() {
-    return new LiteralText("GachaBench");
+    return new TranslatableText("text.eriagacha.contract_table");
   }
 
   @Override
@@ -199,19 +200,19 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       markDirty(world, pos, state);
     }
     boolean canCraft = canCraft(blockEntity.inventory);
-    boolean brewActive = blockEntity.brewTime < 200;
+    boolean signActive = blockEntity.signTime < 200;
 
-    if (brewActive) {
-      blockEntity.brewTime++;
-      boolean brewTimeConsumed = blockEntity.brewTime == 0;
-      if (brewTimeConsumed && canCraft) {
+    if (signActive) {
+      blockEntity.signTime++;
+      boolean signTimeConsumed = blockEntity.signTime == 0;
+      if (signTimeConsumed && canCraft) {
         craft(world, pos, blockEntity.inventory);
         markDirty(world, pos, state);
       }
     } else if (canCraft && blockEntity.fuel > 0) {
       --blockEntity.fuel;
-      blockEntity.brewTime = 0;
-      blockEntity.itemBrewing = blockEntity.inventory.get(1).getItem();
+      blockEntity.signTime = 0;
+      blockEntity.itemSigning = blockEntity.inventory.get(1).getItem();
       if (blockEntity.inventory.get(CRAFT_RESULT).getItem() == RegisterItem.ACQUAINT_FATE_ITEM
           || blockEntity.inventory.get(CRAFT_RESULT).getItem() == Items.AIR) {
 
@@ -279,14 +280,14 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
     super.readNbt(nbt);
     DefaultedList<ItemStack> items = DefaultedList.ofSize(this.INVENTORY_SIZE, ItemStack.EMPTY);
     Inventories.readNbt(nbt, this.inventory);
-    this.brewTime = nbt.getShort("BrewTime");
+    this.signTime = nbt.getShort("SignTime");
     this.fuel = nbt.getByte("Fuel");
   }
 
   @Override
   public NbtCompound writeNbt(NbtCompound nbt) {
     super.writeNbt(nbt);
-    nbt.putShort("BrewTime", (short) this.brewTime);
+    nbt.putShort("SignTime", (short) this.signTime);
     Inventories.writeNbt(nbt, this.inventory);
     nbt.putByte("Fuel", (byte) this.fuel);
     return nbt;

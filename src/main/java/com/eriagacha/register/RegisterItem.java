@@ -9,12 +9,10 @@ import com.eriagacha.item.AcquaintFateItem;
 import com.eriagacha.item.AdeptusTemptation;
 import com.eriagacha.item.BaseScrollItem;
 import com.eriagacha.item.EriaLogoItem;
-import com.eriagacha.item.EssenceSwordTool;
-import com.eriagacha.item.GachaFurnace.GachaFurnaceItem;
-import com.eriagacha.item.GachaTable.GachaTableItem;
 import com.eriagacha.item.InterwinedFateItem;
 import com.eriagacha.item.MineralEssenceItem;
 import com.eriagacha.item.SealedScrollItem;
+import com.eriagacha.item.TavinusSwordTool;
 import com.eriagacha.item.gachabench.GachaBenchItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.item.Item;
@@ -28,10 +26,8 @@ public class RegisterItem {
   public static final Item MINERAL_ESSENCE_ITEM = new MineralEssenceItem();
   public static final Item BASE_SCROLL_ITEM = new BaseScrollItem();
   public static final Item SEALED_SCROLL_ITEM = new SealedScrollItem();
-  public static final Item ESSENCE_SWORD_ITEM = EssenceSwordTool.INSTANCE;
+  public static final Item ESSENCE_SWORD_ITEM = TavinusSwordTool.INSTANCE;
   public static final Item ERIA_LOGO_ITEM = new EriaLogoItem();
-  public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
-  public static final Item GACHA_FURNACE_ITEM = new GachaFurnaceItem();
   public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings().group(
       ItemGroup.DECORATIONS));
 
@@ -47,8 +43,6 @@ public class RegisterItem {
     register(ITEM, id("mineral_essence"), MINERAL_ESSENCE_ITEM);
     register(ITEM, id("base_scroll"), BASE_SCROLL_ITEM);
     register(ITEM, id("sealed_scroll"), SEALED_SCROLL_ITEM);
-    register(ITEM, id("gacha_table"), GACHA_TABLE_ITEM);
-    register(ITEM, id("gacha_furnace"), GACHA_FURNACE_ITEM);
     register(ITEM, id("gacha_bench"), GACHA_BENCH_ITEM);
   }
 }

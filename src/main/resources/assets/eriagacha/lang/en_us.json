@@ -9,5 +9,10 @@
   "text.eriagacha.player_reference_fail": "Player reference is not a real player ",
   "text.eriagacha.obtained": "You have obtained ",
   "text.eriagacha.obtained_translated": "You have obtained %s",
-  "text.eriagacha.roll.error":  "There was an error rolling gacha"
+  "text.eriagacha.roll.error":  "There was an error rolling gacha",
+  "text.eriagacha.contract_table": "kartografî",
+  "text.eriagacha.base_scroll_description": "A piece of paper with unknown text",
+  "text.eriagacha.sealed_scroll_description_0": "A sealed scroll",
+  "text.eriagacha.sealed_scroll_description_1": "You can feel it emanate some kind of energy",
+  "text.eriagacha.tavinus_sword_description_0": "A sword from a fallen god"
 }

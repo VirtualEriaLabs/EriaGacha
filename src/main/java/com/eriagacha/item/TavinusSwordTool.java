@@ -2,7 +2,7 @@ package com.eriagacha.item;
 
 import static com.eriagacha.network.NetworkServer.serverToClientDrawParticule;
 import static com.eriagacha.register.RegisterSound.FIRE_SPELL_SOUND;
-import static com.eriagacha.register.RegisterSound.HIT_1_SOUND;
+import static com.eriagacha.register.RegisterSound.HIT_ENTITY_SOUND;
 
 import java.util.List;
 import net.fabricmc.api.EnvType;
@@ -28,7 +28,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class EssenceSwordTool {
+public class TavinusSwordTool {
 
   public static final ToolMaterial ESSENCESWORD_TOOL_MATERIAL = new ToolMaterial() {
 
@@ -69,10 +69,7 @@ public class EssenceSwordTool {
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip,
                               TooltipContext context) {
-      tooltip.add(new LiteralText("A sword from some fallen god"));
-      tooltip.add(new LiteralText("use at your own risk"));
-
-
+      tooltip.add(new LiteralText("text.eriagacha.tavinus_sword_description_0"));
     }
 
     @Override
@@ -96,7 +93,7 @@ public class EssenceSwordTool {
 
       for (Entity entity : listEntities) {
         if(entity instanceof MobEntity){
-          world.playSoundFromEntity(null,entity,HIT_1_SOUND, SoundCategory.PLAYERS,100,100);
+          world.playSoundFromEntity(null,entity, HIT_ENTITY_SOUND, SoundCategory.PLAYERS,100,100);
           entity.setOnFireFor(5);
           entity.damage(DamageSource.explosion(user), 5);
         }

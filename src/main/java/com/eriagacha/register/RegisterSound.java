@@ -7,6 +7,6 @@ import net.minecraft.sound.SoundEvent;
 public class RegisterSound {
 
   public final static SoundEvent FIRE_SPELL_SOUND = new SoundEvent(id("firespell"));
-  public final static SoundEvent HIT_1_SOUND = new SoundEvent(id("hit1"));
+  public final static SoundEvent HIT_ENTITY_SOUND = new SoundEvent(id("hitentity"));
 
 }

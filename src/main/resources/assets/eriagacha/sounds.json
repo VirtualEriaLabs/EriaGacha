@@ -1,9 +1,9 @@
 {
-  "hit1": {
+  "hitentity": {
   "category": "combat",
   "sounds": [
     {
-      "name": "eriagacha:hit_1",
+      "name": "eriagacha:hit_entity",
       "stream": false
     }
   ]

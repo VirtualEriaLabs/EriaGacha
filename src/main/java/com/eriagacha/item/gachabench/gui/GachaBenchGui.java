@@ -15,22 +15,21 @@ import net.minecraft.screen.ScreenHandlerContext;
 
 public class GachaBenchGui extends SyncedGuiDescription {
 
-  private static final int PROPERTY_COUNT = 2; // This should match PropertyDelegate.size().
+  private static final int PROPERTY_COUNT = 2;
   public static int WINDOW_WIDTH = 164;
   public static int WINDOW_HEIGHT = 200;
   public static int X_PLAYER_INVENTORY = 0;
   public static int Y_PLAYER_INVENTORY = 130;
   private PropertyDelegate blockPropertyDelegate;
-  private static final Texture
-      barBg = new Texture(id("textures/gui/magic_circle_bg.png"));
-  private static final Texture
-      fillBg = new Texture(id("textures/gui/magic_circle_fill.png"));
+  private static final Texture barBg = new
+      Texture(id("textures/gui/magic_circle_bg.png"));
+  private static final Texture fillBg = new
+      Texture(id("textures/gui/magic_circle_fill.png"));
 
   private static final int[][] SLOTS_POS = new int[][] {
-      {72, 1},
-      {27, 29}, {118, 29},
-      {27, 83}, {118, 83},
-      {72, 108},
+      {72, 1}, {27, 29},
+      {118, 29}, {27, 83},
+      {118, 83}, {72, 108},
       {72, 56}
   };
 
@@ -44,7 +43,7 @@ public class GachaBenchGui extends SyncedGuiDescription {
     WBar newBar = WBar.withConstantMaximum(barBg, fillBg, 0, 200, WBar.Direction.UP);
     newBar.setProperties(this.blockPropertyDelegate);
     rootGrid.add(newBar,25,0,114,128);
-    for (var i = 0; i <= 6; i++) {
+    for (var i = 0; i < SLOTS_POS.length; i++) {
       WItemSlot baseItem = WItemSlot.of(super.blockInventory, i);
       rootGrid.add(baseItem, SLOTS_POS[i][0], SLOTS_POS[i][1]);
     }
