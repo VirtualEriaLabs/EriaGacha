@@ -1,5 +1,10 @@
 package com.eriagacha.register;
 
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.block.Blocks;
@@ -25,22 +30,19 @@ public class RegisterLootTable {
   protected static final float[] EMERALD_ORE_CHANCES =
       new float[] {0.1f, 0.14285715f, 0.25f, 0.46f};
 
+  private static final Map<Identifier, float[]> LOOT_TABLE_CHANCES = Stream.of(
+          new AbstractMap.SimpleEntry<>(COAL_ORE_LOOT_TABLE_ID, COAL_ORE_CHANCES),
+          new AbstractMap.SimpleEntry<>(DIAMOND_ORE_LOOT_TABLE_ID, DIAMOND_ORE_CHANCES),
+          new AbstractMap.SimpleEntry<>(IRON_ORE_LOOT_TABLE_ID, IRON_ORE_CHANCES),
+          new AbstractMap.SimpleEntry<>(COPPER_ORE_LOOT_TABLE_ID, COPPER_ORE_CHANCES),
+          new AbstractMap.SimpleEntry<>(EMERALD_ORE_LOOT_TABLE_ID, EMERALD_ORE_CHANCES))
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
   // Actual code
   public static void init() {
-
-    LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, table, setter) ->
-    {
-      if (COAL_ORE_LOOT_TABLE_ID.equals(id)) {
-        table.pool(lootTableHelper(COAL_ORE_CHANCES, RegisterItem.MINERAL_ESSENCE_ITEM));
-      } else if (DIAMOND_ORE_LOOT_TABLE_ID.equals(id)) {
-        table.pool(lootTableHelper(DIAMOND_ORE_CHANCES, RegisterItem.MINERAL_ESSENCE_ITEM));
-      } else if (IRON_ORE_LOOT_TABLE_ID.equals(id)) {
-        table.pool(lootTableHelper(IRON_ORE_CHANCES, RegisterItem.MINERAL_ESSENCE_ITEM));
-      } else if (COPPER_ORE_LOOT_TABLE_ID.equals(id)) {
-        table.pool(lootTableHelper(COPPER_ORE_CHANCES, RegisterItem.MINERAL_ESSENCE_ITEM));
-      } else if (EMERALD_ORE_LOOT_TABLE_ID.equals(id)) {
-        table.pool(lootTableHelper(EMERALD_ORE_CHANCES, RegisterItem.MINERAL_ESSENCE_ITEM));
-      }
+    LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, table, setter) -> {
+      Optional.ofNullable(LOOT_TABLE_CHANCES.get(id)).ifPresent(
+          floats -> table.pool(lootTableHelper(floats, RegisterItem.MINERAL_ESSENCE_ITEM)));
     });
   }
 
