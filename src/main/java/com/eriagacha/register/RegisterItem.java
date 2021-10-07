@@ -5,14 +5,14 @@ import static com.eriagacha.utils.RegisterUtils.id;
 import static net.minecraft.util.registry.Registry.ITEM;
 import static net.minecraft.util.registry.Registry.register;
 
-import com.eriagacha.item.AcquaintFate;
+import com.eriagacha.item.AcquaintFateItem;
 import com.eriagacha.item.AdeptusTemptation;
 import com.eriagacha.item.BaseScrollItem;
-import com.eriagacha.item.EriaLogo;
+import com.eriagacha.item.EriaLogoItem;
 import com.eriagacha.item.EssenceSwordTool;
 import com.eriagacha.item.GachaFurnace.GachaFurnaceItem;
 import com.eriagacha.item.GachaTable.GachaTableItem;
-import com.eriagacha.item.InterwinedFate;
+import com.eriagacha.item.InterwinedFateItem;
 import com.eriagacha.item.MineralEssenceItem;
 import com.eriagacha.item.SealedScrollItem;
 import com.eriagacha.item.gachabench.GachaBenchItem;
@@ -22,14 +22,14 @@ import net.minecraft.item.ItemGroup;
 
 @Log4j2
 public class RegisterItem {
-  public static final Item INTERTWINED_FATE_ITEM = new InterwinedFate();
-  public static final Item ACQUAINT_FATE_ITEM = new AcquaintFate();
+  public static final Item INTERTWINED_FATE_ITEM = new InterwinedFateItem();
+  public static final Item ACQUAINT_FATE_ITEM = new AcquaintFateItem();
   public static final Item ADEPTUS_TEMPTATION_ITEM = new AdeptusTemptation();
   public static final Item MINERAL_ESSENCE_ITEM = new MineralEssenceItem();
   public static final Item BASE_SCROLL_ITEM = new BaseScrollItem();
   public static final Item SEALED_SCROLL_ITEM = new SealedScrollItem();
   public static final Item ESSENCE_SWORD_ITEM = EssenceSwordTool.INSTANCE;
-  public static final Item ERIA_LOGO_ITEM = new EriaLogo();
+  public static final Item ERIA_LOGO_ITEM = new EriaLogoItem();
   public static final Item GACHA_TABLE_ITEM = new GachaTableItem();
   public static final Item GACHA_FURNACE_ITEM = new GachaFurnaceItem();
   public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings().group(

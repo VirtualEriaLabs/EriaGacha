@@ -26,6 +26,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven {
         name = "CottonMC"
         url = "https://server.bbkr.space/artifactory/libs-release"
@@ -58,6 +59,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${project.loombok_version}"
     annotationProcessor "org.projectlombok:lombok:${project.loombok_version}"
     modImplementation ("io.github.cottonmc:LibGui:${project.libgui_version}")
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.13:dev'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     //shadow 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 }
