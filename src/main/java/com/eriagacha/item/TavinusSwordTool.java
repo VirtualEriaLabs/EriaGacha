@@ -2,15 +2,13 @@ package com.eriagacha.item;
 
 import static com.eriagacha.network.NetworkServer.serverToClientDrawParticule;
 import static com.eriagacha.register.RegisterSound.FIRE_SPELL_SOUND;
-import static com.eriagacha.register.RegisterSound.HIT_ENTITY_SOUND;
+import static com.eriagacha.utils.EntityHelper.OnEntityHitDamage;
 
 import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -44,7 +42,7 @@ public class TavinusSwordTool {
 
     @Override
     public float getAttackDamage() {
-      return 13F;
+      return 12F;
     }
 
     @Override
@@ -74,31 +72,19 @@ public class TavinusSwordTool {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-
       int radio = 5;
-      int xRadio = 5;
-      int yRadio = 1;
-      int zRadio = 5;
-      int distanceFromPlayer = 5;
+      int distanceFromPlayer = 5 ;
       Vec3d center = user.getPos().add(user.getRotationVector().normalize().multiply(distanceFromPlayer));
       BlockPos blockPos = new BlockPos(center.getX(), center.getY(), center.getZ());
       if (!world.isClient()) {
-        world.playSoundFromEntity(null,user,FIRE_SPELL_SOUND, SoundCategory.PLAYERS,100,100);
-       serverToClientDrawParticule(world, blockPos, radio, distanceFromPlayer);
+         world.playSoundFromEntity(null,user,FIRE_SPELL_SOUND, SoundCategory.PLAYERS,100,100);
+         serverToClientDrawParticule(world, blockPos, radio, distanceFromPlayer);
       }
-
       List<Entity> listEntities = world.getOtherEntities(user,
           new Box(center.getX() - radio, center.getY() - radio, center.getZ() - radio,
               center.getX() + radio, center.getY() + radio, center.getZ() + radio));
 
-      for (Entity entity : listEntities) {
-        if(entity instanceof MobEntity){
-          world.playSoundFromEntity(null,entity, HIT_ENTITY_SOUND, SoundCategory.PLAYERS,100,100);
-          entity.setOnFireFor(5);
-          entity.damage(DamageSource.explosion(user), 5);
-        }
-      }
-
+      OnEntityHitDamage(listEntities, user, this.getAttackDamage()/2, true);
       return TypedActionResult.success(user.getStackInHand(hand));
     }
 

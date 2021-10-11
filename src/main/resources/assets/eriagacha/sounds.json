@@ -4,7 +4,8 @@
   "sounds": [
     {
       "name": "eriagacha:hit_entity",
-      "stream": false
+      "stream": false,
+      "attenuation_distance": 16
     }
   ]
 },
@@ -13,7 +14,8 @@
     "sounds": [
       {
         "name": "eriagacha:fire_spell",
-        "stream": false
+        "stream": false,
+        "attenuation_distance": 16
       }
     ]
   }
