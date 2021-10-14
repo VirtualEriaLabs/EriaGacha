@@ -1,6 +1,5 @@
 package com.eriagacha.register;
 
-import static com.eriagacha.register.RegisterBlock.GACHA_BENCH;
 import static com.eriagacha.utils.RegisterUtils.id;
 import static net.minecraft.util.registry.Registry.ITEM;
 import static net.minecraft.util.registry.Registry.register;
@@ -16,7 +15,6 @@ import com.eriagacha.item.TavinusSwordTool;
 import com.eriagacha.item.gachabench.GachaBenchItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 
 @Log4j2
 public class RegisterItem {
@@ -28,8 +26,7 @@ public class RegisterItem {
   public static final Item SEALED_SCROLL_ITEM = new SealedScrollItem();
   public static final Item ESSENCE_SWORD_ITEM = TavinusSwordTool.INSTANCE;
   public static final Item ERIA_LOGO_ITEM = new EriaLogoItem();
-  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem(GACHA_BENCH, new Item.Settings().group(
-      ItemGroup.DECORATIONS));
+  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem();
 
 
   private RegisterItem() {}
