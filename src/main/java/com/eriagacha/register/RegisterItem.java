@@ -12,7 +12,7 @@ import com.eriagacha.item.InterwinedFateItem;
 import com.eriagacha.item.MineralEssenceItem;
 import com.eriagacha.item.SealedScrollItem;
 import com.eriagacha.item.TavinusSwordTool;
-import com.eriagacha.item.gachabench.GachaBenchItem;
+import com.eriagacha.item.kartografi.KartografiItem;
 import lombok.extern.log4j.Log4j2;
 import net.minecraft.item.Item;
 
@@ -26,7 +26,7 @@ public class RegisterItem {
   public static final Item SEALED_SCROLL_ITEM = new SealedScrollItem();
   public static final Item ESSENCE_SWORD_ITEM = TavinusSwordTool.INSTANCE;
   public static final Item ERIA_LOGO_ITEM = new EriaLogoItem();
-  public static final Item GACHA_BENCH_ITEM = new GachaBenchItem();
+  public static final Item GACHA_BENCH_ITEM = new KartografiItem();
 
 
   private RegisterItem() {}

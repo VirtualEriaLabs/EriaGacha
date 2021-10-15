@@ -1,9 +1,9 @@
-package com.eriagacha.item.gachabench;
+package com.eriagacha.item.kartografi;
 
 import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
 
 import blue.endless.jankson.annotation.Nullable;
-import com.eriagacha.item.gachabench.gui.GachaBenchGui;
+import com.eriagacha.item.kartografi.gui.KartografiGui;
 import com.eriagacha.register.RegisterItem;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +34,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 @Log4j2
-public class GachaBenchEntity extends LockableContainerBlockEntity implements
+public class KartografiEntity extends LockableContainerBlockEntity implements
     ExtendedScreenHandlerFactory, BlockEntityClientSerializable, PropertyDelegateHolder {
 
   public final static int INVENTORY_SIZE = 7;
@@ -52,7 +52,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   private Item itemSigning;
   protected final PropertyDelegate propertyDelegate;
 
-  public GachaBenchEntity(BlockPos pos, BlockState state) {
+  public KartografiEntity(BlockPos pos, BlockState state) {
     super(GACHA_BENCH_ENTITY, pos, state);
 
     this.propertyDelegate = new PropertyDelegate() {
@@ -60,9 +60,9 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       public int get(int index) {
         switch (index) {
           case 0:
-            return GachaBenchEntity.this.signTime;
+            return KartografiEntity.this.signTime;
           case 1:
-            return GachaBenchEntity.this.fuel;
+            return KartografiEntity.this.fuel;
           default:
             return 0;
         }
@@ -72,10 +72,10 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
       public void set(int index, int value) {
         switch (index) {
           case 0:
-            GachaBenchEntity.this.signTime = value;
+            KartografiEntity.this.signTime = value;
             break;
           case 1:
-            GachaBenchEntity.this.fuel = value;
+            KartografiEntity.this.fuel = value;
         }
 
       }
@@ -183,7 +183,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   @Nullable
   @Override
   public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-    return new GachaBenchGui(syncId, inv, ScreenHandlerContext.create(this.world, this.pos));
+    return new KartografiGui(syncId, inv, ScreenHandlerContext.create(this.world, this.pos));
   }
 
   @Override
@@ -192,7 +192,7 @@ public class GachaBenchEntity extends LockableContainerBlockEntity implements
   }
 
   public static void tick(World world, BlockPos pos, BlockState state,
-                          GachaBenchEntity blockEntity) {
+                          KartografiEntity blockEntity) {
 
     if (blockEntity.fuel <= 0 && blockEntity.inventory.get(0).isOf(RegisterItem.BASE_SCROLL_ITEM)) {
       blockEntity.fuel = 1;
