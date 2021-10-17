@@ -24,9 +24,9 @@ public class RegisterItem {
   public static final Item MINERAL_ESSENCE_ITEM = new MineralEssenceItem();
   public static final Item BASE_SCROLL_ITEM = new BaseScrollItem();
   public static final Item SEALED_SCROLL_ITEM = new SealedScrollItem();
-  public static final Item ESSENCE_SWORD_ITEM = TavinusSwordTool.INSTANCE;
+  public static final Item TAVINUS_SWORD_ITEM = TavinusSwordTool.INSTANCE;
   public static final Item ERIA_LOGO_ITEM = new EriaLogoItem();
-  public static final Item GACHA_BENCH_ITEM = new KartografiItem();
+  public static final Item KARTOGRAFI_ITEM = new KartografiItem();
 
 
   private RegisterItem() {}
@@ -36,10 +36,10 @@ public class RegisterItem {
     register(ITEM, id("acquaint_fate"), ACQUAINT_FATE_ITEM);
     register(ITEM, id("adeptus_temptation"), ADEPTUS_TEMPTATION_ITEM);
     register(ITEM, id("eria_logo"), ERIA_LOGO_ITEM);
-    register(ITEM, id("essence_sword"), ESSENCE_SWORD_ITEM);
+    register(ITEM, id("tavinus_sword"), TAVINUS_SWORD_ITEM);
     register(ITEM, id("mineral_essence"), MINERAL_ESSENCE_ITEM);
     register(ITEM, id("base_scroll"), BASE_SCROLL_ITEM);
     register(ITEM, id("sealed_scroll"), SEALED_SCROLL_ITEM);
-    register(ITEM, id("gacha_bench"), GACHA_BENCH_ITEM);
+    register(ITEM, id("kartografi"), KARTOGRAFI_ITEM);
   }
 }

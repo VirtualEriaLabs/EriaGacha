@@ -13,7 +13,7 @@ public class RegisterScreen {
   public static void init() {
 
     SCREEN_HANDLER_BENCH_TYPE = ScreenHandlerRegistry.registerExtended(
-        id("gacha_bench_gui"),
+        id("kartografi_gui"),
         (syncId, inventory, buf) -> new KartografiGui(
             syncId,
             inventory,

@@ -1,6 +1,6 @@
 package com.eriagacha.item.kartografi;
 
-import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
+import static com.eriagacha.register.RegisterBlockEntity.KARTOGRAFI_ENTITY_TYPE;
 
 import blue.endless.jankson.annotation.Nullable;
 import com.eriagacha.item.kartografi.gui.KartografiGui;
@@ -53,7 +53,7 @@ public class KartografiEntity extends LockableContainerBlockEntity implements
   protected final PropertyDelegate propertyDelegate;
 
   public KartografiEntity(BlockPos pos, BlockState state) {
-    super(GACHA_BENCH_ENTITY, pos, state);
+    super(KARTOGRAFI_ENTITY_TYPE, pos, state);
 
     this.propertyDelegate = new PropertyDelegate() {
       @Override

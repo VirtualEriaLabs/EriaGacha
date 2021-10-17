@@ -1,6 +1,6 @@
 package com.eriagacha.item.kartografi;
 
-import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
+import static com.eriagacha.register.RegisterBlockEntity.KARTOGRAFI_ENTITY_TYPE;
 
 import java.util.Optional;
 import net.minecraft.block.BlockRenderType;
@@ -52,7 +52,7 @@ public class KartografiBlock extends BlockWithEntity implements Stainable {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state,
                                                                 BlockEntityType<T> type) {
-    return checkType(type, GACHA_BENCH_ENTITY, KartografiEntity::tick);
+    return checkType(type, KARTOGRAFI_ENTITY_TYPE, KartografiEntity::tick);
   }
 
   @Nullable
