@@ -1,6 +1,6 @@
-package com.eriagacha.item.gachabench;
+package com.eriagacha.item.kartografi;
 
-import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
+import static com.eriagacha.register.RegisterBlockEntity.KARTOGRAFI_ENTITY_TYPE;
 
 import java.util.Optional;
 import net.minecraft.block.BlockRenderType;
@@ -20,8 +20,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 
-public class GachaBenchBlock extends BlockWithEntity implements Stainable {
-  public GachaBenchBlock(Settings settings) {
+public class KartografiBlock extends BlockWithEntity implements Stainable {
+  public KartografiBlock(Settings settings) {
     super(settings);
   }
 
@@ -40,7 +40,7 @@ public class GachaBenchBlock extends BlockWithEntity implements Stainable {
   @Nullable
   @Override
   public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-    return new GachaBenchEntity(pos, state);
+    return new KartografiEntity(pos, state);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class GachaBenchBlock extends BlockWithEntity implements Stainable {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state,
                                                                 BlockEntityType<T> type) {
-    return checkType(type, GACHA_BENCH_ENTITY, GachaBenchEntity::tick);
+    return checkType(type, KARTOGRAFI_ENTITY_TYPE, KartografiEntity::tick);
   }
 
   @Nullable

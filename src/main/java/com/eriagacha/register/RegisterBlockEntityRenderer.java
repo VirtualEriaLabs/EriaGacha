@@ -1,13 +1,13 @@
 package com.eriagacha.register;
 
-import static com.eriagacha.register.RegisterBlockEntity.GACHA_BENCH_ENTITY;
+import static com.eriagacha.register.RegisterBlockEntity.KARTOGRAFI_ENTITY_TYPE;
 
-import com.eriagacha.item.gachabench.GachaBenchEntityRenderer;
+import com.eriagacha.item.kartografi.KartografiEntityRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 
 public class RegisterBlockEntityRenderer {
 
   public static void init() {
-    BlockEntityRendererRegistry.register(GACHA_BENCH_ENTITY, GachaBenchEntityRenderer::new);
+    BlockEntityRendererRegistry.register(KARTOGRAFI_ENTITY_TYPE, KartografiEntityRenderer::new);
   }
 }

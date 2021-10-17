@@ -1,4 +1,4 @@
-package com.eriagacha.item.gachabench;
+package com.eriagacha.item.kartografi;
 
 import static com.eriagacha.register.RegisterItem.BASE_SCROLL_ITEM;
 
@@ -13,16 +13,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 
-public class GachaBenchEntityRenderer
-    implements BlockEntityRenderer<GachaBenchEntity> {
+public class KartografiEntityRenderer
+    implements BlockEntityRenderer<KartografiEntity> {
 
   private static ItemStack stack = new ItemStack(BASE_SCROLL_ITEM, 1);
 
-  public GachaBenchEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+  public KartografiEntityRenderer(BlockEntityRendererFactory.Context ctx) {
   }
 
   @Override
-  public void render(GachaBenchEntity entity, float tickDelta, MatrixStack matrices,
+  public void render(KartografiEntity entity, float tickDelta, MatrixStack matrices,
                      VertexConsumerProvider vertexConsumers, int light, int overlay) {
     matrices.push();
     double offset = Math.sin((entity.getWorld().getTime() + tickDelta) / 8.0) / 4.0;

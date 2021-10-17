@@ -1,4 +1,4 @@
-package com.eriagacha.item.gachabench.gui;
+package com.eriagacha.item.kartografi.gui;
 
 import static com.eriagacha.register.RegisterScreen.SCREEN_HANDLER_BENCH_TYPE;
 import static com.eriagacha.utils.RegisterUtils.id;
@@ -13,7 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandlerContext;
 
-public class GachaBenchGui extends SyncedGuiDescription {
+public class KartografiGui extends SyncedGuiDescription {
 
   private static final int PROPERTY_COUNT = 2;
   public static int WINDOW_WIDTH = 164;
@@ -33,7 +33,7 @@ public class GachaBenchGui extends SyncedGuiDescription {
       {72, 56}
   };
 
-  public GachaBenchGui(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
+  public KartografiGui(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
     super(SCREEN_HANDLER_BENCH_TYPE, syncId, playerInventory,
         getBlockInventory(ctx), getBlockPropertyDelegate(ctx, PROPERTY_COUNT));
     WGridPanel rootGrid = new WGridPanel(1);
