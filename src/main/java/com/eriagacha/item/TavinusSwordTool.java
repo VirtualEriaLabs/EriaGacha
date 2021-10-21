@@ -61,13 +61,13 @@ public class TavinusSwordTool {
     }
   };
 
-  public static final Item INSTANCE = new SwordItem(ESSENCESWORD_TOOL_MATERIAL, 25, (float) -1.8,
+  public static final Item INSTANCE = new SwordItem(TAVINUS_SWORD_TOOL_MATERIAL, 25, (float) -1.8,
       (new Item.Settings().group(ItemGroup.COMBAT))) {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip,
                               TooltipContext context) {
-      tooltip.add(new LiteralText("text.eriagacha.tavinus_sword_description_0"));
+      tooltip.add(new TranslatableText("text.eriagacha.tavinus_sword_description_0"));
     }
 
     @Override
