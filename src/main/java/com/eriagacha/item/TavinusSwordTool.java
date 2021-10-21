@@ -17,8 +17,8 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 public class TavinusSwordTool {
 
-  public static final ToolMaterial ESSENCESWORD_TOOL_MATERIAL = new ToolMaterial() {
+  public static final ToolMaterial TAVINUS_SWORD_TOOL_MATERIAL = new ToolMaterial() {
 
     @Override
     public int getDurability() {
