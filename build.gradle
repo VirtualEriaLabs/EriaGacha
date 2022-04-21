@@ -1,0 +1,109 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'com.github.johnrengelman.shadow'
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    maven {
+        name = "CottonMC"
+        url = "https://server.bbkr.space/artifactory/libs-release"
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+    zip64 = true
+    mergeServiceFiles()
+    append("META-INF/spring.handlers")
+    append("META-INF/spring.schemas")
+    append("META-INF/spring.tooling")
+    transform(PropertiesFileTransformer) {
+        paths = [
+                'META-INF/spring.factories'
+        ]
+        mergeStrategy = 'append'
+    }
+}
+tasks.remapJar.dependsOn(shadowJar)
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${project.jackson_version}"
+    compileOnly "org.projectlombok:lombok:${project.loombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.loombok_version}"
+    modImplementation ("io.github.cottonmc:LibGui:${project.libgui_version}")
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.17:3.0.13:dev'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    modImplementation 'com.terraformersmc:modmenu:2.0.14'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+    //shadow 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 16
+}
+
+java {
+    withSourcesJar()
+}
+
+bootJar {
+    mainClass.set('net.eriagacha.EriaGachaMain')
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+    repositories {}
+}
+

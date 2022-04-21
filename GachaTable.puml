@@ -1,0 +1,57 @@
+@startuml
+class com.eriagacha.item.GachaTable.GachaTableEntity {
++ int INVENTORY_SIZE
+- DefaultedList<ItemStack> inventory
++ {static} int DEFAULT_COLOR
++ int color
++ void writeScreenOpeningData(ServerPlayerEntity,PacketByteBuf)
++ NbtCompound writeNbt(NbtCompound)
++ void readNbt(NbtCompound)
++ void fromClientTag(NbtCompound)
++ NbtCompound toClientTag(NbtCompound)
++ Object getRenderAttachmentData()
++ DefaultedList<ItemStack> getItems()
++ ItemStack getStack(int)
++ ItemStack removeStack(int,int)
++ ItemStack removeStack(int)
++ void setStack(int,ItemStack)
++ void onClose(PlayerEntity)
++ Text getDisplayName()
++ ScreenHandler createMenu(int,PlayerInventory,PlayerEntity)
+}
+class com.eriagacha.item.GachaTable.gui.GachaTableScreen {
++ {static} ScreenRegistry.Factory<GachaTableGui,GachaTableScreen> FACTORY
+}
+class com.eriagacha.item.GachaTable.GachaTableItem {
+}
+class com.eriagacha.item.GachaTable.GachaTableBlock {
+# {static} VoxelShape SHAPE
++ boolean hasSidedTransparency(BlockState)
++ VoxelShape getOutlineShape(BlockState,BlockView,BlockPos,ShapeContext)
++ BlockRenderType getRenderType(BlockState)
++ void onStateReplaced(BlockState,World,BlockPos,BlockState,boolean)
++ ActionResult onUse(BlockState,World,BlockPos,PlayerEntity,Hand,BlockHitResult)
++ BlockEntity createBlockEntity(BlockPos,BlockState)
++ void randomDisplayTick(BlockState,World,BlockPos,Random)
+}
+class com.eriagacha.item.GachaTable.gui.GachaTableGui {
+}
+class com.eriagacha.item.GachaTable.GachaTableAbstractBlock {
+# Supplier<BlockEntityType<? extends E>> entityTypeRetriever
++ BlockEntity createBlockEntity(BlockPos,BlockState)
++ BlockEntityTicker<T> getTicker(World,BlockState,BlockEntityType<T>)
++ GameEventListener getGameEventListener(World,T)
+}
+
+
+net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory <|.. com.eriagacha.item.GachaTable.GachaTableEntity
+net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity <|.. com.eriagacha.item.GachaTable.GachaTableEntity
+net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable <|.. com.eriagacha.item.GachaTable.GachaTableEntity
+com.eriagacha.ImplementedInventory <|.. com.eriagacha.item.GachaTable.GachaTableEntity
+net.minecraft.block.entity.BlockEntity <|-- com.eriagacha.item.GachaTable.GachaTableEntity
+io.github.cottonmc.cotton.gui.client.CottonInventoryScreen <|-- com.eriagacha.item.GachaTable.gui.GachaTableScreen
+net.minecraft.item.BlockItem <|-- com.eriagacha.item.GachaTable.GachaTableItem
+com.eriagacha.item.GachaTable.GachaTableAbstractBlock <|-- com.eriagacha.item.GachaTable.GachaTableBlock
+io.github.cottonmc.cotton.gui.SyncedGuiDescription <|-- com.eriagacha.item.GachaTable.gui.GachaTableGui
+net.minecraft.block.BlockWithEntity <|-- com.eriagacha.item.GachaTable.GachaTableAbstractBlock
+@enduml

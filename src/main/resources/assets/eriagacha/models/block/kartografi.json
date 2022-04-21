@@ -1,0 +1,25 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "down": "eriagacha:block/kartografi/enchanting_furnace_bottom",
+    "up": "eriagacha:block/kartografi/enchanting_furnace_top",
+    "north": "eriagacha:block/kartografi/enchanting_furnace_side",
+    "east": "eriagacha:block/kartografi/enchanting_furnace_side",
+    "south": "eriagacha:block/kartografi/enchanting_furnace_side",
+    "west": "eriagacha:block/kartografi/enchanting_furnace_side",
+    "particle": "eriagacha:block/kartografi/enchanting_furnace_top"
+  },
+  "elements": [
+    {   "from": [ 0, 0, 0 ],
+      "to": [ 16, 12, 16 ],
+      "faces": {
+        "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#down", "cullface": "down" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#up" },
+        "north": { "uv": [ 0, 4, 16, 16 ], "texture": "#north", "cullface": "north" },
+        "south": { "uv": [ 0, 4, 16, 16 ], "texture": "#south", "cullface": "south" },
+        "west":  { "uv": [ 0, 4, 16, 16 ], "texture": "#west", "cullface": "west" },
+        "east":  { "uv": [ 0, 4, 16, 16 ], "texture": "#east", "cullface": "east" }
+      }
+    }
+  ]
+}

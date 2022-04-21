@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "eriagacha",
+  "version": "${version}",
+  "name": "EriaGacha",
+  "description": "A Gacha mod that allows the player to get random rewards in exchange of something",
+  "authors": [
+    "Serex",
+    "EriaLabs",
+    "Rovinado",
+    "PrimoTabla"
+  ],
+  "contact": {
+    "homepage": "https://github.com/VirtualEriaLabs/EriaGacha",
+    "sources": "https://github.com/VirtualEriaLabs/EriaGacha"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/eriagacha/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.eriagacha.EriaGachaMain"
+    ],
+    "server": [
+      "com.eriagacha.EriaGachaServerMain"
+    ],
+    "client": [
+      "com.eriagacha.EriaGachaClientMain"
+    ]
+  },
+  "mixins": [
+    "eriagacha.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}

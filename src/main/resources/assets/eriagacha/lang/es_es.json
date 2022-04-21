@@ -1,0 +1,18 @@
+{
+  "item.eriagacha.eria_logo": "Eria ",
+  "item.eriagacha.acquaint_fate": "Encuentro del destino ",
+  "item.eriagacha.interwined_fate": "Destino Entrelazado ",
+  "item.eriagacha.primogem": "Protogema ",
+  "item.eriagacha.adeptus_temptation": "Tentación de los adeptus ",
+  "text.eriagacha.missing": "Te falta ",
+  "text.eriagacha.inventory_full": "El inventario esta lleno ",
+  "text.eriagacha.player_reference_fail": "La referencia del jugador no es un jugador ",
+  "text.eriagacha.obtained": "Has conseguido ",
+  "text.eriagacha.obtained_translated": "Has obtenido %s",
+  "text.eriagacha.roll.error":  "Hubo un error tirando el gacha",
+  "text.eriagacha.contract_table": "kartografî",
+  "text.eriagacha.base_scroll_description": "Un trozo de papel con garabatos",
+  "text.eriagacha.sealed_scroll_description_0": "Un pergamino sellado",
+  "text.eriagacha.sealed_scroll_description_1": "Puedes sentir como emana energia",
+  "text.eriagacha.tavinus_sword_description_0": "La espada de un dios caido"
+}

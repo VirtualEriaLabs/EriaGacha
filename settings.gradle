@@ -1,0 +1,17 @@
+pluginManagement {
+        repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+    }
+    plugins {
+        id 'fabric-loom' version "${fabric_loom_version}"
+        id 'maven-publish'
+        id 'org.springframework.boot' version "${spring_boot_version}"
+        id 'io.spring.dependency-management' version "${spring_dependency_management_version}"
+        id 'com.github.johnrengelman.shadow' version "${shadowjar_version}"
+        id 'java'
+    }
+}

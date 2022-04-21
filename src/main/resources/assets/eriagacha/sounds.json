@@ -1,0 +1,22 @@
+{
+  "hitentity": {
+  "category": "combat",
+  "sounds": [
+    {
+      "name": "eriagacha:hit_entity",
+      "stream": false,
+      "attenuation_distance": 16
+    }
+  ]
+},
+  "firespell": {
+    "category": "combat",
+    "sounds": [
+      {
+        "name": "eriagacha:fire_spell",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  }
+}
